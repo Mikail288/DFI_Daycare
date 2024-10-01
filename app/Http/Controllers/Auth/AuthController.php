@@ -120,7 +120,7 @@ class AuthController extends Controller
     /**
      * Write code on Method
      *
-     * @return response()
+     * @return RedirectResponse
      */
     public function logout(): RedirectResponse
     {
@@ -142,5 +142,73 @@ class AuthController extends Controller
         }
 
         return redirect("login")->withErrors('Oops! You do not have access to the admin dashboard');
+    }
+    
+    /**
+     * Show the form for editing the specified user.
+     *
+     * @param  int  $id
+     * @return View|RedirectResponse
+     */
+    public function edit($id): View|RedirectResponse
+    {
+        $user = User::find($id);
+
+        if (Auth::check() && Auth::user()->role == 'admin') {
+            return view('auth.edit', compact('user'));
+        }
+
+        return redirect("login")->withErrors('Oops! You do not have access to edit users.');
+    }
+
+    /**
+     * Update the specified user in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return RedirectResponse
+     */
+    public function update(Request $request, $id): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $id,
+            'password' => 'nullable|min:6',
+            'role' => 'required|in:user,admin',
+        ]);
+
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $passwordChanged = false;
+
+        if ($request->password) {
+            $user->password = Hash::make($request->password);
+            $passwordChanged = true;
+        }
+
+        $user->role = $request->role;
+        $user->save();
+
+        if (Auth::user()->id == $id && $passwordChanged) {
+            Auth::logout();
+            return redirect()->route('login')->withErrors('You have changed your password. Please login again.');
+        }
+
+        return redirect()->route('dashboardadmin')->withSuccess('User updated successfully.');
+    }
+
+    /**
+     * Remove the specified user from storage.
+     *
+     * @param  int  $id
+     * @return RedirectResponse
+     */
+    public function destroy($id): RedirectResponse
+    {
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect()->route('dashboardadmin')->withSuccess('User deleted successfully.');
     }
 }
