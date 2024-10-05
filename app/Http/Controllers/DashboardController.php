@@ -3,14 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User; // Import model User atau model lain yang ingin ditampilkan
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('dashboard');
+        $user = Auth::user();
+        $children = $user->children;
+        $selectedChild = null;
+
+        if ($request->route('child_id')) {
+            $selectedChild = $children->find($request->route('child_id'));
+        }
+
+        return view('dashboard', compact('children', 'selectedChild'));
     }
 
     public function adminIndex()

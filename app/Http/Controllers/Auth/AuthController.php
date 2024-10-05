@@ -34,7 +34,7 @@ class AuthController extends Controller
             return view('auth.registration');
         }
 
-        return redirect("login")->withErrors('Oops! You do not have access to the registration page.');
+        return redirect("login")->withErrors('Kamu tidak memiliki akses registration page.');
     }
       
     /**
@@ -54,14 +54,14 @@ class AuthController extends Controller
             $user = Auth::user();
             if ($user->role == 'admin') {
                 return redirect()->intended('dashboardadmin')
-                            ->withSuccess('You have Successfully logged in as Admin');
+                            ->withSuccess('Kamu berhasil login sebagai Admin');
             } else {
                 return redirect()->intended('dashboard')
-                            ->withSuccess('You have Successfully logged in');
+                            ->withSuccess('Kamu berhasil login');
             }
         }
 
-        return redirect("login")->withErrors('Oops! You have entered invalid credentials');
+        return redirect("login")->withErrors('Email/Password salah, coba lagi');
     }
       
     /**
@@ -74,16 +74,14 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
         ]);
 
-        // Simpan informasi pengguna yang sedang login
         $currentUser = Auth::user();
        
         $data = $request->all();
         $user = $this->create($data);
         
-        // Kembalikan sesi pengguna yang sedang login
         Auth::login($currentUser);
 
         return redirect("dashboardadmin")->withSuccess('Great! You have successfully registered a new account.');
@@ -141,7 +139,7 @@ class AuthController extends Controller
             return view('dashboardadmin');
         }
 
-        return redirect("login")->withErrors('Oops! You do not have access to the admin dashboard');
+        return redirect("login")->withErrors('Kamu tidak memiliki akses dashboard admin.');
     }
     
     /**
@@ -158,7 +156,7 @@ class AuthController extends Controller
             return view('auth.edit', compact('user'));
         }
 
-        return redirect("login")->withErrors('Oops! You do not have access to edit users.');
+        return redirect("login")->withErrors('Kamu tidak memiliki akses edit users.');
     }
 
     /**
@@ -204,11 +202,22 @@ class AuthController extends Controller
      * @param  int  $id
      * @return RedirectResponse
      */
-    public function destroy($id): RedirectResponse
+    public function destroy($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
+        
+        // Delete associated children
+        $user->children()->delete();
+        
+        // Delete the user
         $user->delete();
 
-        return redirect()->route('dashboardadmin')->withSuccess('User deleted successfully.');
+        return redirect()->route('dashboardadmin')->with('success', 'User and associated children have been deleted successfully.');
+    }
+    
+    public function show($id)
+    {
+        $user = User::with('children')->findOrFail($id);
+        return view('detailuser', compact('user'));
     }
 }

@@ -4,109 +4,122 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-      @media (max-width: 576px) {
-        .container-fluid {
-          padding: 1rem;
-        }
-        .display-5 {
-          font-size: 1.5rem;
-        }
-        .lead {
-          font-size: 1rem;
-        }
-        .btn {
-          font-size: 0.875rem;
-        }
-        .table-responsive {
-          font-size: 0.875rem;
-        }
+      body {
+        background-color: #f8f9fa;
       }
-      .modal-dialog-centered {
-        display: flex;
+      .navbar {
+        box-shadow: 0 2px 4px rgba(0,0,0,.1);
+      }
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,.1);
+        transition: all 0.3s ease;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,.1);
+      }
+      .card-header {
+        background-color: #007bff;
+        color: white;
+        border-radius: 15px 15px 0 0 !important;
+      }
+      .btn-icon {
+        display: inline-flex;
         align-items: center;
-        min-height: calc(100% - 1rem);
-      }
-      .modal-dialog-centered::before {
-        display: block;
-        height: calc(100vh - 1rem);
-        content: "";
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
       }
     </style>
   </head>
 <body>
-    
-<main>
-  <div class="container py-4">
-    <header class="pb-3 mb-4 border-bottom">
-        <div class="row">
-            <div class="col-8 col-md-10">
-                <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-                    <img src="" alt="Daycare Logo" class="img-fluid" style="max-width: 100%; height: auto;">
-                </a>          
-            </div>
-            <div class="col-4 col-md-2 text-end">
-                <a class="dropdown-item" href="{{ route('logout') }}"
-                   onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
-                    {{ __('Logout') }}
-                </a>
 
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            <img src="" alt="Daycare Logo" height="40">
+        </a>
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('logout') }}"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
+                </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                     @csrf
                 </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<main class="container my-5">
+    @session('success')
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ $value }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endsession
+
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1 class="display-4 fw-bold">Welcome, {{ Auth::user()->name }}</h1>
+            <p class="lead">Manage your daycare users and children here.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <a href="{{ route('register') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-user-plus me-2"></i> Add New User
+            </a>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-0"><i class="fas fa-users me-2"></i>User Management</h3>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($users as $user)
+                            <tr class="user-row" data-href="{{ route('users.show', $user->id) }}" style="cursor: pointer;">
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td><span class="badge bg-{{ $user->role == 'admin' ? 'danger' : 'success' }}">{{ $user->role }}</span></td>
+                                <td>
+                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm me-1" title="Edit" onclick="event.stopPropagation();">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <button type="button" class="btn btn-success btn-sm me-1" data-bs-toggle="modal" data-bs-target="#addChildModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}" title="Add Child" onclick="event.stopPropagation();">
+                                        <i class="fas fa-baby"></i> Add Child
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}" title="Delete" onclick="event.stopPropagation();">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-      
-    </header>
-
-    <div class="p-5 mb-4 bg-light rounded-3">
-      <div class="container-fluid py-5">
-        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-          <div>
-            <h1 class="display-5 fw-bold">Hi, {{ Auth::user()->name }}</h1>
-            <p class="lead">Welcome to the admin dashboard.</p>
-          </div>
-          <div class="ms-auto">
-            <a href="{{ route('register') }}" class="btn btn-primary">Add User</a>
-          </div>
-        </div>
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Role</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach ($users as $user)
-                <tr>
-                  <td>{{ $user->id }}</td>
-                  <td>{{ $user->name }}</td>
-                  <td>{{ $user->email }}</td>
-                  <td>{{ $user->role }}</td>
-                  <td>
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning">
-                      <i class="bi bi-pencil-square"></i>
-                    </a>
-                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
-                      <i class="bi bi-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
-  </div>
 </main>
 
 <!-- Modal -->
@@ -132,6 +145,32 @@
   </div>
 </div>
 
+<!-- Add Child Modal -->
+<div class="modal fade" id="addChildModal" tabindex="-1" aria-labelledby="addChildModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addChildModalLabel">Tambah anak</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="addChildForm" action="{{ route('children.store') }}" method="POST">
+        @csrf
+        <div class="modal-body">
+          <input type="hidden" name="user_id" id="childUserId">
+          <div class="mb-3">
+            <label for="childName" class="form-label">Nama anak</label>
+            <input type="text" class="form-control" id="childName" name="name" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Add Child</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 <script>
   var deleteModal = document.getElementById('deleteModal');
   deleteModal.addEventListener('show.bs.modal', function (event) {
@@ -144,6 +183,26 @@
     form.action = '/users/' + userId;
     userNameToDelete.textContent = userName;
   });
+
+  var addChildModal = document.getElementById('addChildModal');
+  addChildModal.addEventListener('show.bs.modal', function (event) {
+    var button = event.relatedTarget;
+    var userId = button.getAttribute('data-userid');
+    var childUserId = document.getElementById('childUserId');
+    
+    childUserId.value = userId;
+  });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const userRows = document.querySelectorAll('.user-row');
+    userRows.forEach(row => {
+        row.addEventListener('click', function() {
+            window.location.href = this.dataset.href;
+        });
+    });
+});
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>

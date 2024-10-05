@@ -1,146 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registration Page</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
-  <style type="text/css">
-    body {
-      background: #F8F9FA;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .form-floating .form-control {
-      padding-right: 3rem;
-    }
-    .form-floating .btn {
-      right: 0.75rem;
-    }
-    .form-floating .btn i {
-      font-size: 1.25rem; /* Perbesar ukuran ikon */
-    }
-    .form-floating .btn:hover i {
-      color: #6c757d; /* Warna ikon saat di-hover */
-    }
-  </style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Registration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .card {
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-radius: 1rem 1rem 0 0;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card">
+                    <div class="card-header text-center py-4">
+                        <h2 class="mb-0">Register</h2>
+                    </div>
+                    <div class="card-body p-5">
+                        @if(session('error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{ session('error') }}
+                            </div>
+                        @endif
 
-<section class="bg-light py-3 py-md-5">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 col-xxl-4">
-        <div class="card border border-light-subtle rounded-3 shadow-sm">
-          <div class="card-body p-3 p-md-4 p-xl-5">
-            <div class="text-center mb-3">
-              <a>
-                <img src="" alt="Logo Daycare" width="250">
-              </a>
+                        <form method="POST" action="{{ route('register.post') }}" id="registrationForm">
+                            @csrf
+                            <div class="mb-4">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" value="{{ old('name') }}" required autofocus>
+                                @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" value="{{ old('email') }}" required>
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-4">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                        <i class="fas fa-eye" id="toggleIcon"></i>
+                                    </button>
+                                </div>
+                                @error('password')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="mb-4">
+                                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePasswordConfirmation">
+                                        <i class="fas fa-eye" id="toggleIconConfirmation"></i>
+                                    </button>
+                                </div>
+                                <div class="invalid-feedback" id="passwordMismatch" style="display: none;">
+                                    Passwords do not match.
+                                </div>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg" id="registerButton">Register</button>
+                                <a href="{{ route('dashboardadmin') }}" class="btn btn-secondary btn-lg">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <h2 class="fs-6 fw-normal text-center text-secondary mb-4">Sign up to your account</h2>
-            <form method="POST" action="{{ route('register.post') }}">
-              @csrf
-
-              @session('error')
-                  <div class="alert alert-danger" role="alert"> 
-                      {{ $value }}
-                  </div>
-              @endsession
-
-              <div class="row gy-2 overflow-hidden">
-                <div class="col-12">
-                  <div class="form-floating mb-3">
-                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="name@example.com" required>
-                    <label for="name" class="form-label">{{ __('Name') }}</label>
-                  </div>
-                  @error('name')
-                        <span class="text-danger" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
-                </div>
-                <div class="col-12">
-                  <div class="form-floating mb-3">
-                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="name@example.com" required>
-                    <label for="email" class="form-label">{{ __('Email Address') }}</label>
-                  </div>
-                  @error('email')
-                        <span class="text-danger" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
-                </div>
-                <div class="col-12">
-                  <div class="form-floating mb-3 position-relative">
-                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password" value="" placeholder="Password" required>
-                    <label for="password" class="form-label">{{ __('Password') }}</label>
-                    <button type="button" class="btn btn-outline-secondary position-absolute top-50 end-0 translate-middle-y" id="togglePassword" style="border: none; background: none;">
-                      <i class="bi bi-eye-slash" id="toggleIcon"></i>
-                    </button>
-                  </div>
-                  @error('password')
-                      <span class="text-danger" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
-                </div>
-                <div class="col-12">
-                  <div class="form-floating mb-3 position-relative">
-                    <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" id="password_confirmation" value="" placeholder="password_confirmation" required>
-                    <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
-                    <button type="button" class="btn btn-outline-secondary position-absolute top-50 end-0 translate-middle-y" id="togglePasswordConfirmation" style="border: none; background: none;">
-                      <i class="bi bi-eye-slash" id="toggleIconConfirmation"></i>
-                    </button>
-                  </div>
-                  @error('password_confirmation')
-                      <span class="text-danger" role="alert">
-                          <strong>{{ $message }}</strong>
-                      </span>
-                  @enderror
-                </div>
-                <div class="col-12">
-                  <div class="d-grid my-3">
-                    <button class="btn btn-primary btn-lg" type="submit">{{ __('Register') }}</button>
-                  </div>
-                </div>
-                <div class="col-12">
-                  <div class="d-grid">
-                    <a href="{{ route('dashboardadmin') }}" class="btn btn-secondary">{{ __('Cancel') }}</a>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-</section>
 
-<script>
-  document.getElementById('togglePassword').addEventListener('click', function () {
-    const passwordField = document.getElementById('password');
-    const toggleIcon = document.getElementById('toggleIcon');
-    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-    passwordField.setAttribute('type', type);
-    toggleIcon.classList.toggle('bi-eye');
-    toggleIcon.classList.toggle('bi-eye-slash');
-  });
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function togglePasswordVisibility(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
 
-  document.getElementById('togglePasswordConfirmation').addEventListener('click', function () {
-    const passwordField = document.getElementById('password_confirmation');
-    const toggleIcon = document.getElementById('toggleIconConfirmation');
-    const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
-    passwordField.setAttribute('type', type);
-    toggleIcon.classList.toggle('bi-eye');
-    toggleIcon.classList.toggle('bi-eye-slash');
-  });
-</script>
-
+        document.getElementById('togglePassword').addEventListener('click', () => togglePasswordVisibility('password', 'toggleIcon'));
+        document.getElementById('togglePasswordConfirmation').addEventListener('click', () => togglePasswordVisibility('password_confirmation', 'toggleIconConfirmation'));
+    </script>
 </body>
 </html>
