@@ -111,9 +111,9 @@
                     @if($children->count() > 0)
                         <ul class="list-group list-group-flush">
                             @foreach($children as $child)
-                                <li class="list-group-item">
-                                    <a href="{{ route('dashboard', ['child_id' => $child->id]) }}" class="text-decoration-none">
-                                        <i class="fas fa-user me-2"></i>{{ $child->name }}
+                                <li class="list-group-item p-0">
+                                    <a href="{{ route('dashboard', ['child_id' => $child->id]) }}" class="text-decoration-none d-block p-3 text-dark">
+                                        <i class="fas fa-user me-2 text-dark"></i>{{ $child->name }}
                                     </a>
                                 </li>
                             @endforeach
