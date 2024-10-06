@@ -23,13 +23,11 @@ class DashboardController extends Controller
 
     public function adminIndex()
     {
-        // Cek apakah pengguna yang sedang login adalah admin
         if (Auth::check() && Auth::user()->role == 'admin') {
-            $users = User::all(); // Ambil semua data dari tabel users
+            $users = User::all();
             return view('dashboardadmin', compact('users'));
         }
 
-        // Jika bukan admin, redirect ke halaman login dengan pesan error
-        return redirect("login")->withErrors('Oops! You do not have access to the admin dashboard');
+        return redirect("login")->withErrors('Kamu tidak memiliki akses ke dashboard admin. Silahkan login kembali');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ChildController; // Add this line
+use App\Http\Controllers\ChildController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -35,4 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::post('children', [ChildController::class, 'store'])->name('children.store');
     
     Route::get('users/{id}', [AuthController::class, 'show'])->name('users.show');
+});
+
+Route::fallback(function () {
+    return redirect()->route('login');
 });
