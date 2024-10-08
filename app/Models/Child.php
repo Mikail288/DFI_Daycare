@@ -9,7 +9,20 @@ class Child extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'name'];
+    protected $fillable = [
+        'user_id',
+        'nama',
+        'sudah_makan',
+        'sudah_minum_obat',
+        'tanggal',
+        'keterangan',
+    ];
+
+    protected $casts = [
+        'sudah_makan' => 'boolean',
+        'sudah_minum_obat' => 'boolean',
+        'tanggal' => 'date',
+    ];
 
     public function user()
     {

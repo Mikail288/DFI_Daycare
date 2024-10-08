@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::post('children', [ChildController::class, 'store'])->name('children.store');
     
     Route::get('users/{id}', [AuthController::class, 'show'])->name('users.show');
+    
+    Route::get('dashboardanak', [DashboardController::class, 'childIndex'])->name('dashboardanak');
 });
 
 Route::fallback(function () {

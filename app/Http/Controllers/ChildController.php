@@ -11,11 +11,15 @@ class ChildController extends Controller
     {
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'name' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
+            'sudah_makan' => 'required|boolean',
+            'sudah_minum_obat' => 'required|boolean',
+            'tanggal' => 'required|date',
+            'keterangan' => 'nullable|string',
         ]);
 
         Child::create($request->all());
 
-        return redirect()->route('dashboardadmin')->with('success', 'Child added successfully.');
+        return redirect()->route('dashboardadmin')->with('success', 'Anak berhasil ditambahkan.');
     }
 }

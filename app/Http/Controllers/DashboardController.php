@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Child; // Assuming Child model is defined elsewhere in the project
 
 class DashboardController extends Controller
 {
@@ -29,5 +30,15 @@ class DashboardController extends Controller
         }
 
         return redirect("login")->withErrors('Kamu tidak memiliki akses ke dashboard admin. Silahkan login kembali');
+    }
+
+    public function childIndex()
+    {
+        if (Auth::check() && Auth::user()->role == 'admin') {
+            $children = Child::with('user')->get();
+            return view('dashboardanak', compact('children'));
+        }
+
+        return redirect("login")->withErrors('Anda tidak memiliki akses ke dashboard anak. Silakan login kembali');
     }
 }

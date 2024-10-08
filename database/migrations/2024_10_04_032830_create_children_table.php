@@ -14,7 +14,11 @@ return new class extends Migration
         Schema::create('children', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('name');
+            $table->string('nama');
+            $table->boolean('sudah_makan')->default(false);
+            $table->boolean('sudah_minum_obat')->default(false);
+            $table->date('tanggal');
+            $table->text('keterangan')->nullable();
             $table->timestamps();
         });
     }

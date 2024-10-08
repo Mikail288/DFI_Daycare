@@ -6,6 +6,7 @@
     <title>Dashboard Admin</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
       body {
         background-color: #f8f9fa;
@@ -46,6 +47,11 @@
             <img src="" alt="Daycare Logo" height="40">
         </a>
         <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('dashboardanak') }}">
+                    <i class="fas fa-child"></i> Dashboard Anak
+                </a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('logout') }}"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
@@ -107,7 +113,7 @@
                                         <i class="fas fa-edit"></i> Edit
                                     </a>
                                     <button type="button" class="btn btn-success btn-sm me-1" data-bs-toggle="modal" data-bs-target="#addChildModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}" title="Add Child" onclick="event.stopPropagation();">
-                                        <i class="fas fa-baby"></i> Add Child
+                                        <i class="fas fa-baby"></i>Tambah Anak
                                     </button>
                                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}" title="Delete" onclick="event.stopPropagation();">
                                         <i class="fas fa-trash"></i> Delete
@@ -122,7 +128,6 @@
     </div>
 </main>
 
-<!-- Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
@@ -159,12 +164,34 @@
           <input type="hidden" name="user_id" id="childUserId">
           <div class="mb-3">
             <label for="childName" class="form-label">Nama anak</label>
-            <input type="text" class="form-control" id="childName" name="name" required>
+            <input type="text" class="form-control" id="childName" name="nama" required>
+          </div>
+          <div class="mb-3">
+            <label for="childEaten" class="form-label">Sudah makan</label>
+            <select class="form-select" id="childEaten" name="sudah_makan" required>
+              <option value="0">Belum</option>
+              <option value="1">Sudah</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="childMedicine" class="form-label">Minum obat</label>
+            <select class="form-select" id="childMedicine" name="sudah_minum_obat" required>
+              <option value="0">Belum</option>
+              <option value="1">Sudah</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="childDate" class="form-label">Tanggal</label>
+            <input type="text" class="form-control" id="childDate" name="tanggal" required>
+          </div>
+          <div class="mb-3">
+            <label for="childNotes" class="form-label">Keterangan</label>
+            <textarea class="form-control" id="childNotes" name="keterangan" rows="3"></textarea>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Add Child</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Tambah Anak</button>
         </div>
       </form>
     </div>
@@ -192,6 +219,32 @@
     
     childUserId.value = userId;
   });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var dateInput = document.getElementById('childDate');
+    
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+    dateInput.value = dd + '-' + mm + '-' + yyyy;
+
+    flatpickr(dateInput, {
+      dateFormat: "d-m-Y",
+      allowInput: true
+    });
+  });
+
+  document.getElementById('addChildForm').addEventListener('submit', function(e) {
+    var dateInput = document.getElementById('childDate');
+    var dateParts = dateInput.value.split('-');
+    if (dateParts.length === 3) {
+      var day = dateParts[0];
+      var month = dateParts[1];
+      var year = dateParts[2];
+      dateInput.value = year + '-' + month + '-' + day;
+    }
+  });
 </script>
 
 <script>
@@ -207,6 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 </body>
 </html>

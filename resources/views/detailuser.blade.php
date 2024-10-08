@@ -47,8 +47,7 @@
                             <ul class="list-group">
                                 @foreach($user->children as $child)
                                     <li class="list-group-item">
-                                        <strong>{{ $child->name }}</strong>
-                                        <br>
+                                        <strong>{{ $child->nama }}</strong>
                                     </li>
                                 @endforeach
                             </ul>

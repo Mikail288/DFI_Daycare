@@ -78,22 +78,29 @@
                     @if($selectedChild)
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <h5 class="mb-1">{{ $selectedChild->name }}</h5>
+                                <h5 class="mb-1">{{ $selectedChild->nama }}</h5>
                                 <p class="mb-1">
                                     <span class="me-3">
                                         <i class="fas fa-utensils me-1"></i>
-                                        Makan: <span class="badge {{ $selectedChild->has_eaten ? 'bg-success' : 'bg-danger' }}">
-                                            {{ $selectedChild->has_eaten ? 'Sudah' : 'Belum' }}
+                                        Makan: <span class="badge {{ $selectedChild->sudah_makan ? 'bg-success' : 'bg-danger' }}">
+                                            {{ $selectedChild->sudah_makan ? 'Sudah' : 'Belum' }}
                                         </span>
                                     </span>
                                     <span>
                                         <i class="fas fa-pills me-1"></i>
-                                        Minum obat: <span class="badge {{ $selectedChild->has_taken_medicine ? 'bg-success' : 'bg-danger' }}">
-                                            {{ $selectedChild->has_taken_medicine ? 'Sudah' : 'Belum' }}
+                                        Minum obat: <span class="badge {{ $selectedChild->sudah_minum_obat ? 'bg-success' : 'bg-danger' }}">
+                                            {{ $selectedChild->sudah_minum_obat ? 'Sudah' : 'Belum' }}
                                         </span>
                                     </span>
                                 </p>
-                                <p class="mb-0"><small class="text-muted">Keterangan: {{ $selectedChild->notes ?? 'Tidak ada' }}</small></p>
+                                <p class="mb-1">
+                                    <i class="fas fa-calendar me-1"></i>
+                                    Tanggal: {{ $selectedChild->tanggal->format('d/m/Y') }}
+                                </p>
+                                <p class="mb-0">
+                                    <i class="fas fa-comment me-1"></i>
+                                    Keterangan: {{ $selectedChild->keterangan ?? 'Tidak ada' }}
+                                </p>
                             </li>
                         </ul>
                     @else
@@ -113,7 +120,7 @@
                             @foreach($children as $child)
                                 <li class="list-group-item p-0">
                                     <a href="{{ route('dashboard', ['child_id' => $child->id]) }}" class="text-decoration-none d-block p-3 text-dark">
-                                        <i class="fas fa-user me-2 text-dark"></i>{{ $child->name }}
+                                        <i class="fas fa-user me-2 text-dark"></i>{{ $child->nama }}
                                     </a>
                                 </li>
                             @endforeach
