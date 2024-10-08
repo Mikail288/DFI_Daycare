@@ -33,7 +33,6 @@ class AuthController extends Controller
         if (Auth::check() && Auth::user()->role == 'admin') {
             return view('auth.registration');
         }
-
         return redirect("login")->withErrors('Kamu tidak memiliki akses registration page.');
     }
       
@@ -84,7 +83,7 @@ class AuthController extends Controller
         
         Auth::login($currentUser);
 
-        return redirect("dashboardadmin")->withSuccess('Great! You have successfully registered a new account.');
+        return redirect("dashboardadmin")->withSuccess('Berhasil membuat akun baru');
     }
     
     /**
@@ -212,7 +211,7 @@ class AuthController extends Controller
         // Delete the user
         $user->delete();
 
-        return redirect()->route('dashboardadmin')->with('success', 'User and associated children have been deleted successfully.');
+        return redirect()->route('dashboardadmin')->with('success', 'Berhasil menghapus akun dan anak-anak yang terkait.');
     }
     
     public function show($id)
