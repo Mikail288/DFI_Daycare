@@ -193,7 +193,7 @@ class AuthController extends Controller
             return redirect()->route('login')->withErrors('You have changed your password. Please login again.');
         }
 
-        return redirect()->route('dashboardadmin')->withSuccess('User updated successfully.');
+        return redirect()->route('dashboardadmin')->withSuccess('User update berhasil.');
     }
 
     /**
