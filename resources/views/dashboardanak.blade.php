@@ -6,6 +6,7 @@
     <title>Dashboard Anak</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <style>
       body {
         background-color: #f8f9fa;
@@ -146,7 +147,6 @@
   </div>
 </div>
 
-<!-- Add this new modal after the Delete Child Modal -->
 <!-- Update Status Modal -->
 <div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -176,7 +176,7 @@
           </div>
           <div class="mb-3">
             <label for="tanggal" class="form-label">Tanggal</label>
-            <input type="date" class="form-control" id="tanggal" name="tanggal" required>
+            <input type="text" class="form-control" id="tanggal" name="tanggal" required>
           </div>
           <div class="mb-3">
             <label for="keterangan" class="form-label">Keterangan</label>
@@ -191,6 +191,10 @@
     </div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <script>
   var deleteChildModal = document.getElementById('deleteChildModal');
@@ -215,11 +219,25 @@
     
     form.action = '{{ url("children") }}/' + childId + '/update-status';
     childNameToUpdate.textContent = 'Anak: ' + childName;
+
+    // Initialize flatpickr for the date input
+    flatpickr("#tanggal", {
+      dateFormat: "d-m-Y",
+      defaultDate: "today"
+    });
+  });
+
+  document.getElementById('updateStatusForm').addEventListener('submit', function(e) {
+    var dateInput = document.getElementById('tanggal');
+    var dateParts = dateInput.value.split('-');
+    if (dateParts.length === 3) {
+      var day = dateParts[0];
+      var month = dateParts[1];
+      var year = dateParts[2];
+      dateInput.value = year + '-' + month + '-' + day;
+    }
   });
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
 </body>
 </html>
