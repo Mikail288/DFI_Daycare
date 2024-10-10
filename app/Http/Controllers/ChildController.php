@@ -43,10 +43,8 @@ class ChildController extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
-        // Save current state to history
         $child->saveHistory();
 
-        // Update child with new data
         $child->update($validatedData);
 
         return redirect()->route('dashboardanak')->with('success', 'Status anak berhasil diperbarui');
