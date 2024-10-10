@@ -82,7 +82,6 @@
                         <tr>
                             <th>ID</th>
                             <th>Nama</th>
-                            <th>Orang Tua</th>
                             <th>Makan</th>
                             <th>Minum Obat</th>
                             <th>Tanggal</th>
@@ -94,7 +93,6 @@
                             <tr>
                                 <td>{{ $child->id }}</td>
                                 <td>{{ $child->nama }}</td>
-                                <td>{{ $child->user->name }}</td>
                                 <td>
                                     <span class="badge bg-{{ $child->sudah_makan ? 'success' : 'danger' }}">
                                         {{ $child->sudah_makan ? 'Sudah' : 'Belum' }}
