@@ -22,4 +22,12 @@ class ChildController extends Controller
 
         return redirect()->route('dashboardadmin')->with('success', 'Anak berhasil ditambahkan.');
     }
+
+    public function destroy($id)
+    {
+        $child = Child::findOrFail($id);
+        $child->delete();
+
+        return redirect()->route('dashboardanak')->with('success', 'Data anak berhasil dihapus.');
+    }
 }

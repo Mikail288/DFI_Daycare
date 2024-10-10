@@ -86,6 +86,7 @@
                             <th>Minum Obat</th>
                             <th>Tanggal</th>
                             <th>Keterangan</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -105,6 +106,11 @@
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse($child->tanggal)->format('d-m-Y') }}</td>
                                 <td>{{ $child->keterangan ?? '-' }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteChildModal" data-childid="{{ $child->id }}" data-childname="{{ $child->nama }}">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </button>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -113,6 +119,43 @@
         </div>
     </div>
 </main>
+
+<!-- Delete Child Modal -->
+<div class="modal fade" id="deleteChildModal" tabindex="-1" aria-labelledby="deleteChildModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteChildModalLabel">Konfirmasi penghapusan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Apakah anda yakin ingin menghapus anak <b><span id="childNameToDelete"></span></b>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <form id="deleteChildForm" action="" method="POST">
+          @csrf
+          @method('DELETE')
+          <button type="submit" class="btn btn-danger">Hapus</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var deleteChildModal = document.getElementById('deleteChildModal');
+  deleteChildModal.addEventListener('show.bs.modal', function (event) {
+    var button = event.relatedTarget;
+    var childId = button.getAttribute('data-childid');
+    var childName = button.getAttribute('data-childname');
+    var form = document.getElementById('deleteChildForm');
+    var childNameToDelete = document.getElementById('childNameToDelete');
+    
+    form.action = '{{ route("children.destroy", "") }}/' + childId;
+    childNameToDelete.textContent = childName;
+  });
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>

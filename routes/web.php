@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('users/{id}', [AuthController::class, 'destroy'])->name('users.destroy');
     
     Route::post('children', [ChildController::class, 'store'])->name('children.store');
+    Route::delete('children/{id}', [ChildController::class, 'destroy'])->name('children.destroy');
     
     Route::get('users/{id}', [AuthController::class, 'show'])->name('users.show');
     
