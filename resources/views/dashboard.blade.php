@@ -119,10 +119,10 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Tanggal</th>
-                                        <th>Makan</th>
-                                        <th>Minum Obat</th>
-                                        <th>Keterangan</th>
+                                        <th><i class="fas fa-calendar me-2"></i>Tanggal</th>
+                                        <th><i class="fas fa-utensils me-2"></i>Makan</th>
+                                        <th><i class="fas fa-pills me-2"></i>Minum Obat</th>
+                                        <th><i class="fas fa-comment me-2"></i>Keterangan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
