@@ -66,11 +66,11 @@
             <div class="card mb-4">
                 <div class="card-body">
                     <h1 class="card-title display-5 fw-bold">Hi, {{ auth()->user()->name }}</h1>
-                    <p class="card-text fs-4">Welcome to your dashboard.</p>
+                    <p class="card-text fs-4">Pantau keseharian anak anda disini.</p>
                 </div>
             </div>
             
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-header bg-primary text-white">
                     <h3 class="mb-0"><i class="fas fa-thumbtack me-2"></i>Children Information</h3>
                 </div>
@@ -95,7 +95,7 @@
                                 </p>
                                 <p class="mb-1">
                                     <i class="fas fa-calendar me-1"></i>
-                                    Tanggal: {{ $selectedChild->tanggal->format('d/m/Y') }}
+                                    Tanggal: {{ \Carbon\Carbon::parse($selectedChild->tanggal)->format('d/m/Y') }}
                                 </p>
                                 <p class="mb-0">
                                     <i class="fas fa-comment me-1"></i>
@@ -105,6 +105,50 @@
                         </ul>
                     @else
                         <p class="card-text text-muted">No child selected. Click on a child from "Your Children" to view details.</p>
+                    @endif
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0"><i class="fas fa-history me-2"></i>Child History</h3>
+                </div>
+                <div class="card-body">
+                    @if($selectedChild && $selectedChild->histories->count() > 0)
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Tanggal</th>
+                                        <th>Makan</th>
+                                        <th>Minum Obat</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($selectedChild->histories->sortByDesc('tanggal') as $history)
+                                        <tr>
+                                            <td>{{ \Carbon\Carbon::parse($history->tanggal)->format('d/m/Y') }}</td>
+                                            <td>
+                                                <span class="badge {{ $history->sudah_makan ? 'bg-success' : 'bg-danger' }}">
+                                                    {{ $history->sudah_makan ? 'Sudah' : 'Belum' }}
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <span class="badge {{ $history->sudah_minum_obat ? 'bg-success' : 'bg-danger' }}">
+                                                    {{ $history->sudah_minum_obat ? 'Sudah' : 'Belum' }}
+                                                </span>
+                                            </td>
+                                            <td>{{ $history->keterangan ?? 'Tidak ada' }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @elseif($selectedChild)
+                        <p class="card-text text-muted">No history available for this child.</p>
+                    @else
+                        <p class="card-text text-muted">Select a child to view history.</p>
                     @endif
                 </div>
             </div>
