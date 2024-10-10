@@ -18,14 +18,23 @@ class Child extends Model
         'keterangan',
     ];
 
-    protected $casts = [
-        'sudah_makan' => 'boolean',
-        'sudah_minum_obat' => 'boolean',
-        'tanggal' => 'date',
-    ];
-
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function histories()
+    {
+        return $this->hasMany(ChildHistory::class);
+    }
+
+    public function saveHistory()
+    {
+        $this->histories()->create([
+            'sudah_makan' => $this->sudah_makan,
+            'sudah_minum_obat' => $this->sudah_minum_obat,
+            'tanggal' => $this->tanggal,
+            'keterangan' => $this->keterangan,
+        ]);
     }
 }

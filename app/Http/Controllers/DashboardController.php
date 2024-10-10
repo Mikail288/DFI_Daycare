@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Child; // Assuming Child model is defined elsewhere in the project
+use App\Models\Child;
 
 class DashboardController extends Controller
 {

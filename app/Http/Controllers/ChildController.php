@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Child;
+use App\Models\ChildHistory;
 use Illuminate\Http\Request;
 
 class ChildController extends Controller
@@ -29,5 +30,25 @@ class ChildController extends Controller
         $child->delete();
 
         return redirect()->route('dashboardanak')->with('success', 'Data anak berhasil dihapus.');
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $child = Child::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'sudah_makan' => 'required|boolean',
+            'sudah_minum_obat' => 'required|boolean',
+            'tanggal' => 'required|date',
+            'keterangan' => 'nullable|string',
+        ]);
+
+        // Save current state to history
+        $child->saveHistory();
+
+        // Update child with new data
+        $child->update($validatedData);
+
+        return redirect()->route('dashboardanak')->with('success', 'Status anak berhasil diperbarui');
     }
 }

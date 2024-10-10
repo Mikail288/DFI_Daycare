@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('users/{id}', [AuthController::class, 'show'])->name('users.show');
     
     Route::get('dashboardanak', [DashboardController::class, 'childIndex'])->name('dashboardanak');
+    
+    Route::match(['put', 'post'], 'children/{id}/update-status', [ChildController::class, 'updateStatus'])->name('children.updateStatus');
 });
 
 Route::fallback(function () {
