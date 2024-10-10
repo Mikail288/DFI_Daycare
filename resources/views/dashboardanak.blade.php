@@ -83,8 +83,8 @@
                             <th>ID</th>
                             <th>Nama</th>
                             <th>Orang Tua</th>
-                            <th>Sudah Makan</th>
-                            <th>Sudah Minum Obat</th>
+                            <th>Makan</th>
+                            <th>Minum Obat</th>
                             <th>Tanggal</th>
                             <th>Keterangan</th>
                         </tr>
