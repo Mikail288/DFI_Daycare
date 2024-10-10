@@ -86,7 +86,7 @@
                             <th>Minum Obat</th>
                             <th>Tanggal</th>
                             <th>Keterangan</th>
-                            <th>Aksi</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
