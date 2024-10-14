@@ -65,8 +65,15 @@
         <div class="col-md-8 mb-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h1 class="card-title display-5 fw-bold">Hi, {{ auth()->user()->name }}</h1>
-                    <p class="card-text fs-4">Pantau keseharian anak anda disini.</p>
+                    <div class="row align-items-center">
+                        <div class="col-8 col-md-7">
+                            <h1 class="card-title display-5 fw-bold">Hi, {{ auth()->user()->name }}</h1>
+                            <p class="card-text fs-4">Pantau keseharian anak anda disini.</p>
+                        </div>
+                        <div class="col-4 col-md-5 text-end d-flex align-items-center justify-content-end">
+                            <img src="{{ asset('Upinipin.png') }}" alt="Upinipin" class="img-fluid rounded" style="max-height: 150px; max-width: 100%;">
+                        </div>
+                    </div>
                 </div>
             </div>
             
