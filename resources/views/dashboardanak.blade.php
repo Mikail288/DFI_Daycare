@@ -29,6 +29,27 @@
         color: white;
         border-radius: 15px 15px 0 0 !important;
       }
+
+      .floating-image {
+        transition: all 0.3s ease;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .floating-image:hover {
+        transform: translateY(-10px);
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
     </style>
   </head>
 <body>
@@ -65,10 +86,13 @@
         </div>
     @endsession
 
-    <div class="row mb-4">
+    <div class="row align-items-center">
         <div class="col-md-8">
             <h1 class="display-4 fw-bold">Selamat Datang, {{ Auth::user()->name }}</h1>
             <p class="lead">Kelola data anak-anak di daycare Anda di sini.</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <img src="{{ asset('Upinipin.png') }}" alt="Upin & Ipin" class="img-fluid floating-image" style="max-width: 120px;">
         </div>
     </div>
 
