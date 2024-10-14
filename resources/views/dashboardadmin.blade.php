@@ -171,28 +171,6 @@
             <label for="childName" class="form-label">Nama anak</label>
             <input type="text" class="form-control" id="childName" name="nama" required>
           </div>
-          <div class="mb-3">
-            <label for="childEaten" class="form-label">Sudah makan</label>
-            <select class="form-select" id="childEaten" name="sudah_makan" required>
-              <option value="0">Belum</option>
-              <option value="1">Sudah</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="childMedicine" class="form-label">Minum obat</label>
-            <select class="form-select" id="childMedicine" name="sudah_minum_obat" required>
-              <option value="0">Belum</option>
-              <option value="1">Sudah</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="childDate" class="form-label">Tanggal</label>
-            <input type="text" class="form-control" id="childDate" name="tanggal" required>
-          </div>
-          <div class="mb-3">
-            <label for="childNotes" class="form-label">Keterangan</label>
-            <textarea class="form-control" id="childNotes" name="keterangan" rows="3"></textarea>
-          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
@@ -228,12 +206,6 @@
   document.addEventListener('DOMContentLoaded', function() {
     var dateInput = document.getElementById('childDate');
     
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-    dateInput.value = dd + '-' + mm + '-' + yyyy;
-
     flatpickr(dateInput, {
       dateFormat: "d-m-Y",
       allowInput: true

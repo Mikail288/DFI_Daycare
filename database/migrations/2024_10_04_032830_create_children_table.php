@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('nama');
-            $table->boolean('sudah_makan')->default(false);
-            $table->boolean('sudah_minum_obat')->default(false);
-            $table->date('tanggal');
+            $table->boolean('sudah_makan')->nullable()->default(false);
+            $table->boolean('sudah_minum_obat')->nullable()->default(false);
+            $table->date('tanggal')->nullable();
             $table->text('keterangan')->nullable();
             $table->timestamps();
         });
