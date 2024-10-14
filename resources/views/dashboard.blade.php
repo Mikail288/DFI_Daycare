@@ -111,7 +111,7 @@
                             </li>
                         </ul>
                     @else
-                        <p class="card-text text-muted">No child selected. Click on a child from "Your Children" to view details.</p>
+                        <p class="card-text text-muted">Tidak ada anak yang dipilih. Klik anak dari "Anak Anda" untuk melihat detailnya.</p>
                     @endif
                 </div>
             </div>
@@ -155,7 +155,7 @@
                     @elseif($selectedChild)
                         <p class="card-text text-muted">No history available for this child.</p>
                     @else
-                        <p class="card-text text-muted">Select a child to view history.</p>
+                        <p class="card-text text-muted">Pilih anak untuk melihat history.</p>
                     @endif
                 </div>
             </div>
@@ -163,7 +163,7 @@
         <div class="col-md-4 mb-4">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="mb-0"><i class="fas fa-child me-2"></i>Your Children</h3>
+                    <h3 class="mb-0"><i class="fas fa-child me-2"></i>Anak Anda</h3>
                 </div>
                 <div class="card-body">
                     @if($children->count() > 0)
