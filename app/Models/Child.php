@@ -12,7 +12,9 @@ class Child extends Model
     protected $fillable = [
         'user_id',
         'nama',
-        'sudah_makan',
+        'makan_pagi',
+        'makan_siang',
+        'makan_sore',
         'sudah_minum_obat',
         'tanggal',
         'keterangan',
@@ -32,7 +34,9 @@ class Child extends Model
     public function saveHistory()
     {
         $this->histories()->create([
-            'sudah_makan' => $this->sudah_makan,
+            'makan_pagi' => $this->makan_pagi,
+            'makan_siang' => $this->makan_siang,
+            'makan_sore' => $this->makan_sore,
             'sudah_minum_obat' => $this->sudah_minum_obat,
             'tanggal' => $this->tanggal ?? now(),
             'keterangan' => $this->keterangan,

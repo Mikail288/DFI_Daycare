@@ -137,9 +137,9 @@
                                 <td>{{ \Carbon\Carbon::parse($child->tanggal)->format('d-m-Y') }}</td>
                                 <td>{{ $child->keterangan ?? '-' }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateStatusModal" data-childid="{{ $child->id }}" data-childname="{{ $child->nama }}">
+                                    <a href="{{ route('children.editStatus', $child->id) }}" class="btn btn-primary btn-sm">
                                         <i class="fas fa-edit"></i> Update Status
-                                    </button>
+                                    </a>
                                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteChildModal" data-childid="{{ $child->id }}" data-childname="{{ $child->nama }}">
                                         <i class="fas fa-trash"></i> Hapus
                                     </button>
@@ -159,7 +159,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="deleteChildModalLabel">Konfirmasi penghapusan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Apakah anda yakin ingin menghapus anak <b><span id="childNameToDelete"></span></b>?
@@ -172,54 +171,6 @@
           <button type="submit" class="btn btn-danger">Hapus</button>
         </form>
       </div>
-    </div>
-  </div>
-</div>
-
-<!-- Update Status Modal -->
-<div class="modal fade" id="updateStatusModal" tabindex="-1" aria-labelledby="updateStatusModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="updateStatusModalLabel">Update Status Anak</h5>
-      </div>
-      <form id="updateStatusForm" action="" method="POST">
-        @csrf
-        @method('PUT')
-        <div class="modal-body">
-          <h6 id="childNameToUpdate"></h6>
-          <div class="mb-3">
-            <label for="nama_pendamping" class="form-label">Nama Pendamping</label>
-            <input type="text" class="form-control" id="nama_pendamping" name="nama_pendamping" value="{{ $child->nama_pendamping ?? old('nama_pendamping') }}">
-          </div>
-          <div class="mb-3">
-            <label for="sudah_makan" class="form-label">Status Makan</label>
-            <select class="form-select" id="sudah_makan" name="sudah_makan">
-              <option value="1">Sudah</option>
-              <option value="0">Belum</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="sudah_minum_obat" class="form-label">Status Minum Obat</label>
-            <select class="form-select" id="sudah_minum_obat" name="sudah_minum_obat">
-              <option value="1">Sudah</option>
-              <option value="0">Belum</option>
-            </select>
-          </div>
-          <div class="mb-3">
-            <label for="tanggal" class="form-label">Tanggal</label>
-            <input type="text" class="form-control" id="tanggal" name="tanggal" required>
-          </div>
-          <div class="mb-3">
-            <label for="keterangan" class="form-label">Keterangan</label>
-            <textarea class="form-control" id="keterangan" name="keterangan" rows="3"></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary">Update</button>
-        </div>
-      </form>
     </div>
   </div>
 </div>
@@ -239,35 +190,6 @@
     
     form.action = '{{ route("children.destroy", "") }}/' + childId;
     childNameToDelete.textContent = childName;
-  });
-
-  var updateStatusModal = document.getElementById('updateStatusModal');
-  updateStatusModal.addEventListener('show.bs.modal', function (event) {
-    var button = event.relatedTarget;
-    var childId = button.getAttribute('data-childid');
-    var childName = button.getAttribute('data-childname');
-    var form = document.getElementById('updateStatusForm');
-    var childNameToUpdate = document.getElementById('childNameToUpdate');
-    
-    form.action = '{{ url("children") }}/' + childId + '/update-status';
-    childNameToUpdate.textContent = 'Anak: ' + childName;
-
-    // Initialize flatpickr for the date input
-    flatpickr("#tanggal", {
-      dateFormat: "d-m-Y",
-      defaultDate: "today"
-    });
-  });
-
-  document.getElementById('updateStatusForm').addEventListener('submit', function(e) {
-    var dateInput = document.getElementById('tanggal');
-    var dateParts = dateInput.value.split('-');
-    if (dateParts.length === 3) {
-      var day = dateParts[0];
-      var month = dateParts[1];
-      var year = dateParts[2];
-      dateInput.value = year + '-' + month + '-' + day;
-    }
   });
 </script>
 

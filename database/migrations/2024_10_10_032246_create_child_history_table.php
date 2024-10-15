@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('child_history', function (Blueprint $table) {
             $table->id();
             $table->foreignId('child_id')->constrained()->onDelete('cascade');
-            $table->boolean('sudah_makan');
-            $table->boolean('sudah_minum_obat');
+            $table->string('makan_pagi')->nullable();
+            $table->string('makan_siang')->nullable();
+            $table->string('makan_sore')->nullable();
+            $table->boolean('sudah_minum_obat')->nullable()->default(false);
             $table->date('tanggal');
             $table->text('keterangan')->nullable();
             $table->string('nama_pendamping')->nullable();

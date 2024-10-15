@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Child;
 use App\Models\ChildHistory;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class ChildController extends Controller
 {
@@ -38,17 +39,33 @@ class ChildController extends Controller
         $child = Child::findOrFail($id);
 
         $validatedData = $request->validate([
-            'sudah_makan' => 'required|boolean',
+            'makan_pagi' => 'nullable|in:1,1/2,1/3,1/4',
+            'makan_siang' => 'nullable|in:1,1/2,1/3,1/4',
+            'makan_sore' => 'nullable|in:1,1/2,1/3,1/4',
             'sudah_minum_obat' => 'required|boolean',
-            'tanggal' => 'required|date',
+            'tanggal' => 'required|date_format:d-m-Y',
             'keterangan' => 'nullable|string',
             'nama_pendamping' => 'nullable|string|max:255',
         ]);
 
-        $child->saveHistory();
+        $tanggal = Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
 
-        $child->update($validatedData);
+        $child->update([
+            'makan_pagi' => $validatedData['makan_pagi'] ?? null,
+            'makan_siang' => $validatedData['makan_siang'] ?? null,
+            'makan_sore' => $validatedData['makan_sore'] ?? null,
+            'sudah_minum_obat' => $validatedData['sudah_minum_obat'],
+            'tanggal' => $tanggal, // Gunakan format tanggal yang sudah dikonversi
+            'keterangan' => $validatedData['keterangan'],
+            'nama_pendamping' => $validatedData['nama_pendamping'],
+        ]);
 
         return redirect()->route('dashboardanak')->with('success', 'Status anak berhasil diperbarui');
+    }
+
+    public function editStatus($id)
+    {
+        $child = Child::findOrFail($id);
+        return view('updatestatus', compact('child'));
     }
 }
