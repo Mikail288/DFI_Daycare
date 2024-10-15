@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('sudah_minum_obat')->nullable()->default(false);
             $table->date('tanggal')->nullable();
             $table->text('keterangan')->nullable();
+            $table->string('nama_pendamping')->nullable();
             $table->timestamps();
         });
     }

@@ -13,11 +13,13 @@ class ChildController extends Controller
         $request->validate([
             'user_id' => 'required|exists:users,id',
             'nama' => 'required|string|max:255',
+            'nama_pendamping' => 'nullable|string|max:255',
         ]);
 
         $child = Child::create([
             'user_id' => $request->user_id,
             'nama' => $request->nama,
+            'nama_pendamping' => $request->nama_pendamping,
         ]);
 
         return redirect()->back()->with('success', 'Anak berhasil ditambahkan');
@@ -40,6 +42,7 @@ class ChildController extends Controller
             'sudah_minum_obat' => 'required|boolean',
             'tanggal' => 'required|date',
             'keterangan' => 'nullable|string',
+            'nama_pendamping' => 'nullable|string|max:255',
         ]);
 
         $child->saveHistory();

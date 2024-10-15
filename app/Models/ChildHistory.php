@@ -17,6 +17,7 @@ class ChildHistory extends Model
         'sudah_minum_obat',
         'tanggal',
         'keterangan',
+        'nama_pendamping',
     ];
 
     public function child()

@@ -16,6 +16,7 @@ class Child extends Model
         'sudah_minum_obat',
         'tanggal',
         'keterangan',
+        'nama_pendamping',
     ];
 
     public function user()
@@ -35,6 +36,7 @@ class Child extends Model
             'sudah_minum_obat' => $this->sudah_minum_obat,
             'tanggal' => $this->tanggal ?? now(),
             'keterangan' => $this->keterangan,
+            'nama_pendamping' => $this->nama_pendamping,
         ]);
     }
 }

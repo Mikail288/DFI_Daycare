@@ -85,7 +85,8 @@
                     @if($selectedChild)
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <h5 class="mb-1">{{ $selectedChild->nama }}</h5>
+                                <h4 class="mb-1">{{ $selectedChild->nama }}</h4>
+                                <p class="mb-0">Pendamping : {{ $selectedChild->nama_pendamping }}</p>
                                 <p class="mb-1">
                                     <span class="me-3">
                                         <i class="fas fa-utensils me-1"></i>

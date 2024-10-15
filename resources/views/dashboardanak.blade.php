@@ -189,6 +189,10 @@
         <div class="modal-body">
           <h6 id="childNameToUpdate"></h6>
           <div class="mb-3">
+            <label for="nama_pendamping" class="form-label">Nama Pendamping</label>
+            <input type="text" class="form-control" id="nama_pendamping" name="nama_pendamping" value="{{ $child->nama_pendamping ?? old('nama_pendamping') }}">
+          </div>
+          <div class="mb-3">
             <label for="sudah_makan" class="form-label">Status Makan</label>
             <select class="form-select" id="sudah_makan" name="sudah_makan">
               <option value="1">Sudah</option>
