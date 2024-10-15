@@ -182,7 +182,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="updateStatusModalLabel">Update Status Anak</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form id="updateStatusForm" action="" method="POST">
         @csrf

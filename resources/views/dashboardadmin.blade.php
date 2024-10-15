@@ -138,7 +138,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="deleteModalLabel">Konfirmasi penghapusan</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         Apakah anda yakin ingin menghapus akun <b><span id="userNameToDelete"></span></b> dan anak-anak yang terkait?
@@ -161,7 +160,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="addChildModalLabel">Tambah anak</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <form id="addChildForm" action="{{ route('children.store') }}" method="POST">
         @csrf
