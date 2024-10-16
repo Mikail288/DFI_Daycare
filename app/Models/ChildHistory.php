@@ -20,6 +20,9 @@ class ChildHistory extends Model
         'tanggal',
         'keterangan',
         'nama_pendamping',
+        'susu_pagi',
+        'susu_siang',
+        'susu_sore',
     ];
 
     public function child()

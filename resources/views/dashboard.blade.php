@@ -87,21 +87,33 @@
                             <li class="list-group-item">
                                 <h4 class="mb-1">{{ $selectedChild->nama }}</h4>
                                 <p class="mb-0">Pendamping : {{ $selectedChild->nama_pendamping }}</p>
-                                <p class="mb-1">
-                                    <span class="me-3">
-                                        <i class="fas fa-utensils me-1"></i>
-                                        Makan: <span class="badge {{ $selectedChild->sudah_makan ? 'bg-success' : 'bg-danger' }}">
-                                            {{ $selectedChild->sudah_makan ? 'Sudah' : 'Belum' }}
-                                        </span>
-                                    </span>
-                                    <span>
-                                        <i class="fas fa-pills me-1"></i>
-                                        Minum obat: <span class="badge {{ $selectedChild->sudah_minum_obat ? 'bg-success' : 'bg-danger' }}">
-                                            {{ $selectedChild->sudah_minum_obat ? 'Sudah' : 'Belum' }}
-                                        </span>
-                                    </span>
-                                </p>
-                                <p class="mb-1">
+                                <div class="row mt-3">
+                                    <div class="col-md-6">
+                                        <h5><i class="fas fa-utensils me-2"></i>Makan</h5>
+                                        <p class="mb-1">
+                                            <strong>Pagi:</strong> {{ $selectedChild->makan_pagi ?? 'Belum makan' }}
+                                        </p>
+                                        <p class="mb-1">
+                                            <strong>Siang:</strong> {{ $selectedChild->makan_siang ?? 'Belum makan' }}
+                                        </p>
+                                        <p class="mb-1">
+                                            <strong>Sore:</strong> {{ $selectedChild->makan_sore ?? 'Belum makan' }}
+                                        </p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h5><i class="fas fa-bottle-water me-2"></i>Susu</h5>
+                                        <p class="mb-1">
+                                            <strong>Pagi:</strong> {{ $selectedChild->susu_pagi ?? 0 }} ml
+                                        </p>
+                                        <p class="mb-1">
+                                            <strong>Siang:</strong> {{ $selectedChild->susu_siang ?? 0 }} ml
+                                        </p>
+                                        <p class="mb-1">
+                                            <strong>Sore:</strong> {{ $selectedChild->susu_sore ?? 0 }} ml
+                                        </p>
+                                    </div>
+                                </div>
+                                <p class="mb-1 mt-3">
                                     <i class="fas fa-calendar me-1"></i>
                                     Tanggal: {{ \Carbon\Carbon::parse($selectedChild->tanggal)->format('d/m/Y') }}
                                 </p>
@@ -127,27 +139,27 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th><i class="fas fa-calendar me-2"></i>Tanggal</th>
                                         <th><i class="fas fa-utensils me-2"></i>Makan</th>
-                                        <th><i class="fas fa-pills me-2"></i>Minum Obat</th>
+                                        <th><i class="fas fa-glass-milk me-2"></i>Susu</th>
                                         <th><i class="fas fa-comment me-2"></i>Keterangan</th>
+                                        <th><i class="fas fa-calendar me-2"></i>Tanggal</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($selectedChild->histories->sortByDesc('tanggal') as $history)
                                         <tr>
-                                            <td>{{ \Carbon\Carbon::parse($history->tanggal)->format('d/m/Y') }}</td>
                                             <td>
-                                                <span class="badge {{ $history->sudah_makan ? 'bg-success' : 'bg-danger' }}">
-                                                    {{ $history->sudah_makan ? 'Sudah' : 'Belum' }}
-                                                </span>
+                                                <small>Pagi: {{ $history->makan_pagi ?? 'Belum' }}</small><br>
+                                                <small>Siang: {{ $history->makan_siang ?? 'Belum' }}</small><br>
+                                                <small>Sore: {{ $history->makan_sore ?? 'Belum' }}</small>
                                             </td>
                                             <td>
-                                                <span class="badge {{ $history->sudah_minum_obat ? 'bg-success' : 'bg-danger' }}">
-                                                    {{ $history->sudah_minum_obat ? 'Sudah' : 'Belum' }}
-                                                </span>
+                                                <small>Pagi: {{ $history->susu_pagi ?? 0 }} ml</small><br>
+                                                <small>Siang: {{ $history->susu_siang ?? 0 }} ml</small><br>
+                                                <small>Sore: {{ $history->susu_sore ?? 0 }} ml</small>
                                             </td>
                                             <td>{{ $history->keterangan ?? 'Tidak ada' }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($history->tanggal)->format('d/m/Y') }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>

@@ -22,6 +22,9 @@ return new class extends Migration
             $table->text('keterangan')->nullable();
             $table->string('nama_pendamping')->nullable();
             $table->timestamps();
+            $table->integer('susu_pagi')->nullable();
+            $table->integer('susu_siang')->nullable();
+            $table->integer('susu_sore')->nullable();
         });
     }
 

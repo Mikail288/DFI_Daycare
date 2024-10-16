@@ -19,6 +19,9 @@ class Child extends Model
         'tanggal',
         'keterangan',
         'nama_pendamping',
+        'susu_pagi',
+        'susu_siang',
+        'susu_sore',
     ];
 
     public function user()
@@ -41,6 +44,9 @@ class Child extends Model
             'tanggal' => $this->tanggal ?? now(),
             'keterangan' => $this->keterangan,
             'nama_pendamping' => $this->nama_pendamping,
+            'susu_pagi' => $this->susu_pagi,
+            'susu_siang' => $this->susu_siang,
+            'susu_sore' => $this->susu_sore,
         ]);
     }
 }

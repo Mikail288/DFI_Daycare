@@ -82,7 +82,7 @@
                         <input type="text" class="form-control form-control-sm" id="nama_pendamping" name="nama_pendamping">
                     </div>
                     <div class="mb-2">
-                        <label class="form-label"><i class="fas fa-utensils me-2"></i>Status Makan</label>
+                        <label class="form-label"><i class="fas fa-utensils me-2"></i>Makan</label>
                         @foreach(['Pagi', 'Siang', 'Sore'] as $meal)
                             <div class="meal-group">
                                 <h6><i class="fas fa-{{ $meal == 'Pagi' ? 'sun' : ($meal == 'Siang' ? 'cloud-sun' : 'moon') }} me-2"></i>{{ $meal }}</h6>
@@ -99,6 +99,32 @@
                                 </div>
                             </div>
                         @endforeach
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label"><i class="fas fa-bottle-water me-2"></i>Susu</label>
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Pagi</span>
+                                    <input type="number" class="form-control" id="susu_pagi" name="susu_pagi" min="0" value="{{ $child->susu_pagi }}">
+                                    <span class="input-group-text">ml</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Siang</span>
+                                    <input type="number" class="form-control" id="susu_siang" name="susu_siang" min="0" value="{{ $child->susu_siang }}">
+                                    <span class="input-group-text">ml</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text">Sore</span>
+                                    <input type="number" class="form-control" id="susu_sore" name="susu_sore" min="0" value="{{ $child->susu_sore }}">
+                                    <span class="input-group-text">ml</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-2">
                         <label for="tanggal" class="form-label"><i class="fas fa-calendar-alt me-2"></i>Tanggal</label>

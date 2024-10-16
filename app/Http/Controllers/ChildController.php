@@ -45,10 +45,12 @@ class ChildController extends Controller
             'makan_pagi_custom' => 'nullable|string',
             'makan_siang_custom' => 'nullable|string',
             'makan_sore_custom' => 'nullable|string',
-            'sudah_minum_obat' => 'required|boolean',
             'tanggal' => 'required|date_format:d-m-Y',
             'keterangan' => 'nullable|string',
             'nama_pendamping' => 'nullable|string|max:255',
+            'susu_pagi' => 'nullable|integer|min:0',
+            'susu_siang' => 'nullable|integer|min:0',
+            'susu_sore' => 'nullable|integer|min:0',
         ]);
 
         $child->saveHistory();
@@ -59,10 +61,12 @@ class ChildController extends Controller
             'makan_pagi' => $validatedData['makan_pagi'] === 'custom' ? $validatedData['makan_pagi_custom'] : $validatedData['makan_pagi'],
             'makan_siang' => $validatedData['makan_siang'] === 'custom' ? $validatedData['makan_siang_custom'] : $validatedData['makan_siang'],
             'makan_sore' => $validatedData['makan_sore'] === 'custom' ? $validatedData['makan_sore_custom'] : $validatedData['makan_sore'],
-            'sudah_minum_obat' => $validatedData['sudah_minum_obat'],
             'tanggal' => $tanggal,
             'keterangan' => $validatedData['keterangan'],
             'nama_pendamping' => $validatedData['nama_pendamping'],
+            'susu_pagi' => $validatedData['susu_pagi'],
+            'susu_siang' => $validatedData['susu_siang'],
+            'susu_sore' => $validatedData['susu_sore'],
         ]);
 
         return redirect()->route('dashboardanak')->with('success', 'Status anak berhasil diperbarui');
