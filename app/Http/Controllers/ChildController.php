@@ -39,25 +39,26 @@ class ChildController extends Controller
         $child = Child::findOrFail($id);
 
         $validatedData = $request->validate([
-            'makan_pagi' => 'nullable|in:1,1/2,1/3,1/4',
-            'makan_siang' => 'nullable|in:1,1/2,1/3,1/4',
-            'makan_sore' => 'nullable|in:1,1/2,1/3,1/4',
+            'makan_pagi' => 'nullable|string',
+            'makan_siang' => 'nullable|string',
+            'makan_sore' => 'nullable|string',
+            'makan_pagi_custom' => 'nullable|string',
+            'makan_siang_custom' => 'nullable|string',
+            'makan_sore_custom' => 'nullable|string',
             'sudah_minum_obat' => 'required|boolean',
             'tanggal' => 'required|date_format:d-m-Y',
             'keterangan' => 'nullable|string',
             'nama_pendamping' => 'nullable|string|max:255',
         ]);
 
-        // Simpan data lama ke history sebelum update
         $child->saveHistory();
 
-        // Konversi format tanggal
         $tanggal = \Carbon\Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
 
         $child->update([
-            'makan_pagi' => $validatedData['makan_pagi'] ?? null,
-            'makan_siang' => $validatedData['makan_siang'] ?? null,
-            'makan_sore' => $validatedData['makan_sore'] ?? null,
+            'makan_pagi' => $validatedData['makan_pagi'] === 'custom' ? $validatedData['makan_pagi_custom'] : $validatedData['makan_pagi'],
+            'makan_siang' => $validatedData['makan_siang'] === 'custom' ? $validatedData['makan_siang_custom'] : $validatedData['makan_siang'],
+            'makan_sore' => $validatedData['makan_sore'] === 'custom' ? $validatedData['makan_sore_custom'] : $validatedData['makan_sore'],
             'sudah_minum_obat' => $validatedData['sudah_minum_obat'],
             'tanggal' => $tanggal,
             'keterangan' => $validatedData['keterangan'],
