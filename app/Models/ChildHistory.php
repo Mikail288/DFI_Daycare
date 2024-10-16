@@ -13,7 +13,9 @@ class ChildHistory extends Model
 
     protected $fillable = [
         'child_id',
-        'sudah_makan',
+        'makan_pagi',
+        'makan_siang',
+        'makan_sore',
         'sudah_minum_obat',
         'tanggal',
         'keterangan',

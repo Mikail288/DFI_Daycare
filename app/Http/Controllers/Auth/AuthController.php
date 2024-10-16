@@ -30,10 +30,10 @@ class AuthController extends Controller
      */
     public function registration(): View|RedirectResponse
     {
-        if (Auth::check() && Auth::user()->role == 'admin') {
+        // if (Auth::check() && Auth::user()->role == 'admin') {
             return view('auth.registration');
-        }
-        return redirect("login")->withErrors('Kamu tidak memiliki akses registration page.');
+        // }
+        // return redirect("login")->withErrors('Kamu tidak memiliki akses registration page.');
     }
       
     /**

@@ -48,14 +48,18 @@ class ChildController extends Controller
             'nama_pendamping' => 'nullable|string|max:255',
         ]);
 
-        $tanggal = Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
+        // Simpan data lama ke history sebelum update
+        $child->saveHistory();
+
+        // Konversi format tanggal
+        $tanggal = \Carbon\Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
 
         $child->update([
             'makan_pagi' => $validatedData['makan_pagi'] ?? null,
             'makan_siang' => $validatedData['makan_siang'] ?? null,
             'makan_sore' => $validatedData['makan_sore'] ?? null,
             'sudah_minum_obat' => $validatedData['sudah_minum_obat'],
-            'tanggal' => $tanggal, // Gunakan format tanggal yang sudah dikonversi
+            'tanggal' => $tanggal,
             'keterangan' => $validatedData['keterangan'],
             'nama_pendamping' => $validatedData['nama_pendamping'],
         ]);
