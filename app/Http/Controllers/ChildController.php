@@ -54,17 +54,18 @@ class ChildController extends Controller
             'air_putih_pagi' => 'nullable|integer|min:0',
             'air_putih_siang' => 'nullable|integer|min:0',
             'air_putih_sore' => 'nullable|integer|min:0',
+            'bak_pagi' => 'nullable|integer|min:0',
+            'bak_siang' => 'nullable|integer|min:0',
+            'bak_sore' => 'nullable|integer|min:0',
         ]);
 
         $child->saveHistory();
-
-        $tanggal = \Carbon\Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
 
         $child->update([
             'makan_pagi' => $validatedData['makan_pagi'] === 'custom' ? $validatedData['makan_pagi_custom'] : $validatedData['makan_pagi'],
             'makan_siang' => $validatedData['makan_siang'] === 'custom' ? $validatedData['makan_siang_custom'] : $validatedData['makan_siang'],
             'makan_sore' => $validatedData['makan_sore'] === 'custom' ? $validatedData['makan_sore_custom'] : $validatedData['makan_sore'],
-            'tanggal' => $tanggal,
+            'tanggal' => \Carbon\Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d'),
             'keterangan' => $validatedData['keterangan'],
             'nama_pendamping' => $validatedData['nama_pendamping'],
             'susu_pagi' => $validatedData['susu_pagi'],
@@ -73,6 +74,9 @@ class ChildController extends Controller
             'air_putih_pagi' => $validatedData['air_putih_pagi'],
             'air_putih_siang' => $validatedData['air_putih_siang'],
             'air_putih_sore' => $validatedData['air_putih_sore'],
+            'bak_pagi' => $validatedData['bak_pagi'],
+            'bak_siang' => $validatedData['bak_siang'],
+            'bak_sore' => $validatedData['bak_sore'],
         ]);
 
         return redirect()->route('dashboardanak')->with('success', 'Status anak berhasil diperbarui');

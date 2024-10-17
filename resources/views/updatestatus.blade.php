@@ -243,6 +243,35 @@
                             </div>
                         </div>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-toilet me-2"></i>BAK (Buang Air Kecil)</label>
+                        <div class="milk-container">
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-sun"></i></div>
+                                <div class="milk-label">Pagi</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="bak_pagi" name="bak_pagi" min="0" value="{{ $child->bak_pagi }}">
+                                    <span class="input-group-text">X</span>
+                                </div>
+                            </div>
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="milk-label">Siang</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="bak_siang" name="bak_siang" min="0" value="{{ $child->bak_siang }}">
+                                    <span class="input-group-text">X</span>
+                                </div>
+                            </div>
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-moon"></i></div>
+                                <div class="milk-label">Sore</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="bak_sore" name="bak_sore" min="0" value="{{ $child->bak_sore }}">
+                                    <span class="input-group-text">X</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="mb-2">
                         <label for="keterangan" class="form-label"><i class="fas fa-comment me-2"></i>Keterangan</label>
                         <textarea class="form-control form-control-sm" id="keterangan" name="keterangan" rows="3"></textarea>

@@ -25,6 +25,9 @@ class Child extends Model
         'air_putih_pagi',
         'air_putih_siang',
         'air_putih_sore',
+        'bak_pagi',
+        'bak_siang',
+        'bak_sore',
     ];
 
     public function user()
@@ -53,6 +56,9 @@ class Child extends Model
             'air_putih_pagi' => $this->air_putih_pagi,
             'air_putih_siang' => $this->air_putih_siang,
             'air_putih_sore' => $this->air_putih_sore,
+            'bak_pagi' => $this->bak_pagi,
+            'bak_siang' => $this->bak_siang,
+            'bak_sore' => $this->bak_sore,
         ]);
     }
 }

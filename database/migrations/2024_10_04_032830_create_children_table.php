@@ -28,6 +28,9 @@ return new class extends Migration
             $table->integer('air_putih_pagi')->nullable();
             $table->integer('air_putih_siang')->nullable();
             $table->integer('air_putih_sore')->nullable();
+            $table->integer('bak_pagi')->nullable();
+            $table->integer('bak_siang')->nullable();
+            $table->integer('bak_sore')->nullable();
             $table->timestamps();
         });
     }
