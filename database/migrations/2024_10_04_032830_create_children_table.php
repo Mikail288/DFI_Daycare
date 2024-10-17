@@ -31,6 +31,12 @@ return new class extends Migration
             $table->integer('bak_pagi')->nullable();
             $table->integer('bak_siang')->nullable();
             $table->integer('bak_sore')->nullable();
+            $table->integer('bab_pagi')->nullable();
+            $table->integer('bab_siang')->nullable();
+            $table->integer('bab_sore')->nullable();
+            $table->integer('tidur_pagi')->nullable();
+            $table->integer('tidur_siang')->nullable();
+            $table->integer('tidur_sore')->nullable();
             $table->timestamps();
         });
     }

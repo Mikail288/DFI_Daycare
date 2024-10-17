@@ -272,6 +272,66 @@
                             </div>
                         </div>
                     </div>
+                    <!-- New section for BAB -->
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-poop me-2"></i>BAB (Buang Air Besar)</label>
+                        <div class="milk-container">
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-sun"></i></div>
+                                <div class="milk-label">Pagi</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="bab_pagi" name="bab_pagi" min="0" value="{{ $child->bab_pagi }}">
+                                    <span class="input-group-text">X</span>
+                                </div>
+                            </div>
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="milk-label">Siang</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="bab_siang" name="bab_siang" min="0" value="{{ $child->bab_siang }}">
+                                    <span class="input-group-text">X</span>
+                                </div>
+                            </div>
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-moon"></i></div>
+                                <div class="milk-label">Sore</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="bab_sore" name="bab_sore" min="0" value="{{ $child->bab_sore }}">
+                                    <span class="input-group-text">X</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- New section for Tidur -->
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-bed me-2"></i>Tidur</label>
+                        <div class="milk-container">
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-sun"></i></div>
+                                <div class="milk-label">Pagi</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="tidur_pagi" name="tidur_pagi" min="0" value="{{ $child->tidur_pagi }}">
+                                    <span class="input-group-text">X</span>
+                                </div>
+                            </div>
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="milk-label">Siang</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="tidur_siang" name="tidur_siang" min="0" value="{{ $child->tidur_siang }}">
+                                    <span class="input-group-text">X</span>
+                                </div>
+                            </div>
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-moon"></i></div>
+                                <div class="milk-label">Sore</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="tidur_sore" name="tidur_sore" min="0" value="{{ $child->tidur_sore }}">
+                                    <span class="input-group-text">X</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="mb-2">
                         <label for="keterangan" class="form-label"><i class="fas fa-comment me-2"></i>Keterangan</label>
                         <textarea class="form-control form-control-sm" id="keterangan" name="keterangan" rows="3"></textarea>

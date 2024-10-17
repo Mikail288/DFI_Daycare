@@ -57,6 +57,12 @@ class ChildController extends Controller
             'bak_pagi' => 'nullable|integer|min:0',
             'bak_siang' => 'nullable|integer|min:0',
             'bak_sore' => 'nullable|integer|min:0',
+            'bab_pagi' => 'nullable|integer|min:0',
+            'bab_siang' => 'nullable|integer|min:0',
+            'bab_sore' => 'nullable|integer|min:0',
+            'tidur_pagi' => 'nullable|integer|min:0',
+            'tidur_siang' => 'nullable|integer|min:0',
+            'tidur_sore' => 'nullable|integer|min:0',
         ]);
 
         $child->saveHistory();
@@ -77,6 +83,12 @@ class ChildController extends Controller
             'bak_pagi' => $validatedData['bak_pagi'],
             'bak_siang' => $validatedData['bak_siang'],
             'bak_sore' => $validatedData['bak_sore'],
+            'bab_pagi' => $validatedData['bab_pagi'],
+            'bab_siang' => $validatedData['bab_siang'],
+            'bab_sore' => $validatedData['bab_sore'],
+            'tidur_pagi' => $validatedData['tidur_pagi'],
+            'tidur_siang' => $validatedData['tidur_siang'],
+            'tidur_sore' => $validatedData['tidur_sore'],
         ]);
 
         return redirect()->route('dashboardanak')->with('success', 'Status anak berhasil diperbarui');

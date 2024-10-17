@@ -28,6 +28,12 @@ class Child extends Model
         'bak_pagi',
         'bak_siang',
         'bak_sore',
+        'bab_pagi',
+        'bab_siang',
+        'bab_sore',
+        'tidur_pagi',
+        'tidur_siang',
+        'tidur_sore',
     ];
 
     public function user()
@@ -59,6 +65,12 @@ class Child extends Model
             'bak_pagi' => $this->bak_pagi,
             'bak_siang' => $this->bak_siang,
             'bak_sore' => $this->bak_sore,
+            'bab_pagi' => $this->bab_pagi,
+            'bab_siang' => $this->bab_siang,
+            'bab_sore' => $this->bab_sore,
+            'tidur_pagi' => $this->tidur_pagi,
+            'tidur_siang' => $this->tidur_siang,
+            'tidur_sore' => $this->tidur_sore,
         ]);
     }
 }

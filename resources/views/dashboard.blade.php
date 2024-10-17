@@ -17,11 +17,16 @@
             border: none;
             border-radius: 15px;
             box-shadow: 0 4px 6px rgba(0,0,0,.1);
+            margin-bottom: 20px;
         }
         .card-header {
             background-color: #007bff;
             color: white;
             border-radius: 15px 15px 0 0 !important;
+            padding: 15px 20px;
+        }
+        .card-body {
+            padding: 20px;
         }
         .list-group-item {
             border: none;
@@ -30,7 +35,6 @@
         .list-group-item:not(:last-child) {
             border-bottom: 1px solid #f1f1f1;
         }
-        
         .info-row {
             display: flex;
             flex-wrap: wrap;
@@ -49,25 +53,28 @@
             height: 100%;
             box-shadow: 0 2px 4px rgba(0,0,0,.1);
         }
+        .info-card h5 {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+        .info-card p {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        .history-card {
+            margin-bottom: 15px;
+        }
+        .history-card .card-header {
+            background-color: #f8f9fa;
+            color: #333;
+            font-weight: bold;
+        }
         @media (max-width: 767px) {
-            .info-row {
-                display: flex;
-                flex-wrap: wrap;
-                margin: 0 -10px;
-            }
             .info-col {
                 flex: 0 0 50%;
                 max-width: 50%;
-                padding: 0 10px;
-                margin-bottom: 20px;
             }
-            .info-card {
-                background-color: #f8f9fa;
-                border-radius: 10px;
-                padding: 15px;
-                height: 100%;
-            }
-            
             .order-md-last {
                 order: -1 !important;
             }
@@ -104,7 +111,7 @@
     @endsession
 
     <div class="row">
-        <div class="col-md-8 mb-4">
+        <div class="col-12">
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -118,32 +125,11 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="col-md-4 mb-4 d-md-none order-md-last">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="mb-0"><i class="fas fa-child me-2"></i>Anak Anda</h3>
-                    </div>
-                    <div class="card-body">
-                        @if($children->count() > 0)
-                            <ul class="list-group list-group-flush">
-                                @foreach($children as $child)
-                                    <li class="list-group-item p-0">
-                                        <a href="{{ route('dashboard', ['child_id' => $child->id]) }}" class="text-decoration-none d-block p-3 text-dark">
-                                            <i class="fas fa-user me-2 text-dark"></i>{{ $child->nama }}
-                                        </a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        @else
-                            <p class="card-text text-muted">No children in the list.</p>
-                        @endif
-                    </div>
-                </div>
-            </div>
-            
+        </div>
+        
+        <div class="col-md-8 order-md-1 order-2">
             <div class="card mb-4">
-                <div class="card-header bg-primary text-white">
+                <div class="card-header">
                     <h3 class="mb-0"><i class="fas fa-thumbtack me-2"></i>Children Information</h3>
                 </div>
                 <div class="card-body">
@@ -175,6 +161,33 @@
                                     <p class="mb-1"><small>Sore: {{ $selectedChild->air_putih_sore ?? "-" }} ml</small></p>
                                 </div>
                             </div>
+                            <!-- New BAK info -->
+                            <div class="col-md-4 info-col">
+                                <div class="info-card">
+                                    <h5><i class="fas fa-toilet me-2"></i>BAK</h5>
+                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->bak_pagi ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small>Siang: {{ $selectedChild->bak_siang ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small>Sore: {{ $selectedChild->bak_sore ?? "-" }} X</small></p>
+                                </div>
+                            </div>
+                            <!-- New BAB info -->
+                            <div class="col-md-4 info-col">
+                                <div class="info-card">
+                                    <h5><i class="fas fa-poop me-2"></i>BAB</h5>
+                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->bab_pagi ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small>Siang: {{ $selectedChild->bab_siang ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small>Sore: {{ $selectedChild->bab_sore ?? "-" }} X</small></p>
+                                </div>
+                            </div>
+                            <!-- New Tidur info -->
+                            <div class="col-md-4 info-col">
+                                <div class="info-card">
+                                    <h5><i class="fas fa-bed me-2"></i>Tidur</h5>
+                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->tidur_pagi ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small>Siang: {{ $selectedChild->tidur_siang ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small>Sore: {{ $selectedChild->tidur_sore ?? "-" }} X</small></p>
+                                </div>
+                            </div>
                         </div>
                         <p class="mb-1 mt-3">
                             <i class="fas fa-calendar me-1"></i>
@@ -191,57 +204,88 @@
             </div>
             
             <div class="card">
-                <div class="card-header bg-success text-white">
+                <div class="card-header">
                     <h3 class="mb-0"><i class="fas fa-history me-2"></i>Child History</h3>
                 </div>
                 <div class="card-body">
                     @if($selectedChild && $selectedChild->histories->count() > 0)
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th><i class="fas fa-utensils me-2"></i>Makan</th>
-                                        <th><i class="fas fa-glass-milk me-2"></i>Susu</th>
-                                        <th><i class="fas fa-tint me-2"></i>Air Putih</th>
-                                        <th><i class="fas fa-comment me-2"></i>Keterangan</th>
-                                        <th><i class="fas fa-calendar me-2"></i>Tanggal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($selectedChild->histories->sortByDesc('tanggal') as $history)
-                                        <tr>
-                                            <td>
-                                                <small>Pagi: {{ $history->makan_pagi ?? 'Belum' }}</small><br>
-                                                <small>Siang: {{ $history->makan_siang ?? 'Belum' }}</small><br>
-                                                <small>Sore: {{ $history->makan_sore ?? 'Belum' }}</small>
-                                            </td>
-                                            <td>
-                                                <small>Pagi: {{ $history->susu_pagi ?? "-" }} ml</small><br>
-                                                <small>Siang: {{ $history->susu_siang ?? "-" }} ml</small><br>
-                                                <small>Sore: {{ $history->susu_sore ?? "-" }} ml</small>
-                                            </td>
-                                            <td>
-                                                <small>Pagi: {{ $history->air_putih_pagi ?? "-" }} ml</small><br>
-                                                <small>Siang: {{ $history->air_putih_siang ?? "-" }} ml</small><br>
-                                                <small>Sore: {{ $history->air_putih_sore ?? "-" }} ml</small>
-                                            </td>
-                                            <td>{{ $history->keterangan ?? 'Tidak ada' }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($history->tanggal)->format('d/m/Y') }}</td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
+                        @foreach($selectedChild->histories->sortByDesc('tanggal') as $history)
+                            <div class="card history-card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <i class="fas fa-calendar me-2"></i>
+                                        {{ \Carbon\Carbon::parse($history->tanggal)->format('d/m/Y') }}
+                                    </h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row info-row">
+                                        <div class="col-md-4 info-col">
+                                            <div class="info-card">
+                                                <h5><i class="fas fa-utensils me-2"></i>Makan</h5>
+                                                <p class="mb-1"><small>Pagi: {{ $history->makan_pagi ?? 'Belum' }}</small></p>
+                                                <p class="mb-1"><small>Siang: {{ $history->makan_siang ?? 'Belum' }}</small></p>
+                                                <p class="mb-1"><small>Sore: {{ $history->makan_sore ?? 'Belum' }}</small></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 info-col">
+                                            <div class="info-card">
+                                                <h5><i class="fas fa-bottle-water me-2"></i>Susu</h5>
+                                                <p class="mb-1"><small>Pagi: {{ $history->susu_pagi ?? "-" }} ml</small></p>
+                                                <p class="mb-1"><small>Siang: {{ $history->susu_siang ?? "-" }} ml</small></p>
+                                                <p class="mb-1"><small>Sore: {{ $history->susu_sore ?? "-" }} ml</small></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 info-col">
+                                            <div class="info-card">
+                                                <h5><i class="fas fa-tint me-2"></i>Air Putih</h5>
+                                                <p class="mb-1"><small>Pagi: {{ $history->air_putih_pagi ?? "-" }} ml</small></p>
+                                                <p class="mb-1"><small>Siang: {{ $history->air_putih_siang ?? "-" }} ml</small></p>
+                                                <p class="mb-1"><small>Sore: {{ $history->air_putih_sore ?? "-" }} ml</small></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 info-col">
+                                            <div class="info-card">
+                                                <h5><i class="fas fa-toilet me-2"></i>BAK</h5>
+                                                <p class="mb-1"><small>Pagi: {{ $history->bak_pagi ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small>Siang: {{ $history->bak_siang ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small>Sore: {{ $history->bak_sore ?? "-" }} X</small></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 info-col">
+                                            <div class="info-card">
+                                                <h5><i class="fas fa-poop me-2"></i>BAB</h5>
+                                                <p class="mb-1"><small>Pagi: {{ $history->bab_pagi ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small>Siang: {{ $history->bab_siang ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small>Sore: {{ $history->bab_sore ?? "-" }} X</small></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 info-col">
+                                            <div class="info-card">
+                                                <h5><i class="fas fa-bed me-2"></i>Tidur</h5>
+                                                <p class="mb-1"><small>Pagi: {{ $history->tidur_pagi ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small>Siang: {{ $history->tidur_siang ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small>Sore: {{ $history->tidur_sore ?? "-" }} X</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="mb-0 mt-3">
+                                        <i class="fas fa-comment me-2"></i>
+                                        Keterangan: {{ $history->keterangan ?? 'Tidak ada' }}
+                                    </p>
+                                </div>
+                            </div>
+                        @endforeach
                     @elseif($selectedChild)
-                        <p class="card-text text-muted">No history available for this child.</p>
+                        <p class="card-text text-muted">Tidak ada riwayat tersedia untuk anak ini.</p>
                     @else
-                        <p class="card-text text-muted">Pilih anak untuk melihat history.</p>
+                        <p class="card-text text-muted">Pilih anak untuk melihat riwayat.</p>
                     @endif
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-4 d-none d-md-block">
-            <div class="card">
+        
+        <div class="col-md-4 order-md-2 order-1 mb-4 mb-md-0">
+            <div class="card sticky-top" style="top: 20px;">
                 <div class="card-header">
                     <h3 class="mb-0"><i class="fas fa-child me-2"></i>Anak Anda</h3>
                 </div>
@@ -250,8 +294,8 @@
                         <ul class="list-group list-group-flush">
                             @foreach($children as $child)
                                 <li class="list-group-item p-0">
-                                    <a href="{{ route('dashboard', ['child_id' => $child->id]) }}" class="text-decoration-none d-block p-3 text-dark">
-                                        <i class="fas fa-user me-2 text-dark"></i>{{ $child->nama }}
+                                    <a href="{{ route('dashboard', ['child_id' => $child->id]) }}" class="text-decoration-none d-block p-3 text-dark {{ $selectedChild && $selectedChild->id == $child->id ? 'bg-light' : '' }}">
+                                        <i class="fas fa-user me-2 text-primary"></i>{{ $child->nama }}
                                     </a>
                                 </li>
                             @endforeach

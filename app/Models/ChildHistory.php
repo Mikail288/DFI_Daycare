@@ -29,6 +29,12 @@ class ChildHistory extends Model
         'bak_pagi',
         'bak_siang',
         'bak_sore',
+        'bab_pagi',
+        'bab_siang',
+        'bab_sore',
+        'tidur_pagi',
+        'tidur_siang',
+        'tidur_sore',
     ];
 
     public function child()
