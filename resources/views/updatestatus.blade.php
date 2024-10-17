@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Status Anak</title>
+    <link rel="icon" type="image/png" href="{{ asset('Upinipin.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -122,7 +123,7 @@
             right: 10px;
             top: 50%;
             transform: translateY(-50%);
-            color: #007bff;
+            color: black;
             pointer-events: none;
         }
         @media (max-width: 576px) {
@@ -207,6 +208,36 @@
                                 <div class="milk-label">Sore</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="susu_sore" name="susu_sore" min="0" value="{{ $child->susu_sore }}">
+                                    <span class="input-group-text">ml</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- New section for water intake -->
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-tint me-2"></i>Air Putih</label>
+                        <div class="milk-container">
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-sun"></i></div>
+                                <div class="milk-label">Pagi</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="air_putih_pagi" name="air_putih_pagi" min="0" value="{{ $child->air_putih_pagi }}">
+                                    <span class="input-group-text">ml</span>
+                                </div>
+                            </div>
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="milk-label">Siang</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="air_putih_siang" name="air_putih_siang" min="0" value="{{ $child->air_putih_siang }}">
+                                    <span class="input-group-text">ml</span>
+                                </div>
+                            </div>
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-moon"></i></div>
+                                <div class="milk-label">Sore</div>
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" id="air_putih_sore" name="air_putih_sore" min="0" value="{{ $child->air_putih_sore }}">
                                     <span class="input-group-text">ml</span>
                                 </div>
                             </div>

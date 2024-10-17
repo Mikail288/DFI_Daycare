@@ -30,6 +30,48 @@
         .list-group-item:not(:last-child) {
             border-bottom: 1px solid #f1f1f1;
         }
+        
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        .info-col {
+            flex: 0 0 calc(33.333% - 20px);
+            max-width: calc(33.333% - 20px);
+            padding: 0 10px;
+            margin-bottom: 20px;
+        }
+        .info-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            height: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        @media (max-width: 767px) {
+            .info-row {
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0 -10px;
+            }
+            .info-col {
+                flex: 0 0 50%;
+                max-width: 50%;
+                padding: 0 10px;
+                margin-bottom: 20px;
+            }
+            .info-card {
+                background-color: #f8f9fa;
+                border-radius: 10px;
+                padding: 15px;
+                height: 100%;
+            }
+            
+            .order-md-last {
+                order: -1 !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -77,52 +119,71 @@
                 </div>
             </div>
             
+            <div class="col-md-4 mb-4 d-md-none order-md-last">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="mb-0"><i class="fas fa-child me-2"></i>Anak Anda</h3>
+                    </div>
+                    <div class="card-body">
+                        @if($children->count() > 0)
+                            <ul class="list-group list-group-flush">
+                                @foreach($children as $child)
+                                    <li class="list-group-item p-0">
+                                        <a href="{{ route('dashboard', ['child_id' => $child->id]) }}" class="text-decoration-none d-block p-3 text-dark">
+                                            <i class="fas fa-user me-2 text-dark"></i>{{ $child->nama }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="card-text text-muted">No children in the list.</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            
             <div class="card mb-4">
                 <div class="card-header bg-primary text-white">
                     <h3 class="mb-0"><i class="fas fa-thumbtack me-2"></i>Children Information</h3>
                 </div>
                 <div class="card-body">
                     @if($selectedChild)
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <h4 class="mb-1">{{ $selectedChild->nama }}</h4>
-                                <p class="mb-0">Pendamping : {{ $selectedChild->nama_pendamping }}</p>
-                                <div class="row mt-3">
-                                    <div class="col-6">
-                                        <h5><i class="fas fa-utensils me-2"></i>Makan</h5>
-                                        <p class="mb-1">
-                                            <small>Pagi: {{ $selectedChild->makan_pagi ?? 'Belum' }}</small>
-                                        </p>
-                                        <p class="mb-1">
-                                            <small>Siang: {{ $selectedChild->makan_siang ?? 'Belum' }}</small>
-                                        </p>
-                                        <p class="mb-1">
-                                            <small>Sore: {{ $selectedChild->makan_sore ?? 'Belum' }}</small>
-                                        </p>
-                                    </div>
-                                    <div class="col-6">
-                                        <h5><i class="fas fa-bottle-water me-2"></i>Susu</h5>
-                                        <p class="mb-1">
-                                            <small>Pagi: {{ $selectedChild->susu_pagi ?? "-" }} ml</small>
-                                        </p>
-                                        <p class="mb-1">
-                                            <small>Siang: {{ $selectedChild->susu_siang ?? "-" }} ml</small>
-                                        </p>
-                                        <p class="mb-1">
-                                            <small>Sore: {{ $selectedChild->susu_sore ?? "-" }} ml</small>
-                                        </p>
-                                    </div>
+                        <h4 class="mb-1">{{ $selectedChild->nama }}</h4>
+                        <p class="mb-3">Pendamping : {{ $selectedChild->nama_pendamping }}</p>
+                        <div class="row info-row">
+                            <div class="col-md-4 info-col">
+                                <div class="info-card">
+                                    <h5><i class="fas fa-utensils me-2"></i>Makan</h5>
+                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->makan_pagi ?? 'Belum' }}</small></p>
+                                    <p class="mb-1"><small>Siang: {{ $selectedChild->makan_siang ?? 'Belum' }}</small></p>
+                                    <p class="mb-1"><small>Sore: {{ $selectedChild->makan_sore ?? 'Belum' }}</small></p>
                                 </div>
-                                <p class="mb-1 mt-3">
-                                    <i class="fas fa-calendar me-1"></i>
-                                    Tanggal: {{ \Carbon\Carbon::parse($selectedChild->tanggal)->format('d/m/Y') }}
-                                </p>
-                                <p class="mb-0">
-                                    <i class="fas fa-comment me-1"></i>
-                                    Keterangan: {{ $selectedChild->keterangan ?? 'Tidak ada' }}
-                                </p>
-                            </li>
-                        </ul>
+                            </div>
+                            <div class="col-md-4 info-col">
+                                <div class="info-card">
+                                    <h5><i class="fas fa-bottle-water me-2"></i>Susu</h5>
+                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->susu_pagi ?? "-" }} ml</small></p>
+                                    <p class="mb-1"><small>Siang: {{ $selectedChild->susu_siang ?? "-" }} ml</small></p>
+                                    <p class="mb-1"><small>Sore: {{ $selectedChild->susu_sore ?? "-" }} ml</small></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 info-col">
+                                <div class="info-card">
+                                    <h5><i class="fas fa-tint me-2"></i>Air Putih</h5>
+                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->air_putih_pagi ?? "-" }} ml</small></p>
+                                    <p class="mb-1"><small>Siang: {{ $selectedChild->air_putih_siang ?? "-" }} ml</small></p>
+                                    <p class="mb-1"><small>Sore: {{ $selectedChild->air_putih_sore ?? "-" }} ml</small></p>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mb-1 mt-3">
+                            <i class="fas fa-calendar me-1"></i>
+                            Tanggal: {{ \Carbon\Carbon::parse($selectedChild->tanggal)->format('d/m/Y') }}
+                        </p>
+                        <p class="mb-0">
+                            <i class="fas fa-comment me-1"></i>
+                            Keterangan: {{ $selectedChild->keterangan ?? 'Tidak ada' }}
+                        </p>
                     @else
                         <p class="card-text text-muted">Tidak ada anak yang dipilih. Klik anak dari "Anak Anda" untuk melihat detailnya.</p>
                     @endif
@@ -141,6 +202,7 @@
                                     <tr>
                                         <th><i class="fas fa-utensils me-2"></i>Makan</th>
                                         <th><i class="fas fa-glass-milk me-2"></i>Susu</th>
+                                        <th><i class="fas fa-tint me-2"></i>Air Putih</th>
                                         <th><i class="fas fa-comment me-2"></i>Keterangan</th>
                                         <th><i class="fas fa-calendar me-2"></i>Tanggal</th>
                                     </tr>
@@ -158,6 +220,11 @@
                                                 <small>Siang: {{ $history->susu_siang ?? "-" }} ml</small><br>
                                                 <small>Sore: {{ $history->susu_sore ?? "-" }} ml</small>
                                             </td>
+                                            <td>
+                                                <small>Pagi: {{ $history->air_putih_pagi ?? "-" }} ml</small><br>
+                                                <small>Siang: {{ $history->air_putih_siang ?? "-" }} ml</small><br>
+                                                <small>Sore: {{ $history->air_putih_sore ?? "-" }} ml</small>
+                                            </td>
                                             <td>{{ $history->keterangan ?? 'Tidak ada' }}</td>
                                             <td>{{ \Carbon\Carbon::parse($history->tanggal)->format('d/m/Y') }}</td>
                                         </tr>
@@ -173,7 +240,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
+        <div class="col-md-4 mb-4 d-none d-md-block">
             <div class="card">
                 <div class="card-header">
                     <h3 class="mb-0"><i class="fas fa-child me-2"></i>Anak Anda</h3>

@@ -21,10 +21,13 @@ return new class extends Migration
             $table->date('tanggal');
             $table->text('keterangan')->nullable();
             $table->string('nama_pendamping')->nullable();
-            $table->timestamps();
             $table->integer('susu_pagi')->nullable();
             $table->integer('susu_siang')->nullable();
             $table->integer('susu_sore')->nullable();
+            $table->integer('air_putih_pagi')->nullable();
+            $table->integer('air_putih_siang')->nullable();
+            $table->integer('air_putih_sore')->nullable();
+            $table->timestamps();
         });
     }
 

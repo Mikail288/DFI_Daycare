@@ -23,6 +23,9 @@ class ChildHistory extends Model
         'susu_pagi',
         'susu_siang',
         'susu_sore',
+        'air_putih_pagi',
+        'air_putih_siang',
+        'air_putih_sore',
     ];
 
     public function child()

@@ -51,6 +51,9 @@ class ChildController extends Controller
             'susu_pagi' => 'nullable|integer|min:0',
             'susu_siang' => 'nullable|integer|min:0',
             'susu_sore' => 'nullable|integer|min:0',
+            'air_putih_pagi' => 'nullable|integer|min:0',
+            'air_putih_siang' => 'nullable|integer|min:0',
+            'air_putih_sore' => 'nullable|integer|min:0',
         ]);
 
         $child->saveHistory();
@@ -67,6 +70,9 @@ class ChildController extends Controller
             'susu_pagi' => $validatedData['susu_pagi'],
             'susu_siang' => $validatedData['susu_siang'],
             'susu_sore' => $validatedData['susu_sore'],
+            'air_putih_pagi' => $validatedData['air_putih_pagi'],
+            'air_putih_siang' => $validatedData['air_putih_siang'],
+            'air_putih_sore' => $validatedData['air_putih_sore'],
         ]);
 
         return redirect()->route('dashboardanak')->with('success', 'Status anak berhasil diperbarui');
