@@ -20,10 +20,6 @@
         box-shadow: 0 4px 6px rgba(0,0,0,.1);
         transition: all 0.3s ease;
       }
-      .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 15px rgba(0,0,0,.1);
-      }
       .card-header {
         background-color: #007bff;
         color: white;
