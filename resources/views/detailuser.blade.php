@@ -7,13 +7,39 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f8f9fa; }
-        .card { border: none; border-radius: 15px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
-        .card-header { background-color: #007bff; color: white; border-radius: 15px 15px 0 0; }
-        .user-avatar { width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 3px solid white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
-        .list-group-item { border: none; padding: 0.75rem 1.25rem; }
-        .list-group-item:not(:last-child) { border-bottom: 1px solid #e9ecef; }
-        .section-header { display: flex; justify-content: space-between; align-items: center; }
+        body { 
+            background-color: #f8f9fa;
+        }
+        .card {
+            border: none;
+            border-radius: 15px; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            border-radius: 15px 15px 0 0; 
+        }
+        .user-avatar { 
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .list-group-item {
+            border: none; 
+            padding: 0.75rem 1.25rem;
+        }
+        .list-group-item:not(:last-child) {
+            border-bottom: 1px solid #e9ecef;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
