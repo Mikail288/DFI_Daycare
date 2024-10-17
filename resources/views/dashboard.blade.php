@@ -88,28 +88,28 @@
                                 <h4 class="mb-1">{{ $selectedChild->nama }}</h4>
                                 <p class="mb-0">Pendamping : {{ $selectedChild->nama_pendamping }}</p>
                                 <div class="row mt-3">
-                                    <div class="col-md-6">
+                                    <div class="col-6">
                                         <h5><i class="fas fa-utensils me-2"></i>Makan</h5>
                                         <p class="mb-1">
-                                            <strong>Pagi:</strong> {{ $selectedChild->makan_pagi ?? 'Belum makan' }}
+                                            <small>Pagi: {{ $selectedChild->makan_pagi ?? 'Belum' }}</small>
                                         </p>
                                         <p class="mb-1">
-                                            <strong>Siang:</strong> {{ $selectedChild->makan_siang ?? 'Belum makan' }}
+                                            <small>Siang: {{ $selectedChild->makan_siang ?? 'Belum' }}</small>
                                         </p>
                                         <p class="mb-1">
-                                            <strong>Sore:</strong> {{ $selectedChild->makan_sore ?? 'Belum makan' }}
+                                            <small>Sore: {{ $selectedChild->makan_sore ?? 'Belum' }}</small>
                                         </p>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-6">
                                         <h5><i class="fas fa-bottle-water me-2"></i>Susu</h5>
                                         <p class="mb-1">
-                                            <strong>Pagi:</strong> {{ $selectedChild->susu_pagi ?? 0 }} ml
+                                            <small>Pagi: {{ $selectedChild->susu_pagi ?? "-" }} ml</small>
                                         </p>
                                         <p class="mb-1">
-                                            <strong>Siang:</strong> {{ $selectedChild->susu_siang ?? 0 }} ml
+                                            <small>Siang: {{ $selectedChild->susu_siang ?? "-" }} ml</small>
                                         </p>
                                         <p class="mb-1">
-                                            <strong>Sore:</strong> {{ $selectedChild->susu_sore ?? 0 }} ml
+                                            <small>Sore: {{ $selectedChild->susu_sore ?? "-" }} ml</small>
                                         </p>
                                     </div>
                                 </div>
@@ -154,9 +154,9 @@
                                                 <small>Sore: {{ $history->makan_sore ?? 'Belum' }}</small>
                                             </td>
                                             <td>
-                                                <small>Pagi: {{ $history->susu_pagi ?? 0 }} ml</small><br>
-                                                <small>Siang: {{ $history->susu_siang ?? 0 }} ml</small><br>
-                                                <small>Sore: {{ $history->susu_sore ?? 0 }} ml</small>
+                                                <small>Pagi: {{ $history->susu_pagi ?? "-" }} ml</small><br>
+                                                <small>Siang: {{ $history->susu_siang ?? "-" }} ml</small><br>
+                                                <small>Sore: {{ $history->susu_sore ?? "-" }} ml</small>
                                             </td>
                                             <td>{{ $history->keterangan ?? 'Tidak ada' }}</td>
                                             <td>{{ \Carbon\Carbon::parse($history->tanggal)->format('d/m/Y') }}</td>

@@ -7,11 +7,19 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
         body {
             background-color: #ffffff;
-            min-height: 100vh;
             display: flex;
             align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-height: 100%;
+            overflow-y: auto;
         }
         .card {
             border-radius: 1rem;
@@ -29,6 +37,14 @@
         .btn-primary:hover {
             background-color: #0056b3;
             border-color: #0056b3;
+        }
+        @media (max-height: 600px) {
+            .card-body {
+                padding: 1rem !important;
+            }
+            .mb-4 {
+                margin-bottom: 0.5rem !important;
+            }
         }
     </style>
 </head>
