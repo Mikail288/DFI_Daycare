@@ -65,6 +65,80 @@
                 font-size: 1.25rem;
             }
         }
+        .milk-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .milk-item {
+            flex: 1;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        .milk-icon {
+            font-size: 1.5rem;
+            color: #007bff;
+            margin-bottom: 5px;
+        }
+        .milk-label {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #6c757d;
+            margin-top: 5px;
+        }
+        .milk-item .input-group {
+            justify-content: center;
+        }
+        .milk-item .form-control {
+            text-align: center;
+            border-radius: 5px 0 0 5px;
+        }
+        .milk-item .input-group-text {
+            border-radius: 0 5px 5px 0;
+            background-color: #007bff;
+            color: white;
+        }
+        .form-row {
+            display: flex;
+            flex-wrap: nowrap;
+            gap: 10px;
+        }
+        .form-row > div {
+            flex: 1;
+            min-width: 0;
+        }
+        .date-input-group {
+            position: relative;
+        }
+        .date-input-group .form-control {
+            padding-right: 30px;
+        }
+        .date-input-group .calendar-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #007bff;
+            pointer-events: none;
+        }
+        @media (max-width: 576px) {
+            .form-row {
+                flex-direction: row;
+            }
+            .form-row > div {
+                width: 50%;
+            }
+            .form-control {
+                font-size: 0.875rem;
+            }
+            .form-label {
+                font-size: 0.875rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -77,9 +151,18 @@
                 <form id="updateStatusForm" action="{{ route('children.updateStatus', $child->id) }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <div class="mb-2">
-                        <label for="nama_pendamping" class="form-label"><i class="fas fa-user me-2"></i>Nama Pendamping</label>
-                        <input type="text" class="form-control form-control-sm" id="nama_pendamping" name="nama_pendamping">
+                    <div class="form-row mb-2">
+                        <div>
+                            <label for="nama_pendamping" class="form-label"><i class="fas fa-user me-2"></i>Nama Pendamping</label>
+                            <input type="text" class="form-control form-control-sm" id="nama_pendamping" name="nama_pendamping">
+                        </div>
+                        <div>
+                            <label for="tanggal" class="form-label"><i class="fas fa-calendar-alt me-2"></i>Tanggal</label>
+                            <div class="date-input-group">
+                                <input type="text" class="form-control form-control-sm" id="tanggal" name="tanggal" required>
+                                <i class="fas fa-calendar-alt calendar-icon"></i>
+                            </div>
+                        </div>
                     </div>
                     <div class="mb-2">
                         <label class="form-label"><i class="fas fa-utensils me-2"></i>Makan</label>
@@ -100,35 +183,34 @@
                             </div>
                         @endforeach
                     </div>
-                    <div class="mb-2">
+                    <div class="mb-3">
                         <label class="form-label"><i class="fas fa-bottle-water me-2"></i>Susu</label>
-                        <div class="row g-2">
-                            <div class="col-md-4">
+                        <div class="milk-container">
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-sun"></i></div>
+                                <div class="milk-label">Pagi</div>
                                 <div class="input-group input-group-sm">
-                                    <span class="input-group-text">Pagi</span>
                                     <input type="number" class="form-control" id="susu_pagi" name="susu_pagi" min="0" value="{{ $child->susu_pagi }}">
                                     <span class="input-group-text">ml</span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="milk-label">Siang</div>
                                 <div class="input-group input-group-sm">
-                                    <span class="input-group-text">Siang</span>
                                     <input type="number" class="form-control" id="susu_siang" name="susu_siang" min="0" value="{{ $child->susu_siang }}">
                                     <span class="input-group-text">ml</span>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="milk-item">
+                                <div class="milk-icon"><i class="fas fa-moon"></i></div>
+                                <div class="milk-label">Sore</div>
                                 <div class="input-group input-group-sm">
-                                    <span class="input-group-text">Sore</span>
                                     <input type="number" class="form-control" id="susu_sore" name="susu_sore" min="0" value="{{ $child->susu_sore }}">
                                     <span class="input-group-text">ml</span>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-2">
-                        <label for="tanggal" class="form-label"><i class="fas fa-calendar-alt me-2"></i>Tanggal</label>
-                        <input type="text" class="form-control form-control-sm" id="tanggal" name="tanggal" required>
                     </div>
                     <div class="mb-2">
                         <label for="keterangan" class="form-label"><i class="fas fa-comment me-2"></i>Keterangan</label>
@@ -149,15 +231,49 @@
     document.addEventListener('DOMContentLoaded', function() {
         flatpickr("#tanggal", {
             dateFormat: "d-m-Y",
-            defaultDate: "today"
+            defaultDate: "today",
+            allowInput: true,
+            clickOpens: true,
+            onOpen: function(selectedDates, dateStr, instance) {
+                instance.setDate(instance.input.value, false);
+            },
+            disableMobile: "true",
+            monthSelectorType: "static",
+            animate: true
         });
 
         document.querySelectorAll('.meal-group').forEach(group => {
             const radios = group.querySelectorAll('input[type="radio"]');
             const customInput = group.querySelector('.custom-input');
+            const lainnyaRadio = group.querySelector('input[value="custom"]');
+            const lainnyaLabel = lainnyaRadio.nextElementSibling;
+            
             radios.forEach(radio => {
-                radio.addEventListener('change', function() {
-                    customInput.style.display = this.value === 'custom' ? 'inline-block' : 'none';
+                radio.addEventListener('click', function(event) {
+                    if (this.checked) {
+                        if (this.dataset.wasChecked === 'true') {
+                            this.checked = false;
+                            this.dataset.wasChecked = 'false';
+                            customInput.style.display = 'none';
+                            if (this.value === 'custom') {
+                                lainnyaLabel.style.display = 'inline';
+                            }
+                        } else {
+                            radios.forEach(r => r.dataset.wasChecked = 'false');
+                            this.dataset.wasChecked = 'true';
+                            customInput.style.display = this.value === 'custom' ? 'inline-block' : 'none';
+                            if (this.value === 'custom') {
+                                lainnyaLabel.style.display = 'none';
+                                customInput.focus();
+                            }
+                        }
+                    }
+                    
+                    radios.forEach(r => {
+                        if (r.value === 'custom') {
+                            r.nextElementSibling.style.display = r.checked ? 'none' : 'inline';
+                        }
+                    });
                 });
             });
         });
