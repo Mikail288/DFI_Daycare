@@ -149,8 +149,6 @@
     </div>
   </div>
 </div>
-
-<!-- Add Child Modal -->
 <div class="modal fade" id="addChildModal" tabindex="-1" aria-labelledby="addChildModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

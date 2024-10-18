@@ -40,7 +40,6 @@ class ChildController extends Controller
         $child = Child::findOrFail($id);
         $today = Carbon::now()->format('Y-m-d');
 
-        // Validasi input
         $validatedData = $request->validate([
             'nama_pendamping' => 'required|string',
             'tanggal' => 'required|date_format:d-m-Y',
@@ -67,10 +66,8 @@ class ChildController extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
-        // Konversi tanggal ke format Y-m-d
         $tanggal = Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
 
-        // Proses kegiatan outdoor
         $kegiatanOutdoor = $request->kegiatan_outdoor ?? [];
         $kegiatanOutdoorLainnya = $request->kegiatan_outdoor_lainnya;
 
@@ -84,19 +81,15 @@ class ChildController extends Controller
 
         $validatedData['kegiatan_outdoor'] = json_encode($kegiatanOutdoor);
 
-        // Hapus kegiatan_outdoor_lainnya dari validatedData karena tidak ada kolom seperti itu
         unset($validatedData['kegiatan_outdoor_lainnya']);
 
-        // Update data di tabel children
         $validatedData['tanggal'] = $tanggal;
         $child->update($validatedData);
 
-        // Hapus entri sebelumnya untuk tanggal yang sama (jika ada)
         ChildHistory::where('child_id', $child->id)
             ->whereDate('tanggal', $tanggal)
             ->delete();
 
-        // Simpan data baru ke child_history
         $childHistory = new ChildHistory($validatedData);
         $childHistory->child_id = $child->id;
         $childHistory->save();
@@ -107,21 +100,17 @@ class ChildController extends Controller
     public function editStatus($id)
     {
         $child = Child::findOrFail($id);
-        
-        // Ambil data riwayat untuk tanggal hari ini
         $today = Carbon::now()->format('Y-m-d');
         $todayHistory = $child->histories()
             ->whereDate('tanggal', $today)
             ->latest()
             ->first();
 
-        // Jika ada riwayat hari ini, gunakan data tersebut
         if ($todayHistory) {
             $child->fill($todayHistory->toArray());
             $child->tanggal = $today;
             $child->kegiatan_outdoor = json_decode($todayHistory->kegiatan_outdoor, true);
         } else {
-            // Jika tidak ada riwayat hari ini, gunakan data dari tabel children
             $child->tanggal = $today;
             $child->kegiatan_outdoor = json_decode($child->kegiatan_outdoor, true);
         }

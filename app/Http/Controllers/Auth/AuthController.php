@@ -205,10 +205,8 @@ class AuthController extends Controller
     {
         $user = User::findOrFail($id);
         
-        // Delete associated children
         $user->children()->delete();
-        
-        // Delete the user
+
         $user->delete();
 
         return redirect()->route('dashboardadmin')->with('success', 'Berhasil menghapus akun dan anak-anak yang terkait.');

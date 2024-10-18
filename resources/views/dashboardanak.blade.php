@@ -149,7 +149,6 @@
     </div>
 </main>
 
-<!-- Delete Child Modal -->
 <div class="modal fade" id="deleteChildModal" tabindex="-1" aria-labelledby="deleteChildModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">

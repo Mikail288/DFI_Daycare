@@ -214,7 +214,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- New section for water intake -->
                     <div class="mb-3">
                         <label class="form-label"><i class="fas fa-tint me-2"></i>Air Putih</label>
                         <div class="milk-container">
@@ -273,7 +272,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- New section for BAB -->
                     <div class="mb-3">
                         <label class="form-label"><i class="fas fa-poop me-2"></i>BAB (Buang Air Besar)</label>
                         <div class="milk-container">
@@ -303,7 +301,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- New section for Tidur -->
                     <div class="mb-3">
                         <label class="form-label"><i class="fas fa-bed me-2"></i>Tidur</label>
                         <div class="milk-container">
@@ -416,8 +413,6 @@
                 });
             });
         });
-
-        // Tambahkan kode berikut di bagian akhir fungsi DOMContentLoaded
         const lainnyaCheckbox = document.querySelector('#kegiatan_lainnya');
         const lainnyaText = document.querySelector('#kegiatan_outdoor_lainnya');
         const lainnyaLabel = lainnyaCheckbox.nextElementSibling;
@@ -433,8 +428,6 @@
                 lainnyaText.value = '';
             }
         });
-
-        // Jika 'lainnya' sudah dicentang saat halaman dimuat
         if (lainnyaCheckbox.checked) {
             lainnyaText.classList.remove('d-none');
             lainnyaLabel.classList.add('d-none');
