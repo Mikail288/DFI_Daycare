@@ -155,12 +155,13 @@
                     <div class="form-row mb-2">
                         <div>
                             <label for="nama_pendamping" class="form-label"><i class="fas fa-user me-2"></i>Nama Pendamping</label>
-                            <input type="text" class="form-control form-control-sm" id="nama_pendamping" name="nama_pendamping">
+                            <input type="text" class="form-control form-control-sm" id="nama_pendamping" name="nama_pendamping" value="{{ $child->nama_pendamping }}">
                         </div>
                         <div>
                             <label for="tanggal" class="form-label"><i class="fas fa-calendar-alt me-2"></i>Tanggal</label>
                             <div class="date-input-group">
-                                <input type="text" class="form-control form-control-sm" id="tanggal" name="tanggal" required>
+                                <input type="text" class="form-control form-control-sm" id="tanggal" name="tanggal" 
+                                    value="{{ $child->tanggal ? (\Carbon\Carbon::parse($child->tanggal)->format('d-m-Y')) : '' }}" required>
                                 <i class="fas fa-calendar-alt calendar-icon"></i>
                             </div>
                         </div>
@@ -172,14 +173,14 @@
                                 <h6><i class="fas fa-{{ $meal == 'Pagi' ? 'sun' : ($meal == 'Siang' ? 'cloud-sun' : 'moon') }} me-2"></i>{{ $meal }}</h6>
                                 @foreach(['1', '1/2', '1/3', '1/4'] as $value)
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="makan_{{ strtolower($meal) }}" id="makan_{{ strtolower($meal) }}_{{ str_replace('/', '_', $value) }}" value="{{ $value }}">
+                                        <input class="form-check-input" type="radio" name="makan_{{ strtolower($meal) }}" id="makan_{{ strtolower($meal) }}_{{ str_replace('/', '_', $value) }}" value="{{ $value }}" {{ $child->{"makan_" . strtolower($meal)} == $value ? 'checked' : '' }}>
                                         <label class="form-check-label" for="makan_{{ strtolower($meal) }}_{{ str_replace('/', '_', $value) }}">{{ $value }}</label>
                                     </div>
                                 @endforeach
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input lainnya-checkbox" type="radio" name="makan_{{ strtolower($meal) }}" id="makan_{{ strtolower($meal) }}_lainnya" value="custom">
+                                    <input class="form-check-input lainnya-checkbox" type="radio" name="makan_{{ strtolower($meal) }}" id="makan_{{ strtolower($meal) }}_lainnya" value="custom" {{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="makan_{{ strtolower($meal) }}_lainnya">Lainnya</label>
-                                    <input type="text" class="form-control form-control-sm custom-input" id="makan_{{ strtolower($meal) }}_custom" name="makan_{{ strtolower($meal) }}_custom" style="display: none;">
+                                    <input type="text" class="form-control form-control-sm custom-input" id="makan_{{ strtolower($meal) }}_custom" name="makan_{{ strtolower($meal) }}_custom" value="{{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? $child->{"makan_" . strtolower($meal)} : '' }}" style="{{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? 'display: inline-block;' : 'display: none;' }}">
                                 </div>
                             </div>
                         @endforeach
@@ -332,9 +333,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-2">
-                        <label for="keterangan" class="form-label"><i class="fas fa-comment me-2"></i>Keterangan</label>
-                        <textarea class="form-control form-control-sm" id="keterangan" name="keterangan" rows="3"></textarea>
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-running me-2"></i>Kegiatan Outdoor</label>
+                        <div>
+                            @php
+                                $kegiatanOptions = ['berjemur', 'jalan jalan', 'olahraga', 'grounding', 'mandi bola', 'main pasir', 'main air/busa', 'lainnya'];
+                                $selectedKegiatan = is_array($child->kegiatan_outdoor) ? $child->kegiatan_outdoor : json_decode($child->kegiatan_outdoor ?? '[]', true);
+                            @endphp
+                            @foreach($kegiatanOptions as $kegiatan)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input kegiatan-checkbox" type="checkbox" name="kegiatan_outdoor[]" value="{{ $kegiatan }}" id="kegiatan_{{ $kegiatan }}" {{ in_array($kegiatan, $selectedKegiatan) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="kegiatan_{{ $kegiatan }}">{{ ucfirst($kegiatan) }}</label>
+                                    @if($kegiatan == 'lainnya')
+                                        <input type="text" class="form-control form-control-sm d-none ms-2" id="kegiatan_outdoor_lainnya" name="kegiatan_outdoor_lainnya" style="width: 150px;" value="{{ $child->kegiatan_outdoor_lainnya ?? '' }}">
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="keterangan" class="form-label">Keterangan</label>
+                        <textarea class="form-control" id="keterangan" name="keterangan" rows="3">{{ $child->keterangan }}</textarea>
                     </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary btn-sm"><i class="fas fa-save me-2"></i>Update</button>
@@ -397,6 +416,29 @@
                 });
             });
         });
+
+        // Tambahkan kode berikut di bagian akhir fungsi DOMContentLoaded
+        const lainnyaCheckbox = document.querySelector('#kegiatan_lainnya');
+        const lainnyaText = document.querySelector('#kegiatan_outdoor_lainnya');
+        const lainnyaLabel = lainnyaCheckbox.nextElementSibling;
+
+        lainnyaCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                lainnyaText.classList.remove('d-none');
+                lainnyaLabel.classList.add('d-none');
+                lainnyaText.focus();
+            } else {
+                lainnyaText.classList.add('d-none');
+                lainnyaLabel.classList.remove('d-none');
+                lainnyaText.value = '';
+            }
+        });
+
+        // Jika 'lainnya' sudah dicentang saat halaman dimuat
+        if (lainnyaCheckbox.checked) {
+            lainnyaText.classList.remove('d-none');
+            lainnyaLabel.classList.add('d-none');
+        }
     });
     </script>
 </body>

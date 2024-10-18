@@ -37,6 +37,7 @@ return new class extends Migration
             $table->integer('tidur_pagi')->nullable();
             $table->integer('tidur_siang')->nullable();
             $table->integer('tidur_sore')->nullable();
+            $table->json('kegiatan_outdoor')->nullable();
             $table->timestamps();
         });
     }

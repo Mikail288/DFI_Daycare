@@ -140,52 +140,69 @@
                             <div class="col-md-4 info-col">
                                 <div class="info-card">
                                     <h5><i class="fas fa-utensils me-2"></i>Makan</h5>
-                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->makan_pagi ?? 'Belum' }}</small></p>
-                                    <p class="mb-1"><small>Siang: {{ $selectedChild->makan_siang ?? 'Belum' }}</small></p>
-                                    <p class="mb-1"><small>Sore: {{ $selectedChild->makan_sore ?? 'Belum' }}</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $selectedChild->makan_pagi ?? 'Belum' }}</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $selectedChild->makan_siang ?? 'Belum' }}</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $selectedChild->makan_sore ?? 'Belum' }}</small></p>
                                 </div>
                             </div>
                             <div class="col-md-4 info-col">
                                 <div class="info-card">
                                     <h5><i class="fas fa-bottle-water me-2"></i>Susu</h5>
-                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->susu_pagi ?? "-" }} ml</small></p>
-                                    <p class="mb-1"><small>Siang: {{ $selectedChild->susu_siang ?? "-" }} ml</small></p>
-                                    <p class="mb-1"><small>Sore: {{ $selectedChild->susu_sore ?? "-" }} ml</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $selectedChild->susu_pagi ?? "-" }} ml</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $selectedChild->susu_siang ?? "-" }} ml</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $selectedChild->susu_sore ?? "-" }} ml</small></p>
                                 </div>
                             </div>
                             <div class="col-md-4 info-col">
                                 <div class="info-card">
                                     <h5><i class="fas fa-tint me-2"></i>Air Putih</h5>
-                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->air_putih_pagi ?? "-" }} ml</small></p>
-                                    <p class="mb-1"><small>Siang: {{ $selectedChild->air_putih_siang ?? "-" }} ml</small></p>
-                                    <p class="mb-1"><small>Sore: {{ $selectedChild->air_putih_sore ?? "-" }} ml</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $selectedChild->air_putih_pagi ?? "-" }} ml</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $selectedChild->air_putih_siang ?? "-" }} ml</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $selectedChild->air_putih_sore ?? "-" }} ml</small></p>
                                 </div>
                             </div>
-                            <!-- New BAK info -->
                             <div class="col-md-4 info-col">
                                 <div class="info-card">
                                     <h5><i class="fas fa-toilet me-2"></i>BAK</h5>
-                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->bak_pagi ?? "-" }} X</small></p>
-                                    <p class="mb-1"><small>Siang: {{ $selectedChild->bak_siang ?? "-" }} X</small></p>
-                                    <p class="mb-1"><small>Sore: {{ $selectedChild->bak_sore ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $selectedChild->bak_pagi ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $selectedChild->bak_siang ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $selectedChild->bak_sore ?? "-" }} X</small></p>
                                 </div>
                             </div>
                             <!-- New BAB info -->
                             <div class="col-md-4 info-col">
                                 <div class="info-card">
                                     <h5><i class="fas fa-poop me-2"></i>BAB</h5>
-                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->bab_pagi ?? "-" }} X</small></p>
-                                    <p class="mb-1"><small>Siang: {{ $selectedChild->bab_siang ?? "-" }} X</small></p>
-                                    <p class="mb-1"><small>Sore: {{ $selectedChild->bab_sore ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $selectedChild->bab_pagi ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $selectedChild->bab_siang ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $selectedChild->bab_sore ?? "-" }} X</small></p>
                                 </div>
                             </div>
-                            <!-- New Tidur info -->
                             <div class="col-md-4 info-col">
                                 <div class="info-card">
                                     <h5><i class="fas fa-bed me-2"></i>Tidur</h5>
-                                    <p class="mb-1"><small>Pagi: {{ $selectedChild->tidur_pagi ?? "-" }} X</small></p>
-                                    <p class="mb-1"><small>Siang: {{ $selectedChild->tidur_siang ?? "-" }} X</small></p>
-                                    <p class="mb-1"><small>Sore: {{ $selectedChild->tidur_sore ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $selectedChild->tidur_pagi ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $selectedChild->tidur_siang ?? "-" }} X</small></p>
+                                    <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $selectedChild->tidur_sore ?? "-" }} X</small></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 info-col">
+                                <div class="info-card">
+                                    <h5><i class="fas fa-running me-2"></i>Kegiatan Outdoor</h5>
+                                    <small>
+                                        @php
+                                            $kegiatan = json_decode($selectedChild->kegiatan_outdoor, true) ?? [];
+                                        @endphp
+                                        @if(count($kegiatan) > 0)
+                                            <ul class="list-unstyled mb-0">
+                                                @foreach($kegiatan as $item)
+                                                    <li>- {{ $item }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <p>Tidak ada kegiatan outdoor</p>
+                                        @endif
+                                    </small>
                                 </div>
                             </div>
                         </div>
@@ -222,49 +239,68 @@
                                         <div class="col-md-4 info-col">
                                             <div class="info-card">
                                                 <h5><i class="fas fa-utensils me-2"></i>Makan</h5>
-                                                <p class="mb-1"><small>Pagi: {{ $history->makan_pagi ?? 'Belum' }}</small></p>
-                                                <p class="mb-1"><small>Siang: {{ $history->makan_siang ?? 'Belum' }}</small></p>
-                                                <p class="mb-1"><small>Sore: {{ $history->makan_sore ?? 'Belum' }}</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $history->makan_pagi ?? 'Belum' }}</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $history->makan_siang ?? 'Belum' }}</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->makan_sore ?? 'Belum' }}</small></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4 info-col">
                                             <div class="info-card">
                                                 <h5><i class="fas fa-bottle-water me-2"></i>Susu</h5>
-                                                <p class="mb-1"><small>Pagi: {{ $history->susu_pagi ?? "-" }} ml</small></p>
-                                                <p class="mb-1"><small>Siang: {{ $history->susu_siang ?? "-" }} ml</small></p>
-                                                <p class="mb-1"><small>Sore: {{ $history->susu_sore ?? "-" }} ml</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $history->susu_pagi ?? "-" }} ml</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $history->susu_siang ?? "-" }} ml</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->susu_sore ?? "-" }} ml</small></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4 info-col">
                                             <div class="info-card">
                                                 <h5><i class="fas fa-tint me-2"></i>Air Putih</h5>
-                                                <p class="mb-1"><small>Pagi: {{ $history->air_putih_pagi ?? "-" }} ml</small></p>
-                                                <p class="mb-1"><small>Siang: {{ $history->air_putih_siang ?? "-" }} ml</small></p>
-                                                <p class="mb-1"><small>Sore: {{ $history->air_putih_sore ?? "-" }} ml</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $history->air_putih_pagi ?? "-" }} ml</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $history->air_putih_siang ?? "-" }} ml</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->air_putih_sore ?? "-" }} ml</small></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4 info-col">
                                             <div class="info-card">
                                                 <h5><i class="fas fa-toilet me-2"></i>BAK</h5>
-                                                <p class="mb-1"><small>Pagi: {{ $history->bak_pagi ?? "-" }} X</small></p>
-                                                <p class="mb-1"><small>Siang: {{ $history->bak_siang ?? "-" }} X</small></p>
-                                                <p class="mb-1"><small>Sore: {{ $history->bak_sore ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $history->bak_pagi ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $history->bak_siang ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->bak_sore ?? "-" }} X</small></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4 info-col">
                                             <div class="info-card">
                                                 <h5><i class="fas fa-poop me-2"></i>BAB</h5>
-                                                <p class="mb-1"><small>Pagi: {{ $history->bab_pagi ?? "-" }} X</small></p>
-                                                <p class="mb-1"><small>Siang: {{ $history->bab_siang ?? "-" }} X</small></p>
-                                                <p class="mb-1"><small>Sore: {{ $history->bab_sore ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $history->bab_pagi ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $history->bab_siang ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->bab_sore ?? "-" }} X</small></p>
                                             </div>
                                         </div>
                                         <div class="col-md-4 info-col">
                                             <div class="info-card">
                                                 <h5><i class="fas fa-bed me-2"></i>Tidur</h5>
-                                                <p class="mb-1"><small>Pagi: {{ $history->tidur_pagi ?? "-" }} X</small></p>
-                                                <p class="mb-1"><small>Siang: {{ $history->tidur_siang ?? "-" }} X</small></p>
-                                                <p class="mb-1"><small>Sore: {{ $history->tidur_sore ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $history->tidur_pagi ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $history->tidur_siang ?? "-" }} X</small></p>
+                                                <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->tidur_sore ?? "-" }} X</small></p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 info-col">
+                                            <div class="info-card">
+                                                <h5><i class="fas fa-running me-2"></i>Kegiatan Outdoor</h5>
+                                                <small>
+                                                    @php
+                                                        $kegiatan = json_decode($selectedChild->kegiatan_outdoor, true) ?? [];
+                                                    @endphp
+                                                    @if(count($kegiatan) > 0)
+                                                        <ul class="list-unstyled mb-0">
+                                                            @foreach($kegiatan as $item)
+                                                                <li>- {{ $item }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @else
+                                                        <p>Tidak ada kegiatan outdoor</p>
+                                                    @endif
+                                                </small>
                                             </div>
                                         </div>
                                     </div>

@@ -6,6 +6,7 @@ use App\Models\Child;
 use App\Models\ChildHistory;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ChildController extends Controller
 {
@@ -37,66 +38,94 @@ class ChildController extends Controller
     public function updateStatus(Request $request, $id)
     {
         $child = Child::findOrFail($id);
+        $today = Carbon::now()->format('Y-m-d');
 
+        // Validasi input
         $validatedData = $request->validate([
+            'nama_pendamping' => 'required|string',
+            'tanggal' => 'required|date_format:d-m-Y',
             'makan_pagi' => 'nullable|string',
             'makan_siang' => 'nullable|string',
             'makan_sore' => 'nullable|string',
-            'makan_pagi_custom' => 'nullable|string',
-            'makan_siang_custom' => 'nullable|string',
-            'makan_sore_custom' => 'nullable|string',
-            'tanggal' => 'required|date_format:d-m-Y',
+            'susu_pagi' => 'nullable|integer',
+            'susu_siang' => 'nullable|integer',
+            'susu_sore' => 'nullable|integer',
+            'air_putih_pagi' => 'nullable|integer',
+            'air_putih_siang' => 'nullable|integer',
+            'air_putih_sore' => 'nullable|integer',
+            'bak_pagi' => 'nullable|integer',
+            'bak_siang' => 'nullable|integer',
+            'bak_sore' => 'nullable|integer',
+            'bab_pagi' => 'nullable|integer',
+            'bab_siang' => 'nullable|integer',
+            'bab_sore' => 'nullable|integer',
+            'tidur_pagi' => 'nullable|integer',
+            'tidur_siang' => 'nullable|integer',
+            'tidur_sore' => 'nullable|integer',
+            'kegiatan_outdoor' => 'nullable|array',
+            'kegiatan_outdoor_lainnya' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string',
-            'nama_pendamping' => 'nullable|string|max:255',
-            'susu_pagi' => 'nullable|integer|min:0',
-            'susu_siang' => 'nullable|integer|min:0',
-            'susu_sore' => 'nullable|integer|min:0',
-            'air_putih_pagi' => 'nullable|integer|min:0',
-            'air_putih_siang' => 'nullable|integer|min:0',
-            'air_putih_sore' => 'nullable|integer|min:0',
-            'bak_pagi' => 'nullable|integer|min:0',
-            'bak_siang' => 'nullable|integer|min:0',
-            'bak_sore' => 'nullable|integer|min:0',
-            'bab_pagi' => 'nullable|integer|min:0',
-            'bab_siang' => 'nullable|integer|min:0',
-            'bab_sore' => 'nullable|integer|min:0',
-            'tidur_pagi' => 'nullable|integer|min:0',
-            'tidur_siang' => 'nullable|integer|min:0',
-            'tidur_sore' => 'nullable|integer|min:0',
         ]);
 
-        $child->saveHistory();
+        // Konversi tanggal ke format Y-m-d
+        $tanggal = Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
 
-        $child->update([
-            'makan_pagi' => $validatedData['makan_pagi'] === 'custom' ? $validatedData['makan_pagi_custom'] : $validatedData['makan_pagi'],
-            'makan_siang' => $validatedData['makan_siang'] === 'custom' ? $validatedData['makan_siang_custom'] : $validatedData['makan_siang'],
-            'makan_sore' => $validatedData['makan_sore'] === 'custom' ? $validatedData['makan_sore_custom'] : $validatedData['makan_sore'],
-            'tanggal' => \Carbon\Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d'),
-            'keterangan' => $validatedData['keterangan'],
-            'nama_pendamping' => $validatedData['nama_pendamping'],
-            'susu_pagi' => $validatedData['susu_pagi'],
-            'susu_siang' => $validatedData['susu_siang'],
-            'susu_sore' => $validatedData['susu_sore'],
-            'air_putih_pagi' => $validatedData['air_putih_pagi'],
-            'air_putih_siang' => $validatedData['air_putih_siang'],
-            'air_putih_sore' => $validatedData['air_putih_sore'],
-            'bak_pagi' => $validatedData['bak_pagi'],
-            'bak_siang' => $validatedData['bak_siang'],
-            'bak_sore' => $validatedData['bak_sore'],
-            'bab_pagi' => $validatedData['bab_pagi'],
-            'bab_siang' => $validatedData['bab_siang'],
-            'bab_sore' => $validatedData['bab_sore'],
-            'tidur_pagi' => $validatedData['tidur_pagi'],
-            'tidur_siang' => $validatedData['tidur_siang'],
-            'tidur_sore' => $validatedData['tidur_sore'],
-        ]);
+        // Proses kegiatan outdoor
+        $kegiatanOutdoor = $request->kegiatan_outdoor ?? [];
+        $kegiatanOutdoorLainnya = $request->kegiatan_outdoor_lainnya;
 
-        return redirect()->route('dashboardanak')->with('success', 'Status anak berhasil diperbarui');
+        if (in_array('lainnya', $kegiatanOutdoor) && $kegiatanOutdoorLainnya) {
+            $key = array_search('lainnya', $kegiatanOutdoor);
+            if ($key !== false) {
+                unset($kegiatanOutdoor[$key]);
+                $kegiatanOutdoor[] = $kegiatanOutdoorLainnya;
+            }
+        }
+
+        $validatedData['kegiatan_outdoor'] = json_encode($kegiatanOutdoor);
+
+        // Hapus kegiatan_outdoor_lainnya dari validatedData karena tidak ada kolom seperti itu
+        unset($validatedData['kegiatan_outdoor_lainnya']);
+
+        // Update data di tabel children
+        $validatedData['tanggal'] = $tanggal;
+        $child->update($validatedData);
+
+        // Hapus entri sebelumnya untuk tanggal yang sama (jika ada)
+        ChildHistory::where('child_id', $child->id)
+            ->whereDate('tanggal', $tanggal)
+            ->delete();
+
+        // Simpan data baru ke child_history
+        $childHistory = new ChildHistory($validatedData);
+        $childHistory->child_id = $child->id;
+        $childHistory->save();
+
+        return redirect()->route('dashboardanak')->with('success', 'Status anak berhasil diperbarui dan riwayat terbaru disimpan.');
     }
 
     public function editStatus($id)
     {
         $child = Child::findOrFail($id);
+        
+        // Ambil data riwayat untuk tanggal hari ini
+        $today = Carbon::now()->format('Y-m-d');
+        $todayHistory = $child->histories()
+            ->whereDate('tanggal', $today)
+            ->latest()
+            ->first();
+
+        // Jika ada riwayat hari ini, gunakan data tersebut
+        if ($todayHistory) {
+            $child->fill($todayHistory->toArray());
+            $child->tanggal = $today;
+            $child->kegiatan_outdoor = json_decode($todayHistory->kegiatan_outdoor, true);
+        } else {
+            // Jika tidak ada riwayat hari ini, gunakan data dari tabel children
+            $child->tanggal = $today;
+            $child->kegiatan_outdoor = json_decode($child->kegiatan_outdoor, true);
+        }
+
         return view('updatestatus', compact('child'));
     }
 }
