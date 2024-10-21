@@ -326,13 +326,16 @@
                     @if($selectedChild && $selectedChild->histories->count() > 0)
                         @foreach($selectedChild->histories->sortByDesc('tanggal') as $history)
                             <div class="card history-card mx-n2 mb-3">
-                                <div class="card-header">
-                                    <h5 class="mb-0">
-                                        <i class="fas fa-calendar me-2"></i>
-                                        {{ \Carbon\Carbon::parse($history->tanggal)->format('d/m/Y') }}
+                                <div class="card-header" role="button" onclick="toggleHistory({{ $history->id }})">
+                                    <h5 class="mb-0 d-flex justify-content-between align-items-center">
+                                        <span>
+                                            <i class="fas fa-calendar me-2"></i>
+                                            {{ \Carbon\Carbon::parse($history->tanggal)->format('d/m/Y') }}
+                                        </span>
+                                        <i class="fas fa-chevron-down toggle-icon" id="toggle-icon-{{ $history->id }}"></i>
                                     </h5>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body collapse" id="history-{{ $history->id }}">
                                     <div class="row info-row">
                                         <div class="col-md-4 info-col">
                                             <div class="info-card">
@@ -543,5 +546,21 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+function toggleHistory(id) {
+    const historyElement = document.getElementById(`history-${id}`);
+    const toggleIcon = document.getElementById(`toggle-icon-${id}`);
+    
+    if (historyElement.classList.contains('show')) {
+        historyElement.classList.remove('show');
+        toggleIcon.classList.remove('fa-chevron-up');
+        toggleIcon.classList.add('fa-chevron-down');
+    } else {
+        historyElement.classList.add('show');
+        toggleIcon.classList.remove('fa-chevron-down');
+        toggleIcon.classList.add('fa-chevron-up');
+    }
+}
+</script>
 </body>
 </html>
