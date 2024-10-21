@@ -69,6 +69,12 @@ class ChildController extends Controller
             'keterangan' => 'nullable|string',
             'kegiatan_indoor' => 'nullable|array',
             'kegiatan_indoor_lainnya' => 'nullable|string|max:255',
+            'makanan_camilan_pagi' => 'nullable|array',
+            'makanan_camilan_siang' => 'nullable|array',
+            'makanan_camilan_sore' => 'nullable|array',
+            'makanan_camilan_pagi.*' => 'nullable|string',
+            'makanan_camilan_siang.*' => 'nullable|string',
+            'makanan_camilan_sore.*' => 'nullable|string',
         ]);
 
         $tanggal = Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
@@ -112,6 +118,12 @@ class ChildController extends Controller
         unset($validatedData['kegiatan_indoor_lainnya']);
 
         $validatedData['tanggal'] = $tanggal;
+
+        // Mengubah array menjadi JSON sebelum menyimpan ke database
+        $validatedData['makanan_camilan_pagi'] = json_encode(array_filter($validatedData['makanan_camilan_pagi'] ?? []));
+        $validatedData['makanan_camilan_siang'] = json_encode(array_filter($validatedData['makanan_camilan_siang'] ?? []));
+        $validatedData['makanan_camilan_sore'] = json_encode(array_filter($validatedData['makanan_camilan_sore'] ?? []));
+
         $child->update($validatedData);
 
         ChildHistory::where('child_id', $child->id)
@@ -141,6 +153,9 @@ class ChildController extends Controller
             $child->fill($todayHistory->toArray());
             $child->kegiatan_outdoor = json_decode($todayHistory->kegiatan_outdoor, true) ?? [];
             $child->kegiatan_indoor = json_decode($todayHistory->kegiatan_indoor, true) ?? [];
+            $child->makanan_camilan_pagi = $todayHistory->makanan_camilan_pagi;
+            $child->makanan_camilan_siang = $todayHistory->makanan_camilan_siang;
+            $child->makanan_camilan_sore = $todayHistory->makanan_camilan_sore;
         } else {
             // Jika tidak ada riwayat hari ini, reset semua field
             $fieldsToReset = [
@@ -165,6 +180,10 @@ class ChildController extends Controller
             // Set kegiatan_outdoor dan kegiatan_indoor ke array kosong
             $child->kegiatan_outdoor = [];
             $child->kegiatan_indoor = [];
+
+            $child->makanan_camilan_pagi = null;
+            $child->makanan_camilan_siang = null;
+            $child->makanan_camilan_sore = null;
         }
 
         // Selalu set tanggal ke hari ini

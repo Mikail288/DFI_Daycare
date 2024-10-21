@@ -39,6 +39,9 @@ return new class extends Migration
             $table->integer('tidur_sore')->nullable();
             $table->json('kegiatan_outdoor')->nullable();
             $table->json('kegiatan_indoor')->nullable();
+            $table->text('makanan_camilan_pagi')->nullable();
+            $table->text('makanan_camilan_siang')->nullable();
+            $table->text('makanan_camilan_sore')->nullable();
             $table->timestamps();
         });
     }

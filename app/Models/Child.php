@@ -36,6 +36,9 @@ class Child extends Model
         'tidur_sore',
         'kegiatan_outdoor',
         'kegiatan_indoor',
+        'makanan_camilan_pagi',
+        'makanan_camilan_siang',
+        'makanan_camilan_sore',
     ];
 
     protected $dates = ['tanggal'];
@@ -77,6 +80,9 @@ class Child extends Model
             'tidur_sore' => $this->tidur_sore,
             'kegiatan_outdoor' => $this->kegiatan_outdoor,
             'kegiatan_indoor' => $this->kegiatan_indoor,
+            'makanan_camilan_pagi' => $this->makanan_camilan_pagi,
+            'makanan_camilan_siang' => $this->makanan_camilan_siang,
+            'makanan_camilan_sore' => $this->makanan_camilan_sore,
         ]);
     }
 }

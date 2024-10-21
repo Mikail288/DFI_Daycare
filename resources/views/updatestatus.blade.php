@@ -366,6 +366,26 @@
                             @endforeach
                         </div>
                     </div>
+                    <!-- Tambahkan setelah bagian kegiatan outdoor -->
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-utensils me-2"></i>Menu Makanan dan Camilan</label>
+                        <div class="row">
+                            @foreach(['pagi', 'siang', 'sore'] as $waktu)
+                                <div class="col-md-4 mb-3">
+                                    <label class="form-label">{{ ucfirst($waktu) }}</label>
+                                    @for($i = 1; $i <= 4; $i++)
+                                        <div class="mb-2">
+                                            <input type="text" class="form-control" 
+                                                   id="makanan_camilan_{{ $waktu }}_{{ $i }}" 
+                                                   name="makanan_camilan_{{ $waktu }}[]" 
+                                                   placeholder="Menu {{ $i }}"
+                                                   value="{{ isset($child->{"makanan_camilan_$waktu"}) ? (json_decode($child->{"makanan_camilan_$waktu"}, true)[$i-1] ?? '') : '' }}">
+                                        </div>
+                                    @endfor
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <label for="keterangan" class="form-label">Keterangan</label>
                         <textarea class="form-control" id="keterangan" name="keterangan" rows="3">{{ $child->keterangan }}</textarea>
