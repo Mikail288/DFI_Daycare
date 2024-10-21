@@ -46,6 +46,9 @@ class ChildController extends Controller
             'makan_pagi' => 'nullable|string',
             'makan_siang' => 'nullable|string',
             'makan_sore' => 'nullable|string',
+            'makan_pagi_custom' => 'nullable|string',
+            'makan_siang_custom' => 'nullable|string',
+            'makan_sore_custom' => 'nullable|string',
             'susu_pagi' => 'nullable|integer',
             'susu_siang' => 'nullable|integer',
             'susu_sore' => 'nullable|integer',
@@ -67,6 +70,14 @@ class ChildController extends Controller
         ]);
 
         $tanggal = Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
+
+        // Handle custom makan inputs
+        foreach (['pagi', 'siang', 'sore'] as $waktu) {
+            if ($validatedData["makan_$waktu"] === 'custom') {
+                $validatedData["makan_$waktu"] = $validatedData["makan_{$waktu}_custom"] ?? 'custom';
+            }
+            unset($validatedData["makan_{$waktu}_custom"]);
+        }
 
         $kegiatanOutdoor = $request->kegiatan_outdoor ?? [];
         $kegiatanOutdoorLainnya = $request->kegiatan_outdoor_lainnya;
