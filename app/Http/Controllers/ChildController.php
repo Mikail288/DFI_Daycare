@@ -193,4 +193,10 @@ class ChildController extends Controller
 
         return view('updatestatus', compact('child'));
     }
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $children = Child::where('nama', 'LIKE', "%{$search}%")->get();
+        return view('dashboardanak', compact('children'));
+    }
 }

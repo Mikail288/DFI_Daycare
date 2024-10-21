@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::match(['put', 'post'], 'children/{id}/update-status', [ChildController::class, 'updateStatus'])->name('children.updateStatus');
     
     Route::get('children/{id}/edit-status', [ChildController::class, 'editStatus'])->name('children.editStatus');
+    
+    Route::get('/children/search', [ChildController::class, 'search'])->name('children.search');
 });
 
 Route::fallback(function () {

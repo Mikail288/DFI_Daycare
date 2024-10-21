@@ -34,17 +34,42 @@
       .floating-image:hover {
         transform: translateY(-10px);
       }
+      .input-group {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 25px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 2px solid #28a745;
+        max-width: 250px;
+      }
 
-      @keyframes float {
-        0% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-10px);
-        }
-        100% {
-          transform: translateY(0px);
-        }
+      .input-group:hover, .input-group:focus-within {
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        border-color: #218838;
+      }
+
+      .input-group .form-control {
+        border: none;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+      }
+
+      .input-group .btn {
+        border-radius: 0 23px 23px 0;
+        padding: 10px 15px;
+        background-color: #28a745;
+        border-color: #28a745;
+      }
+
+      .input-group .btn:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+      }
+
+      .input-group .form-control:focus,
+      .input-group .btn:focus {
+        box-shadow: none;
+        outline: none;
       }
     </style>
   </head>
@@ -99,17 +124,24 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="mb-0"><i class="fas fa-child me-2"></i>Daftar Anak</h3>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-child me-2"></i>Daftar Anak</h3>
+                <form action="{{ route('children.search') }}" method="GET">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Cari nama anak..." value="{{ request('search') }}" aria-label="Cari nama anak" aria-describedby="search-addon">
+                        <button class="btn btn-primary" type="submit" id="search-addon">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead class="table-light">
                         <tr>
-                            <th>ID</th>
                             <th>Nama</th>
-                            <th>Makan</th>
-                            <th>Minum Obat</th>
                             <th>Tanggal</th>
                             <th>Keterangan</th>
                             <th>Actions</th>
@@ -118,18 +150,7 @@
                     <tbody>
                         @foreach ($children as $child)
                             <tr>
-                                <td>{{ $child->id }}</td>
                                 <td>{{ $child->nama }}</td>
-                                <td>
-                                    <span class="badge bg-{{ $child->sudah_makan ? 'success' : 'danger' }}">
-                                        {{ $child->sudah_makan ? 'Sudah' : 'Belum' }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-{{ $child->sudah_minum_obat ? 'success' : 'danger' }}">
-                                        {{ $child->sudah_minum_obat ? 'Sudah' : 'Belum' }}
-                                    </span>
-                                </td>
                                 <td>{{ \Carbon\Carbon::parse($child->tanggal)->format('d-m-Y') }}</td>
                                 <td>{{ $child->keterangan ?? '-' }}</td>
                                 <td>
@@ -186,6 +207,26 @@
     form.action = '{{ route("children.destroy", "") }}/' + childId;
     childNameToDelete.textContent = childName;
   });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const tableRows = document.querySelectorAll('table tbody tr');
+
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+
+        tableRows.forEach(row => {
+            const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
+            if (name.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+});
 </script>
 
 </body>

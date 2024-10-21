@@ -242,13 +242,13 @@
                                     <h5><i class="fas fa-pills me-2"></i>Obat</h5>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: Jam {{ $selectedChild->obat_pagi ?? 'Tidak ada' }}</small></p>
+                                            <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $selectedChild->obat_pagi ?? 'Tidak ada' }}</small></p>
                                         </div>
                                         <div class="col-md-4">
-                                            <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: Jam{{ $selectedChild->obat_siang ?? 'Tidak ada' }}</small></p>
+                                            <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $selectedChild->obat_siang ?? 'Tidak ada' }}</small></p>
                                         </div>
                                         <div class="col-md-4">
-                                            <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: Jam{{ $selectedChild->obat_sore ?? 'Tidak ada' }}</small></p>
+                                            <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $selectedChild->obat_sore ?? 'Tidak ada' }}</small></p>
                                         </div>
                                     </div>
                                 </div>
