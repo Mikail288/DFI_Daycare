@@ -67,6 +67,8 @@ class ChildController extends Controller
             'kegiatan_outdoor' => 'nullable|array',
             'kegiatan_outdoor_lainnya' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string',
+            'kegiatan_indoor' => 'nullable|array',
+            'kegiatan_indoor_lainnya' => 'nullable|string|max:255',
         ]);
 
         $tanggal = Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
@@ -93,6 +95,21 @@ class ChildController extends Controller
         $validatedData['kegiatan_outdoor'] = json_encode($kegiatanOutdoor);
 
         unset($validatedData['kegiatan_outdoor_lainnya']);
+
+        $kegiatanIndoor = $request->kegiatan_indoor ?? [];
+        $kegiatanIndoorLainnya = $request->kegiatan_indoor_lainnya;
+
+        if (in_array('lainnya', $kegiatanIndoor) && $kegiatanIndoorLainnya) {
+            $key = array_search('lainnya', $kegiatanIndoor);
+            if ($key !== false) {
+                unset($kegiatanIndoor[$key]);
+                $kegiatanIndoor[] = $kegiatanIndoorLainnya;
+            }
+        }
+
+        $validatedData['kegiatan_indoor'] = json_encode($kegiatanIndoor);
+
+        unset($validatedData['kegiatan_indoor_lainnya']);
 
         $validatedData['tanggal'] = $tanggal;
         $child->update($validatedData);
@@ -121,9 +138,11 @@ class ChildController extends Controller
             $child->fill($todayHistory->toArray());
             $child->tanggal = $today;
             $child->kegiatan_outdoor = json_decode($todayHistory->kegiatan_outdoor, true);
+            $child->kegiatan_indoor = json_decode($todayHistory->kegiatan_indoor, true);
         } else {
             $child->tanggal = $today;
             $child->kegiatan_outdoor = json_decode($child->kegiatan_outdoor, true);
+            $child->kegiatan_indoor = json_decode($child->kegiatan_indoor, true);
         }
 
         return view('updatestatus', compact('child'));

@@ -36,7 +36,7 @@ class ChildHistory extends Model
         'tidur_siang',
         'tidur_sore',
         'kegiatan_outdoor',
-        'kegiatan_outdoor_lainnya',
+        'kegiatan_indoor',
     ];
 
     protected $dates = ['tanggal'];

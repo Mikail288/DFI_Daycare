@@ -188,6 +188,25 @@
                             </div>
                             <div class="col-md-12 info-col">
                                 <div class="info-card">
+                                    <h5><i class="fas fa-home me-2"></i>Kegiatan Indoor</h5>
+                                    <small>
+                                        @php
+                                            $kegiatanIndoor = json_decode($selectedChild->kegiatan_indoor, true) ?? [];
+                                        @endphp
+                                        @if(count($kegiatanIndoor) > 0)
+                                            <ul class="list-unstyled mb-0">
+                                                @foreach($kegiatanIndoor as $item)
+                                                    <li>- {{ $item }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <p>Tidak ada kegiatan indoor</p>
+                                        @endif
+                                    </small>
+                                </div>
+                            </div>
+                            <div class="col-md-12 info-col">
+                                <div class="info-card">
                                     <h5><i class="fas fa-running me-2"></i>Kegiatan Outdoor</h5>
                                     <small>
                                         @php
@@ -286,10 +305,29 @@
                                         </div>
                                         <div class="col-md-4 info-col">
                                             <div class="info-card">
+                                                <h5><i class="fas fa-home me-2"></i>Kegiatan Indoor</h5>
+                                                <small>
+                                                    @php
+                                                        $kegiatanIndoor = json_decode($history->kegiatan_indoor, true) ?? [];
+                                                    @endphp
+                                                    @if(count($kegiatanIndoor) > 0)
+                                                        <ul class="list-unstyled mb-0">
+                                                            @foreach($kegiatanIndoor as $item)
+                                                                <li>- {{ $item }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @else
+                                                        <p>Tidak ada kegiatan indoor</p>
+                                                    @endif
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 info-col">
+                                            <div class="info-card">
                                                 <h5><i class="fas fa-running me-2"></i>Kegiatan Outdoor</h5>
                                                 <small>
                                                     @php
-                                                        $kegiatan = json_decode($selectedChild->kegiatan_outdoor, true) ?? [];
+                                                        $kegiatan = json_decode($history->kegiatan_outdoor, true) ?? [];
                                                     @endphp
                                                     @if(count($kegiatan) > 0)
                                                         <ul class="list-unstyled mb-0">

@@ -331,6 +331,24 @@
                         </div>
                     </div>
                     <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-home me-2"></i>Kegiatan Indoor</label>
+                        <div>
+                            @php
+                                $kegiatanIndoorOptions = ['mengaji', 'senam', 'main bebas', 'bahasa inggris', 'belajar sensorik', 'belajar motorik', 'fun looking', 'toilet training', 'ke paud', 'lainnya'];
+                                $selectedKegiatanIndoor = is_array($child->kegiatan_indoor) ? $child->kegiatan_indoor : json_decode($child->kegiatan_indoor ?? '[]', true);
+                            @endphp
+                            @foreach($kegiatanIndoorOptions as $kegiatan)
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input kegiatan-indoor-checkbox" type="checkbox" name="kegiatan_indoor[]" value="{{ $kegiatan }}" id="kegiatan_indoor_{{ $kegiatan }}" {{ in_array($kegiatan, $selectedKegiatanIndoor) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="kegiatan_indoor_{{ $kegiatan }}">{{ ucfirst($kegiatan) }}</label>
+                                    @if($kegiatan == 'lainnya')
+                                        <input type="text" class="form-control form-control-sm d-none ms-2" id="kegiatan_indoor_lainnya" name="kegiatan_indoor_lainnya" style="width: 150px;" value="{{ $child->kegiatan_indoor_lainnya ?? '' }}">
+                                    @endif
+                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label"><i class="fas fa-running me-2"></i>Kegiatan Outdoor</label>
                         <div>
                             @php
@@ -431,6 +449,28 @@
         if (lainnyaCheckbox.checked) {
             lainnyaText.classList.remove('d-none');
             lainnyaLabel.classList.add('d-none');
+        }
+
+        // Perbaikan untuk kegiatan indoor
+        const lainnyaIndoorCheckbox = document.querySelector('#kegiatan_indoor_lainnya');
+        const lainnyaIndoorText = document.querySelector('input[name="kegiatan_indoor_lainnya"]');
+        const lainnyaIndoorLabel = lainnyaIndoorCheckbox.nextElementSibling;
+
+        lainnyaIndoorCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                lainnyaIndoorText.classList.remove('d-none');
+                lainnyaIndoorLabel.classList.add('d-none');
+                lainnyaIndoorText.focus();
+            } else {
+                lainnyaIndoorText.classList.add('d-none');
+                lainnyaIndoorLabel.classList.remove('d-none');
+                lainnyaIndoorText.value = '';
+            }
+        });
+
+        if (lainnyaIndoorCheckbox.checked) {
+            lainnyaIndoorText.classList.remove('d-none');
+            lainnyaIndoorLabel.classList.add('d-none');
         }
     });
     </script>

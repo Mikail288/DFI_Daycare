@@ -35,7 +35,7 @@ class Child extends Model
         'tidur_siang',
         'tidur_sore',
         'kegiatan_outdoor',
-        'kegiatan_outdoor_lainnya',
+        'kegiatan_indoor',
     ];
 
     protected $dates = ['tanggal'];
@@ -75,6 +75,8 @@ class Child extends Model
             'tidur_pagi' => $this->tidur_pagi,
             'tidur_siang' => $this->tidur_siang,
             'tidur_sore' => $this->tidur_sore,
+            'kegiatan_outdoor' => $this->kegiatan_outdoor,
+            'kegiatan_indoor' => $this->kegiatan_indoor,
         ]);
     }
 }
