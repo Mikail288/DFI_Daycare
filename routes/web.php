@@ -43,7 +43,9 @@ Route::middleware('auth')->group(function () {
     
     Route::get('children/{id}/edit-status', [ChildController::class, 'editStatus'])->name('children.editStatus');
     
-    Route::get('/children/search', [ChildController::class, 'search'])->name('children.search');
+    Route::get('/searchanak', [ChildController::class, 'search'])->name('children.search');
+    
+    Route::get('/searchuser', [AuthController::class, 'search'])->name('users.search');
 });
 
 Route::fallback(function () {

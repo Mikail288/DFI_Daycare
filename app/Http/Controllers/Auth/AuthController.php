@@ -217,4 +217,11 @@ class AuthController extends Controller
         $user = User::with('children')->findOrFail($id);
         return view('detailuser', compact('user'));
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->input('search');
+        $users = User::where('name', 'LIKE', "%{$search}%")->get();
+        return view('dashboardadmin', compact('users'));
+    }
 }

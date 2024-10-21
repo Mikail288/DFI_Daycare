@@ -33,6 +33,43 @@
         height: 32px;
         border-radius: 50%;
       }
+      .input-group {
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        border-radius: 25px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        border: 2px solid #007bff;
+        max-width: 250px;
+      }
+
+      .input-group:hover, .input-group:focus-within {
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        border-color: #0056b3;
+      }
+
+      .input-group .form-control {
+        border: none;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+      }
+
+      .input-group .btn {
+        border-radius: 0 23px 23px 0;
+        padding: 10px 15px;
+        background-color: #007bff;
+        border-color: #007bff;
+      }
+
+      .input-group .btn:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+      }
+
+      .input-group .form-control:focus,
+      .input-group .btn:focus {
+        box-shadow: none;
+        outline: none;
+      }
     </style>
   </head>
 <body>
@@ -88,7 +125,17 @@
 
     <div class="card">
         <div class="card-header">
-            <h3 class="mb-0"><i class="fas fa-users me-2"></i>User Management</h3>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mb-0"><i class="fas fa-users me-2"></i>User Management</h3>
+                <form action="{{ route('users.search') }}" method="GET">
+                    <div class="input-group">
+                        <input type="text" name="search" class="form-control" placeholder="Cari nama pengguna..." value="{{ request('search') }}" aria-label="Cari nama pengguna" aria-describedby="search-addon">
+                        <button class="btn btn-primary" type="submit" id="search-addon">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
         <div class="card-body">
             <div class="table-responsive">
