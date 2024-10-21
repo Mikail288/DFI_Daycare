@@ -41,6 +41,7 @@ return new class extends Migration
             $table->text('makanan_camilan_pagi')->nullable();
             $table->text('makanan_camilan_siang')->nullable();
             $table->text('makanan_camilan_sore')->nullable();
+            $table->string('kondisi')->nullable();
             $table->timestamps();
         });
     }

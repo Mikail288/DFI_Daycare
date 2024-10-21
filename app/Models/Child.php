@@ -39,6 +39,7 @@ class Child extends Model
         'makanan_camilan_pagi',
         'makanan_camilan_siang',
         'makanan_camilan_sore',
+        'kondisi',
     ];
 
     protected $dates = ['tanggal'];

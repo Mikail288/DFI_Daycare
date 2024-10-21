@@ -368,22 +368,121 @@
                     </div>
                     <!-- Tambahkan setelah bagian kegiatan outdoor -->
                     <div class="mb-3">
-                        <label class="form-label"><i class="fas fa-utensils me-2"></i>Menu Makanan dan Camilan</label>
+                        <label class="form-label"><i class="fas fa-utensils me-2"></i>Menu Makanan & Camilan</label>
                         <div class="row">
-                            @foreach(['pagi', 'siang', 'sore'] as $waktu)
-                                <div class="col-md-4 mb-3">
-                                    <label class="form-label">{{ ucfirst($waktu) }}</label>
-                                    @for($i = 1; $i <= 4; $i++)
-                                        <div class="mb-2">
-                                            <input type="text" class="form-control" 
-                                                   id="makanan_camilan_{{ $waktu }}_{{ $i }}" 
-                                                   name="makanan_camilan_{{ $waktu }}[]" 
-                                                   placeholder="Menu {{ $i }}"
-                                                   value="{{ isset($child->{"makanan_camilan_$waktu"}) ? (json_decode($child->{"makanan_camilan_$waktu"}, true)[$i-1] ?? '') : '' }}">
-                                        </div>
-                                    @endfor
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Pagi</label>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_pagi_1" 
+                                           name="makanan_camilan_pagi[]" 
+                                           placeholder="Menu 1"
+                                           value="{{ isset($child->makanan_camilan_pagi) ? (json_decode($child->makanan_camilan_pagi, true)[0] ?? '') : '' }}">
                                 </div>
-                            @endforeach
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_pagi_2" 
+                                           name="makanan_camilan_pagi[]" 
+                                           placeholder="Menu 2"
+                                           value="{{ isset($child->makanan_camilan_pagi) ? (json_decode($child->makanan_camilan_pagi, true)[1] ?? '') : '' }}">
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_pagi_3" 
+                                           name="makanan_camilan_pagi[]" 
+                                           placeholder="Menu 3"
+                                           value="{{ isset($child->makanan_camilan_pagi) ? (json_decode($child->makanan_camilan_pagi, true)[2] ?? '') : '' }}">
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_pagi_4" 
+                                           name="makanan_camilan_pagi[]" 
+                                           placeholder="Menu 4"
+                                           value="{{ isset($child->makanan_camilan_pagi) ? (json_decode($child->makanan_camilan_pagi, true)[3] ?? '') : '' }}">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Siang</label>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_siang_1" 
+                                           name="makanan_camilan_siang[]" 
+                                           placeholder="Menu 1"
+                                           value="{{ isset($child->makanan_camilan_siang) ? (json_decode($child->makanan_camilan_siang, true)[0] ?? '') : '' }}">
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_siang_2" 
+                                           name="makanan_camilan_siang[]" 
+                                           placeholder="Menu 2"
+                                           value="{{ isset($child->makanan_camilan_siang) ? (json_decode($child->makanan_camilan_siang, true)[1] ?? '') : '' }}">
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_siang_3" 
+                                           name="makanan_camilan_siang[]" 
+                                           placeholder="Menu 3"
+                                           value="{{ isset($child->makanan_camilan_siang) ? (json_decode($child->makanan_camilan_siang, true)[2] ?? '') : '' }}">
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_siang_4" 
+                                           name="makanan_camilan_siang[]" 
+                                           placeholder="Menu 4"
+                                           value="{{ isset($child->makanan_camilan_siang) ? (json_decode($child->makanan_camilan_siang, true)[3] ?? '') : '' }}">
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Sore</label>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_sore_1" 
+                                           name="makanan_camilan_sore[]" 
+                                           placeholder="Menu 1"
+                                           value="{{ isset($child->makanan_camilan_sore) ? (json_decode($child->makanan_camilan_sore, true)[0] ?? '') : '' }}">
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_sore_2" 
+                                           name="makanan_camilan_sore[]" 
+                                           placeholder="Menu 2"
+                                           value="{{ isset($child->makanan_camilan_sore) ? (json_decode($child->makanan_camilan_sore, true)[1] ?? '') : '' }}">
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_sore_3" 
+                                           name="makanan_camilan_sore[]" 
+                                           placeholder="Menu 3"
+                                           value="{{ isset($child->makanan_camilan_sore) ? (json_decode($child->makanan_camilan_sore, true)[2] ?? '') : '' }}">
+                                </div>
+                                <div class="mb-2">
+                                    <input type="text" class="form-control" 
+                                           id="makanan_camilan_sore_4" 
+                                           name="makanan_camilan_sore[]" 
+                                           placeholder="Menu 4"
+                                           value="{{ isset($child->makanan_camilan_sore) ? (json_decode($child->makanan_camilan_sore, true)[3] ?? '') : '' }}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tambahkan bagian ini setelah menu makanan & camilan -->
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-heartbeat me-2"></i>Kondisi Kesehatan</label>
+                        <div class="d-flex">
+                            <div class="form-check me-4">
+                                <input class="form-check-input" type="radio" name="kondisi" id="kondisi_sehat" value="sehat" {{ $child->kondisi === 'sehat' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="kondisi_sehat">
+                                    Sehat
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="kondisi" id="kondisi_sakit" value="sakit" {{ $child->kondisi === 'sakit' ? 'checked' : '' }}>
+                                <label class="form-check-label" for="kondisi_sakit">
+                                    Sakit
+                                </label>
+                            </div>
                         </div>
                     </div>
                     <div class="mb-3">

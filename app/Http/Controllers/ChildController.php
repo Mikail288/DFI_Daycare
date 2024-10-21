@@ -75,6 +75,7 @@ class ChildController extends Controller
             'makanan_camilan_pagi.*' => 'nullable|string',
             'makanan_camilan_siang.*' => 'nullable|string',
             'makanan_camilan_sore.*' => 'nullable|string',
+            'kondisi' => 'nullable|in:sehat,sakit',
         ]);
 
         $tanggal = Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
@@ -156,6 +157,7 @@ class ChildController extends Controller
             $child->makanan_camilan_pagi = $todayHistory->makanan_camilan_pagi;
             $child->makanan_camilan_siang = $todayHistory->makanan_camilan_siang;
             $child->makanan_camilan_sore = $todayHistory->makanan_camilan_sore;
+            $child->kondisi = $todayHistory->kondisi;
         } else {
             // Jika tidak ada riwayat hari ini, reset semua field
             $fieldsToReset = [
@@ -184,6 +186,7 @@ class ChildController extends Controller
             $child->makanan_camilan_pagi = null;
             $child->makanan_camilan_siang = null;
             $child->makanan_camilan_sore = null;
+            $child->kondisi = null;
         }
 
         // Selalu set tanggal ke hari ini
