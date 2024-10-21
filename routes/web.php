@@ -46,6 +46,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/searchanak', [ChildController::class, 'search'])->name('children.search');
     
     Route::get('/searchuser', [AuthController::class, 'search'])->name('users.search');
+    
+    Route::get('dashboard/{id}/history', [ChildController::class, 'showHistory'])->name('children.history');
 });
 
 Route::fallback(function () {

@@ -513,7 +513,7 @@
                         @endforeach
                         @if($selectedChild->histories->count() > 5)
                             <div class="text-center mt-3">
-                                <a href="#" class="btn btn-outline-primary btn-sm">Lihat Semua Riwayat</a>
+                                <a href="{{ route('children.history', $selectedChild->id) }}" class="btn btn-outline-primary btn-sm">Lihat Semua Riwayat</a>
                             </div>
                         @endif
                     @elseif($selectedChild)

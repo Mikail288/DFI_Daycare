@@ -199,4 +199,11 @@ class ChildController extends Controller
         $children = Child::where('nama', 'LIKE', "%{$search}%")->get();
         return view('dashboardanak', compact('children'));
     }
+
+    public function showHistory($id)
+    {
+        $child = Child::findOrFail($id);
+        $histories = $child->histories()->orderBy('tanggal', 'desc')->paginate(10);
+        return view('child_history', compact('child', 'histories'));
+    }
 }
