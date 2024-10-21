@@ -129,21 +129,46 @@ class ChildController extends Controller
     {
         $child = Child::findOrFail($id);
         $today = Carbon::now()->format('Y-m-d');
+        
+        // Cari riwayat untuk hari ini
         $todayHistory = $child->histories()
             ->whereDate('tanggal', $today)
             ->latest()
             ->first();
 
         if ($todayHistory) {
+            // Jika ada riwayat hari ini, gunakan data tersebut
             $child->fill($todayHistory->toArray());
-            $child->tanggal = $today;
-            $child->kegiatan_outdoor = json_decode($todayHistory->kegiatan_outdoor, true);
-            $child->kegiatan_indoor = json_decode($todayHistory->kegiatan_indoor, true);
+            $child->kegiatan_outdoor = json_decode($todayHistory->kegiatan_outdoor, true) ?? [];
+            $child->kegiatan_indoor = json_decode($todayHistory->kegiatan_indoor, true) ?? [];
         } else {
-            $child->tanggal = $today;
-            $child->kegiatan_outdoor = json_decode($child->kegiatan_outdoor, true);
-            $child->kegiatan_indoor = json_decode($child->kegiatan_indoor, true);
+            // Jika tidak ada riwayat hari ini, reset semua field
+            $fieldsToReset = [
+                'makan_pagi', 'makan_siang', 'makan_sore', 'nama_pendamping', 'sudah_minum_obat',
+                'susu_pagi', 'susu_siang', 'susu_sore',
+                'air_putih_pagi', 'air_putih_siang', 'air_putih_sore',
+                'bak_pagi', 'bak_siang', 'bak_sore',
+                'bab_pagi', 'bab_siang', 'bab_sore',
+                'tidur_pagi', 'tidur_siang', 'tidur_sore',
+                'kegiatan_outdoor', 'kegiatan_indoor', 'keterangan'
+            ];
+
+            foreach ($fieldsToReset as $field) {
+                $child->$field = null;
+            }
+
+            // Reset makan custom fields
+            $child->makan_pagi_custom = null;
+            $child->makan_siang_custom = null;
+            $child->makan_sore_custom = null;
+
+            // Set kegiatan_outdoor dan kegiatan_indoor ke array kosong
+            $child->kegiatan_outdoor = [];
+            $child->kegiatan_indoor = [];
         }
+
+        // Selalu set tanggal ke hari ini
+        $child->tanggal = $today;
 
         return view('updatestatus', compact('child'));
     }

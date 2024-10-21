@@ -178,9 +178,9 @@
                                     </div>
                                 @endforeach
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input lainnya-checkbox" type="radio" name="makan_{{ strtolower($meal) }}" id="makan_{{ strtolower($meal) }}_lainnya" value="custom" {{ !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? 'checked' : '' }}>
+                                    <input class="form-check-input lainnya-checkbox" type="radio" name="makan_{{ strtolower($meal) }}" id="makan_{{ strtolower($meal) }}_lainnya" value="custom" {{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="makan_{{ strtolower($meal) }}_lainnya">Lainnya</label>
-                                    <input type="text" class="form-control form-control-sm custom-input" id="makan_{{ strtolower($meal) }}_custom" name="makan_{{ strtolower($meal) }}_custom" value="{{ !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? $child->{"makan_" . strtolower($meal)} : '' }}" style="{{ !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? 'display: inline-block;' : 'display: none;' }}">
+                                    <input type="text" class="form-control form-control-sm custom-input" id="makan_{{ strtolower($meal) }}_custom" name="makan_{{ strtolower($meal) }}_custom" value="{{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? $child->{"makan_" . strtolower($meal)} : '' }}" style="{{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? 'display: inline-block;' : 'display: none;' }}">
                                 </div>
                             </div>
                         @endforeach
