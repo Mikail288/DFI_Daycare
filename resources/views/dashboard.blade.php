@@ -320,11 +320,11 @@
             
             <div class="card">
                 <div class="card-header">
-                    <h3 class="mb-0"><i class="fas fa-history me-2"></i>Child History</h3>
+                    <h3 class="mb-0"><i class="fas fa-history me-2"></i>Riwayat Anak (5 Terakhir)</h3>
                 </div>
                 <div class="card-body p-2">
                     @if($selectedChild && $selectedChild->histories->count() > 0)
-                        @foreach($selectedChild->histories->sortByDesc('tanggal') as $history)
+                        @foreach($selectedChild->histories->sortByDesc('tanggal')->take(5) as $history)
                             <div class="card history-card mx-n2 mb-3">
                                 <div class="card-header" role="button" onclick="toggleHistory({{ $history->id }})">
                                     <h5 class="mb-0 d-flex justify-content-between align-items-center">
@@ -511,6 +511,11 @@
                                 </div>
                             </div>
                         @endforeach
+                        @if($selectedChild->histories->count() > 5)
+                            <div class="text-center mt-3">
+                                <a href="#" class="btn btn-outline-primary btn-sm">Lihat Semua Riwayat</a>
+                            </div>
+                        @endif
                     @elseif($selectedChild)
                         <p class="card-text text-muted">Tidak ada riwayat tersedia untuk anak ini.</p>
                     @else
