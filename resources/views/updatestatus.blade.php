@@ -170,17 +170,31 @@
                         <label class="form-label"><i class="fas fa-utensils me-2"></i>Makan</label>
                         @foreach(['Pagi', 'Siang', 'Sore'] as $meal)
                             <div class="meal-group">
-                                <h6><i class="fas fa-{{ $meal == 'Pagi' ? 'sun' : ($meal == 'Siang' ? 'cloud-sun' : 'moon') }} me-2"></i>{{ $meal }}</h6>
+                                <h6>
+                                    <i class="fas fa-{{ $meal == 'Pagi' ? 'sun text-warning' : ($meal == 'Siang' ? 'cloud-sun text-primary' : 'moon text-info') }} me-2"></i>
+                                    {{ $meal }}
+                                </h6>
                                 @foreach(['1', '1/2', '1/3', '1/4'] as $value)
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="makan_{{ strtolower($meal) }}" id="makan_{{ strtolower($meal) }}_{{ str_replace('/', '_', $value) }}" value="{{ $value }}" {{ $child->{"makan_" . strtolower($meal)} == $value ? 'checked' : '' }}>
+                                        <input class="form-check-input" type="radio" name="makan_{{ strtolower($meal) }}" 
+                                               id="makan_{{ strtolower($meal) }}_{{ str_replace('/', '_', $value) }}" 
+                                               value="{{ $value }}" 
+                                               {{ $child->{"makan_" . strtolower($meal)} == $value ? 'checked' : '' }}>
                                         <label class="form-check-label" for="makan_{{ strtolower($meal) }}_{{ str_replace('/', '_', $value) }}">{{ $value }}</label>
                                     </div>
                                 @endforeach
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input lainnya-checkbox" type="radio" name="makan_{{ strtolower($meal) }}" id="makan_{{ strtolower($meal) }}_lainnya" value="custom" {{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? 'checked' : '' }}>
+                                    <input class="form-check-input lainnya-checkbox" type="radio" 
+                                           name="makan_{{ strtolower($meal) }}" 
+                                           id="makan_{{ strtolower($meal) }}_lainnya" 
+                                           value="custom" 
+                                           {{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? 'checked' : '' }}>
                                     <label class="form-check-label" for="makan_{{ strtolower($meal) }}_lainnya">Lainnya</label>
-                                    <input type="text" class="form-control form-control-sm custom-input" id="makan_{{ strtolower($meal) }}_custom" name="makan_{{ strtolower($meal) }}_custom" value="{{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? $child->{"makan_" . strtolower($meal)} : '' }}" style="{{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? 'display: inline-block;' : 'display: none;' }}">
+                                    <input type="text" class="form-control form-control-sm custom-input" 
+                                           id="makan_{{ strtolower($meal) }}_custom" 
+                                           name="makan_{{ strtolower($meal) }}_custom" 
+                                           value="{{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? $child->{"makan_" . strtolower($meal)} : '' }}" 
+                                           style="{{ $child->{"makan_" . strtolower($meal)} && !in_array($child->{"makan_" . strtolower($meal)}, ['1', '1/2', '1/3', '1/4']) ? 'display: inline-block;' : 'display: none;' }}">
                                 </div>
                             </div>
                         @endforeach
@@ -189,7 +203,7 @@
                         <label class="form-label"><i class="fas fa-bottle-water me-2"></i>Susu</label>
                         <div class="milk-container">
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-sun"></i></div>
+                                <div class="milk-icon"><i class="fas fa-sun text-warning"></i></div>
                                 <div class="milk-label">Pagi</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="susu_pagi" name="susu_pagi" min="0" value="{{ $child->susu_pagi }}">
@@ -197,7 +211,7 @@
                                 </div>
                             </div>
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="milk-icon"><i class="fas fa-cloud-sun text-primary"></i></div>
                                 <div class="milk-label">Siang</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="susu_siang" name="susu_siang" min="0" value="{{ $child->susu_siang }}">
@@ -205,7 +219,7 @@
                                 </div>
                             </div>
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-moon"></i></div>
+                                <div class="milk-icon"><i class="fas fa-moon text-info"></i></div>
                                 <div class="milk-label">Sore</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="susu_sore" name="susu_sore" min="0" value="{{ $child->susu_sore }}">
@@ -218,7 +232,7 @@
                         <label class="form-label"><i class="fas fa-tint me-2"></i>Air Putih</label>
                         <div class="milk-container">
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-sun"></i></div>
+                                <div class="milk-icon"><i class="fas fa-sun text-warning"></i></div>
                                 <div class="milk-label">Pagi</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="air_putih_pagi" name="air_putih_pagi" min="0" value="{{ $child->air_putih_pagi }}">
@@ -226,7 +240,7 @@
                                 </div>
                             </div>
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="milk-icon"><i class="fas fa-cloud-sun text-primary"></i></div>
                                 <div class="milk-label">Siang</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="air_putih_siang" name="air_putih_siang" min="0" value="{{ $child->air_putih_siang }}">
@@ -234,7 +248,7 @@
                                 </div>
                             </div>
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-moon"></i></div>
+                                <div class="milk-icon"><i class="fas fa-moon text-info"></i></div>
                                 <div class="milk-label">Sore</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="air_putih_sore" name="air_putih_sore" min="0" value="{{ $child->air_putih_sore }}">
@@ -247,7 +261,7 @@
                         <label class="form-label"><i class="fas fa-toilet me-2"></i>BAK (Buang Air Kecil)</label>
                         <div class="milk-container">
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-sun"></i></div>
+                                <div class="milk-icon"><i class="fas fa-sun text-warning"></i></div>
                                 <div class="milk-label">Pagi</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="bak_pagi" name="bak_pagi" min="0" value="{{ $child->bak_pagi }}">
@@ -255,7 +269,7 @@
                                 </div>
                             </div>
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="milk-icon"><i class="fas fa-cloud-sun text-primary"></i></div>
                                 <div class="milk-label">Siang</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="bak_siang" name="bak_siang" min="0" value="{{ $child->bak_siang }}">
@@ -263,7 +277,7 @@
                                 </div>
                             </div>
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-moon"></i></div>
+                                <div class="milk-icon"><i class="fas fa-moon text-info"></i></div>
                                 <div class="milk-label">Sore</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="bak_sore" name="bak_sore" min="0" value="{{ $child->bak_sore }}">
@@ -276,7 +290,7 @@
                         <label class="form-label"><i class="fas fa-poop me-2"></i>BAB (Buang Air Besar)</label>
                         <div class="milk-container">
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-sun"></i></div>
+                                <div class="milk-icon"><i class="fas fa-sun text-warning"></i></div>
                                 <div class="milk-label">Pagi</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="bab_pagi" name="bab_pagi" min="0" value="{{ $child->bab_pagi }}">
@@ -284,7 +298,7 @@
                                 </div>
                             </div>
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-cloud-sun"></i></div>
+                                <div class="milk-icon"><i class="fas fa-cloud-sun text-primary"></i></div>
                                 <div class="milk-label">Siang</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="bab_siang" name="bab_siang" min="0" value="{{ $child->bab_siang }}">
@@ -292,7 +306,7 @@
                                 </div>
                             </div>
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-moon"></i></div>
+                                <div class="milk-icon"><i class="fas fa-moon text-info"></i></div>
                                 <div class="milk-label">Sore</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="bab_sore" name="bab_sore" min="0" value="{{ $child->bab_sore }}">
@@ -305,7 +319,7 @@
                         <label class="form-label"><i class="fas fa-bed me-2"></i>Tidur</label>
                         <div class="milk-container">
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-sun"></i></div>
+                                <div class="milk-icon"><i class="fas fa-sun text-warning"></i></div>
                                 <div class="milk-label">Pagi</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="tidur_pagi" name="tidur_pagi" min="0" value="{{ $child->tidur_pagi }}">
@@ -321,7 +335,7 @@
                                 </div>
                             </div>
                             <div class="milk-item">
-                                <div class="milk-icon"><i class="fas fa-moon"></i></div>
+                                <div class="milk-icon"><i class="fas fa-moon text-info"></i></div>
                                 <div class="milk-label">Sore</div>
                                 <div class="input-group input-group-sm">
                                     <input type="number" class="form-control" id="tidur_sore" name="tidur_sore" min="0" value="{{ $child->tidur_sore }}">
@@ -371,7 +385,9 @@
                         <label class="form-label"><i class="fas fa-utensils me-2"></i>Menu Makanan & Camilan</label>
                         <div class="row">
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">Pagi</label>
+                                <label class="form-label">
+                                    <i class="fas fa-sun text-warning me-2"></i>Pagi
+                                </label>
                                 <div class="mb-2">
                                     <input type="text" class="form-control" 
                                            id="makanan_camilan_pagi_1" 
@@ -403,7 +419,9 @@
                             </div>
                             
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">Siang</label>
+                                <label class="form-label">
+                                    <i class="fas fa-cloud-sun text-primary me-2"></i>Siang
+                                </label>
                                 <div class="mb-2">
                                     <input type="text" class="form-control" 
                                            id="makanan_camilan_siang_1" 
@@ -435,7 +453,9 @@
                             </div>
                             
                             <div class="col-md-4 mb-3">
-                                <label class="form-label">Sore</label>
+                                <label class="form-label">
+                                    <i class="fas fa-moon text-info me-2"></i>Sore
+                                </label>
                                 <div class="mb-2">
                                     <input type="text" class="form-control" 
                                            id="makanan_camilan_sore_1" 
@@ -482,6 +502,33 @@
                                 <label class="form-check-label" for="kondisi_sakit">
                                     Sakit
                                 </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tambahkan bagian obat di sini -->
+                    <div class="mb-3">
+                        <label class="form-label"><i class="fas fa-pills me-2"></i>Obat</label>
+                        <div class="row">
+                            <div class="col-md-4 mb-2">
+                                <label><i class="fas fa-sun text-warning me-2"></i>Pagi</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="obat_pagi" name="obat_pagi" value="{{ $child->obat_pagi ?? '' }}" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" placeholder="HH:MM" maxlength="5">
+                                    <span class="input-group-text">JAM</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <label><i class="fas fa-cloud-sun text-primary me-2"></i>Siang</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="obat_siang" name="obat_siang" value="{{ $child->obat_siang ?? '' }}" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" placeholder="HH:MM" maxlength="5">
+                                    <span class="input-group-text">JAM</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <label><i class="fas fa-moon text-info me-2"></i>Sore</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="obat_sore" name="obat_sore" value="{{ $child->obat_sore ?? '' }}" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" placeholder="HH:MM" maxlength="5">
+                                    <span class="input-group-text">JAM</span>
+                                </div>
                             </div>
                         </div>
                     </div>

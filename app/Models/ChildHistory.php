@@ -16,7 +16,6 @@ class ChildHistory extends Model
         'makan_pagi',
         'makan_siang',
         'makan_sore',
-        'sudah_minum_obat',
         'tanggal',
         'keterangan',
         'nama_pendamping',
@@ -41,6 +40,9 @@ class ChildHistory extends Model
         'makanan_camilan_siang',
         'makanan_camilan_sore',
         'kondisi',
+        'obat_pagi',
+        'obat_siang',
+        'obat_sore',
     ];
 
     protected $dates = ['tanggal'];

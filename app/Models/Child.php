@@ -15,7 +15,6 @@ class Child extends Model
         'makan_pagi',
         'makan_siang',
         'makan_sore',
-        'sudah_minum_obat',
         'tanggal',
         'keterangan',
         'nama_pendamping',
@@ -40,6 +39,9 @@ class Child extends Model
         'makanan_camilan_siang',
         'makanan_camilan_sore',
         'kondisi',
+        'obat_pagi',
+        'obat_siang',
+        'obat_sore',
     ];
 
     protected $dates = ['tanggal'];
@@ -60,7 +62,6 @@ class Child extends Model
             'makan_pagi' => $this->makan_pagi,
             'makan_siang' => $this->makan_siang,
             'makan_sore' => $this->makan_sore,
-            'sudah_minum_obat' => $this->sudah_minum_obat,
             'tanggal' => $this->tanggal ?? now(),
             'keterangan' => $this->keterangan,
             'nama_pendamping' => $this->nama_pendamping,
@@ -84,6 +85,9 @@ class Child extends Model
             'makanan_camilan_pagi' => $this->makanan_camilan_pagi,
             'makanan_camilan_siang' => $this->makanan_camilan_siang,
             'makanan_camilan_sore' => $this->makanan_camilan_sore,
+            'obat_pagi' => $this->obat_pagi,
+            'obat_siang' => $this->obat_siang,
+            'obat_sore' => $this->obat_sore,
         ]);
     }
 }

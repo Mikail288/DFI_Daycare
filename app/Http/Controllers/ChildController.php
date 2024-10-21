@@ -76,6 +76,9 @@ class ChildController extends Controller
             'makanan_camilan_siang.*' => 'nullable|string',
             'makanan_camilan_sore.*' => 'nullable|string',
             'kondisi' => 'nullable|in:sehat,sakit',
+            'obat_pagi' => 'nullable|date_format:H:i',
+            'obat_siang' => 'nullable|date_format:H:i',
+            'obat_sore' => 'nullable|date_format:H:i',
         ]);
 
         $tanggal = Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
@@ -158,16 +161,20 @@ class ChildController extends Controller
             $child->makanan_camilan_siang = $todayHistory->makanan_camilan_siang;
             $child->makanan_camilan_sore = $todayHistory->makanan_camilan_sore;
             $child->kondisi = $todayHistory->kondisi;
+            $child->obat_pagi = $todayHistory->obat_pagi;
+            $child->obat_siang = $todayHistory->obat_siang;
+            $child->obat_sore = $todayHistory->obat_sore;
         } else {
             // Jika tidak ada riwayat hari ini, reset semua field
             $fieldsToReset = [
-                'makan_pagi', 'makan_siang', 'makan_sore', 'nama_pendamping', 'sudah_minum_obat',
+                'makan_pagi', 'makan_siang', 'makan_sore', 'nama_pendamping',
                 'susu_pagi', 'susu_siang', 'susu_sore',
                 'air_putih_pagi', 'air_putih_siang', 'air_putih_sore',
                 'bak_pagi', 'bak_siang', 'bak_sore',
                 'bab_pagi', 'bab_siang', 'bab_sore',
                 'tidur_pagi', 'tidur_siang', 'tidur_sore',
-                'kegiatan_outdoor', 'kegiatan_indoor', 'keterangan'
+                'kegiatan_outdoor', 'kegiatan_indoor', 'keterangan',
+                'obat_pagi', 'obat_siang', 'obat_sore'
             ];
 
             foreach ($fieldsToReset as $field) {
