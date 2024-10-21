@@ -83,7 +83,6 @@ class ChildController extends Controller
 
         $tanggal = Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
 
-        // Handle custom makan inputs
         foreach (['pagi', 'siang', 'sore'] as $waktu) {
             if ($validatedData["makan_$waktu"] === 'custom') {
                 $validatedData["makan_$waktu"] = $validatedData["makan_{$waktu}_custom"] ?? 'custom';
@@ -123,7 +122,6 @@ class ChildController extends Controller
 
         $validatedData['tanggal'] = $tanggal;
 
-        // Mengubah array menjadi JSON sebelum menyimpan ke database
         $validatedData['makanan_camilan_pagi'] = json_encode(array_filter($validatedData['makanan_camilan_pagi'] ?? []));
         $validatedData['makanan_camilan_siang'] = json_encode(array_filter($validatedData['makanan_camilan_siang'] ?? []));
         $validatedData['makanan_camilan_sore'] = json_encode(array_filter($validatedData['makanan_camilan_sore'] ?? []));
@@ -146,14 +144,12 @@ class ChildController extends Controller
         $child = Child::findOrFail($id);
         $today = Carbon::now()->format('Y-m-d');
         
-        // Cari riwayat untuk hari ini
         $todayHistory = $child->histories()
             ->whereDate('tanggal', $today)
             ->latest()
             ->first();
 
         if ($todayHistory) {
-            // Jika ada riwayat hari ini, gunakan data tersebut
             $child->fill($todayHistory->toArray());
             $child->kegiatan_outdoor = json_decode($todayHistory->kegiatan_outdoor, true) ?? [];
             $child->kegiatan_indoor = json_decode($todayHistory->kegiatan_indoor, true) ?? [];
@@ -165,7 +161,6 @@ class ChildController extends Controller
             $child->obat_siang = $todayHistory->obat_siang;
             $child->obat_sore = $todayHistory->obat_sore;
         } else {
-            // Jika tidak ada riwayat hari ini, reset semua field
             $fieldsToReset = [
                 'makan_pagi', 'makan_siang', 'makan_sore', 'nama_pendamping',
                 'susu_pagi', 'susu_siang', 'susu_sore',
@@ -181,12 +176,10 @@ class ChildController extends Controller
                 $child->$field = null;
             }
 
-            // Reset makan custom fields
             $child->makan_pagi_custom = null;
             $child->makan_siang_custom = null;
             $child->makan_sore_custom = null;
 
-            // Set kegiatan_outdoor dan kegiatan_indoor ke array kosong
             $child->kegiatan_outdoor = [];
             $child->kegiatan_indoor = [];
 
@@ -196,7 +189,6 @@ class ChildController extends Controller
             $child->kondisi = null;
         }
 
-        // Selalu set tanggal ke hari ini
         $child->tanggal = $today;
 
         return view('updatestatus', compact('child'));

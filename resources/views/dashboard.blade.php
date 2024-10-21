@@ -169,7 +169,6 @@
                                     <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $selectedChild->bak_sore ?? "-" }} X</small></p>
                                 </div>
                             </div>
-                            <!-- New BAB info -->
                             <div class="col-md-4 info-col">
                                 <div class="info-card">
                                     <h5><i class="fas fa-poop me-2"></i>BAB</h5>
@@ -224,6 +223,86 @@
                                     </small>
                                 </div>
                             </div>
+                            <div class="col-md-12 info-col">
+                                <div class="info-card">
+                                    <h5><i class="fas fa-heartbeat me-2"></i>Kondisi</h5>
+                                    <p class="mb-0">
+                                        @if($selectedChild->kondisi)
+                                            <span class="badge {{ $selectedChild->kondisi === 'sehat' ? 'bg-success' : 'bg-danger' }}">
+                                                {{ ucfirst($selectedChild->kondisi) }}
+                                            </span>
+                                        @else
+                                            <span class="text-muted">Belum diisi</span>
+                                        @endif
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-12 info-col">
+                                <div class="info-card">
+                                    <h5><i class="fas fa-pills me-2"></i>Obat</h5>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: Jam {{ $selectedChild->obat_pagi ?? 'Tidak ada' }}</small></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: Jam{{ $selectedChild->obat_siang ?? 'Tidak ada' }}</small></p>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: Jam{{ $selectedChild->obat_sore ?? 'Tidak ada' }}</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 info-col">
+                                <div class="info-card">
+                                    <h5><i class="fas fa-cookie-bite me-2"></i>Makanan & Camilan</h5>
+                                    <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi:</small></p>
+                                    <small>
+                                        @php
+                                            $makananCamilanPagi = json_decode($selectedChild->makanan_camilan_pagi, true) ?? [];
+                                        @endphp
+                                        @if(count($makananCamilanPagi) > 0)
+                                            <ul class="list-unstyled mb-0">
+                                                @foreach($makananCamilanPagi as $item)
+                                                    <li>- {{ $item }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <p>Tidak ada</p>
+                                        @endif
+                                    </small>
+                                    <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang:</small></p>
+                                    <small>
+                                        @php
+                                            $makananCamilanSiang = json_decode($selectedChild->makanan_camilan_siang, true) ?? [];
+                                        @endphp
+                                        @if(count($makananCamilanSiang) > 0)
+                                            <ul class="list-unstyled mb-0">
+                                                @foreach($makananCamilanSiang as $item)
+                                                    <li>- {{ $item }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <p>Tidak ada</p>
+                                        @endif
+                                    </small>
+                                    <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore:</small></p>
+                                    <small>
+                                    @php
+                                        $makananCamilanSore = json_decode($selectedChild->makanan_camilan_sore, true) ?? [];
+                                    @endphp
+                                    @if(count($makananCamilanSore) > 0)
+                                        <ul class="list-unstyled mb-0">
+                                            @foreach($makananCamilanSore as $item)
+                                                <li>- {{ $item }}</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <p>Tidak ada</p>
+                                    @endif
+                                    </small>
+                                </div>
+                            </div>
                         </div>
                         <p class="mb-1 mt-3">
                             <i class="fas fa-calendar me-1"></i>
@@ -243,10 +322,10 @@
                 <div class="card-header">
                     <h3 class="mb-0"><i class="fas fa-history me-2"></i>Child History</h3>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-2">
                     @if($selectedChild && $selectedChild->histories->count() > 0)
                         @foreach($selectedChild->histories->sortByDesc('tanggal') as $history)
-                            <div class="card history-card">
+                            <div class="card history-card mx-n2 mb-3">
                                 <div class="card-header">
                                     <h5 class="mb-0">
                                         <i class="fas fa-calendar me-2"></i>
@@ -337,6 +416,86 @@
                                                         </ul>
                                                     @else
                                                         <p>Tidak ada kegiatan outdoor</p>
+                                                    @endif
+                                                </small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 info-col">
+                                            <div class="info-card">
+                                                <h5><i class="fas fa-heartbeat me-2"></i>Kondisi</h5>
+                                                <p class="mb-0">
+                                                    @if($history->kondisi)
+                                                        <span class="badge {{ $history->kondisi === 'sehat' ? 'bg-success' : 'bg-danger' }}">
+                                                            {{ ucfirst($history->kondisi) }}
+                                                        </span>
+                                                    @else
+                                                        <span class="text-muted">Belum diisi</span>
+                                                    @endif
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 info-col">
+                                            <div class="info-card">
+                                                <h5><i class="fas fa-pills me-2"></i>Obat</h5>
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi: {{ $history->obat_pagi ?? 'Tidak ada' }}</small></p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <p class="mb-1"><small><i class="fas fa-cloud-sun text-primary me-2"></i>Siang: {{ $history->obat_siang ?? 'Tidak ada' }}</small></p>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->obat_sore ?? 'Tidak ada' }}</small></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 info-col">
+                                            <div class="info-card">
+                                                <h5><i class="fas fa-cookie-bite me-2"></i>Makanan & Camilan</h5>
+                                                <p class="mb-1"><small><i class="fas fa-sun text-warning me-2"></i>Pagi:</small></p>
+                                                <small>
+                                                    @php
+                                                        $makananCamilanPagi = json_decode($selectedChild->makanan_camilan_pagi, true) ?? [];
+                                                    @endphp
+                                                    @if(count($makananCamilanPagi) > 0)
+                                                        <ul class="list-unstyled mb-0">
+                                                            @foreach($makananCamilanPagi as $item)
+                                                                <li>- {{ $item }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @else
+                                                        <p>Tidak ada</p>
+                                                    @endif
+                                                </small>
+                                                <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Siang:</small></p>
+                                                <small>
+                                                    @php
+                                                        $makananCamilanSiang = json_decode($selectedChild->makanan_camilan_siang, true) ?? [];
+                                                    @endphp
+                                                    @if(count($makananCamilanSiang) > 0)
+                                                        <ul class="list-unstyled mb-0">
+                                                            @foreach($makananCamilanSiang as $item)
+                                                                <li>- {{ $item }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @else
+                                                        <p>Tidak ada</p>
+                                                    @endif
+                                                </small>
+                                                <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore:</small></p>
+                                                <small>
+                                                    @php
+                                                        $makananCamilanSore = json_decode($selectedChild->makanan_camilan_sore, true) ?? [];
+                                                    @endphp
+                                                    @if(count($makananCamilanSore) > 0)
+                                                        <ul class="list-unstyled mb-0">
+                                                            @foreach($makananCamilanSore as $item)
+                                                                <li>- {{ $item }}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @else
+                                                        <p>Tidak ada</p>
                                                     @endif
                                                 </small>
                                             </div>

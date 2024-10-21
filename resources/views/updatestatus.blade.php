@@ -380,7 +380,6 @@
                             @endforeach
                         </div>
                     </div>
-                    <!-- Tambahkan setelah bagian kegiatan outdoor -->
                     <div class="mb-3">
                         <label class="form-label"><i class="fas fa-utensils me-2"></i>Menu Makanan & Camilan</label>
                         <div class="row">
@@ -487,7 +486,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Tambahkan bagian ini setelah menu makanan & camilan -->
                     <div class="mb-3">
                         <label class="form-label"><i class="fas fa-heartbeat me-2"></i>Kondisi Kesehatan</label>
                         <div class="d-flex">
@@ -505,7 +503,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Tambahkan bagian obat di sini -->
                     <div class="mb-3">
                         <label class="form-label"><i class="fas fa-pills me-2"></i>Obat</label>
                         <div class="row">
