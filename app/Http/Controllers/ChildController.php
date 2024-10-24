@@ -203,7 +203,14 @@ class ChildController extends Controller
     public function showHistory($id)
     {
         $child = Child::findOrFail($id);
-        $histories = $child->histories()->orderBy('tanggal', 'desc')->paginate(10);
+        $histories = $child->histories()->orderBy('tanggal', 'desc')->paginate(7);
         return view('child_history', compact('child', 'histories'));
+    }
+
+    public function showInfo($id)
+    {
+        $child = Child::findOrFail($id);
+        $histories = $child->histories()->orderBy('tanggal', 'desc')->paginate(7);
+        return view('child_info', compact('child', 'histories'));
     }
 }

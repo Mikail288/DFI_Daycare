@@ -161,13 +161,16 @@
                     </thead>
                     <tbody>
                         @foreach ($children as $child)
-                            <tr>
+                            <tr class="clickable-row" data-href="{{ route('children.info', $child->id) }}">
                                 <td>{{ $child->nama }}</td>
                                 <td>{{ \Carbon\Carbon::parse($child->tanggal)->format('d-m-Y') }}</td>
                                 <td>{{ $child->keterangan ?? '-' }}</td>
                                 <td>
                                     <a href="{{ route('children.editStatus', $child->id) }}" class="btn btn-primary btn-sm">
                                         <i class="fas fa-edit"></i> Update Status
+                                    </a>
+                                    <a href="{{ route('children.info', $child->id) }}" class="btn btn-warning btn-sm">
+                                        <i class="fas fa-info-circle"></i> Informasi Anak
                                     </a>
                                     <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteChildModal" data-childid="{{ $child->id }}" data-childname="{{ $child->nama }}">
                                         <i class="fas fa-trash"></i> Hapus
@@ -223,18 +226,11 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const tableRows = document.querySelectorAll('table tbody tr');
-
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-
-        tableRows.forEach(row => {
-            const name = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-            if (name.includes(searchTerm)) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
+    const rows = document.querySelectorAll('.clickable-row');
+    rows.forEach(row => {
+        row.addEventListener('click', function(e) {
+            if (!e.target.closest('a, button')) {
+                window.location.href = this.dataset.href;
             }
         });
     });

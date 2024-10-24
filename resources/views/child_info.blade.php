@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat {{ $child->nama }}</title>
+    <title>Informasi {{ $child->nama }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
@@ -65,7 +65,7 @@
             <a href="{{ route('dashboard') }}" class="btn btn-primary me-3">
                 <i class="fas fa-arrow-left"></i> Kembali
             </a>
-            <h1 class="mb-0">Riwayat {{ $child->nama }}</h1>
+            <h1 class="mb-0">Informasi {{ $child->nama }}</h1>
         </div>
         @foreach($histories as $history)
             <div class="card mb-3">
@@ -79,7 +79,7 @@
                     </h5>
                 </div>
                 <div class="card-body collapse" id="history-{{ $history->id }}">
-                    <div class="row info-row">
+                <div class="row info-row">
                         <!-- Makan -->
                         <div class="col-md-4 info-col">
                             <div class="info-card">
