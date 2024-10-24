@@ -26,6 +26,18 @@
         border-radius: 15px 15px 0 0 !important;
       }
 
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
       .floating-image {
         transition: all 0.3s ease;
         animation: float 3s ease-in-out infinite;

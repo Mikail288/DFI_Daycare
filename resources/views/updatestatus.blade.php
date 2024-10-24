@@ -472,9 +472,12 @@
                                 <div class="col-4 mb-2 obat-item">
                                     <label><i class="fas fa-{{ $icon }} me-2"></i>{{ ucfirst($waktu) }}</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="obat_{{ $waktu }}" name="obat_{{ $waktu }}" 
-                                               value="{{ $child->{"obat_$waktu"} ?? '' }}" pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]" 
-                                               placeholder="HH:MM" maxlength="5">
+                                        <input type="text" class="form-control time-input" id="obat_{{ $waktu }}" name="obat_{{ $waktu }}" 
+                                               value="{{ $child->{"obat_$waktu"} ?? '' }}" 
+                                               placeholder="HH:MM" maxlength="5"
+                                               pattern="([01]?[0-9]|2[0-3]):[0-5][0-9]"
+                                               oninvalid="this.setCustomValidity('Masukkan waktu dalam format HH:MM')"
+                                               oninput="this.setCustomValidity('')">
                                         <span class="input-group-text">JAM</span>
                                     </div>
                                 </div>
@@ -587,6 +590,20 @@
             lainnyaIndoorText.classList.remove('d-none');
             lainnyaIndoorLabel.classList.add('d-none');
         }
+
+        document.querySelectorAll('.time-input').forEach(input => {
+            input.addEventListener('invalid', function(e) {
+                if (e.target.value !== '') {
+                    e.target.setCustomValidity('Masukkan waktu dalam format HH:MM');
+                } else {
+                    e.target.setCustomValidity('');
+                }
+            });
+
+            input.addEventListener('input', function(e) {
+                e.target.setCustomValidity('');
+            });
+        });
     });
     </script>
 </body>
