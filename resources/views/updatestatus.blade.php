@@ -196,6 +196,9 @@
                 <form id="updateStatusForm" action="{{ route('children.updateStatus', $child->id) }}" method="POST">
                     @csrf
                     @method('PUT')
+                    <div class="mb-2">
+                        <p class="mb-1"><strong><i class="fas fa-child me-2"></i>Nama Anak: {{ $child->nama }}</strong></p>
+                    </div>
                     <div class="form-row mb-2">
                         <div>
                             <label for="nama_pendamping" class="form-label"><i class="fas fa-user me-2"></i>Nama Pendamping</label>
