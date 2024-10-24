@@ -155,7 +155,8 @@
                         <tr>
                             <th>Nama</th>
                             <th>Tanggal</th>
-                            <th>Keterangan</th>
+                            <!-- <th>Keterangan</th> -->
+                            <th>Status Pengisian</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -164,7 +165,48 @@
                             <tr class="clickable-row" data-href="{{ route('children.info', $child->id) }}">
                                 <td>{{ $child->nama }}</td>
                                 <td>{{ \Carbon\Carbon::parse($child->tanggal)->format('d-m-Y') }}</td>
-                                <td>{{ $child->keterangan ?? '-' }}</td>
+                                <!-- <td>{{ $child->keterangan ?? '-' }}</td> -->
+                                <td>
+                                    @php
+                                        $today = \Carbon\Carbon::now()->format('Y-m-d');
+                                        $childHistory = $child->histories()
+                                            ->whereDate('tanggal', $today)
+                                            ->latest()
+                                            ->first();
+
+                                        $isComplete = $childHistory && 
+                                            !empty($childHistory->makan_pagi) && !empty($childHistory->makan_siang) && !empty($childHistory->makan_sore) &&
+                                            !empty($childHistory->susu_pagi) && !empty($childHistory->susu_siang) && !empty($childHistory->susu_sore) &&
+                                            !empty($childHistory->air_putih_pagi) && !empty($childHistory->air_putih_siang) && !empty($childHistory->air_putih_sore) &&
+                                            !empty($childHistory->bak_pagi) && !empty($childHistory->bak_siang) && !empty($childHistory->bak_sore) &&
+                                            !empty($childHistory->bab_pagi) && !empty($childHistory->bab_siang) && !empty($childHistory->bab_sore) &&
+                                            !empty($childHistory->tidur_pagi) && !empty($childHistory->tidur_siang) && !empty($childHistory->tidur_sore) &&
+                                            !empty($childHistory->kondisi);
+
+                                        if ($isComplete) {
+                                            $kegiatanOutdoor = json_decode($childHistory->kegiatan_outdoor, true);
+                                            $kegiatanIndoor = json_decode($childHistory->kegiatan_indoor, true);
+                                            $makananCamilanPagi = json_decode($childHistory->makanan_camilan_pagi, true);
+                                            $makananCamilanSiang = json_decode($childHistory->makanan_camilan_siang, true);
+                                            $makananCamilanSore = json_decode($childHistory->makanan_camilan_sore, true);
+                                            
+                                            $isComplete = $isComplete && 
+                                                is_array($kegiatanOutdoor) && count($kegiatanOutdoor) > 0 &&
+                                                is_array($kegiatanIndoor) && count($kegiatanIndoor) > 0 &&
+                                                is_array($makananCamilanPagi) && count($makananCamilanPagi) > 0 &&
+                                                is_array($makananCamilanSiang) && count($makananCamilanSiang) > 0 &&
+                                                is_array($makananCamilanSore) && count($makananCamilanSore) > 0 &&
+                                                !empty($childHistory->obat_pagi) &&
+                                                !empty($childHistory->obat_siang) &&
+                                                !empty($childHistory->obat_sore);
+                                        }
+                                    @endphp
+                                    @if ($isComplete)
+                                        <span class="badge bg-success">Lengkap</span>
+                                    @else
+                                        <span class="badge bg-danger">Belum Lengkap</span>
+                                    @endif
+                                </td>
                                 <td>
                                     <a href="{{ route('children.editStatus', $child->id) }}" class="btn btn-primary btn-sm">
                                         <i class="fas fa-edit"></i> Update Status

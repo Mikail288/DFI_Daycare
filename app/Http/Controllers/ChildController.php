@@ -84,7 +84,7 @@ class ChildController extends Controller
         $tanggal = Carbon::createFromFormat('d-m-Y', $validatedData['tanggal'])->format('Y-m-d');
 
         foreach (['pagi', 'siang', 'sore'] as $waktu) {
-            if ($validatedData["makan_$waktu"] === 'custom') {
+            if (isset($validatedData["makan_$waktu"]) && $validatedData["makan_$waktu"] === 'custom') {
                 $validatedData["makan_$waktu"] = $validatedData["makan_{$waktu}_custom"] ?? 'custom';
             }
             unset($validatedData["makan_{$waktu}_custom"]);
