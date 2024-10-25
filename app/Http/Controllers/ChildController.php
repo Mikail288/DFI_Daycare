@@ -7,7 +7,6 @@ use App\Models\ChildHistory;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use PDF; // Pastikan Anda sudah menginstal dan mengimpor package dompdf
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ChildHistoryExport;
 use Illuminate\Support\Facades\Log;

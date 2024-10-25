@@ -97,7 +97,6 @@
                 </div>
                 <div class="card-body collapse" id="history-{{ $history->id }}">
                 <div class="row info-row">
-                        <!-- Makan -->
                         <div class="col-md-4 info-col">
                             <div class="info-card">
                                 <h5><i class="fas fa-utensils me-2"></i>Makan</h5>
@@ -106,7 +105,6 @@
                                 <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->makan_sore ?? 'Belum' }}</small></p>
                             </div>
                         </div>
-                        <!-- Susu -->
                         <div class="col-md-4 info-col">
                             <div class="info-card">
                                 <h5><i class="fas fa-bottle-water me-2"></i>Susu</h5>
@@ -115,7 +113,6 @@
                                 <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->susu_sore ?? "-" }} ml</small></p>
                             </div>
                         </div>
-                        <!-- Air Putih -->
                         <div class="col-md-4 info-col">
                             <div class="info-card">
                                 <h5><i class="fas fa-tint me-2"></i>Air Putih</h5>
@@ -133,7 +130,6 @@
                                 <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->bak_sore ?? "-" }} X</small></p>
                             </div>
                         </div>
-                        <!-- BAB -->
                         <div class="col-md-4 info-col">
                             <div class="info-card">
                                 <h5><i class="fas fa-poop me-2"></i>BAB</h5>
@@ -142,7 +138,6 @@
                                 <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->bab_sore ?? "-" }} X</small></p>
                             </div>
                         </div>
-                        <!-- Tidur -->
                         <div class="col-md-4 info-col">
                             <div class="info-card">
                                 <h5><i class="fas fa-bed me-2"></i>Tidur</h5>
@@ -151,7 +146,6 @@
                                 <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->tidur_sore ?? "-" }} X</small></p>
                             </div>
                         </div>
-                        <!-- Kegiatan Indoor -->
                         <div class="col-md-6 info-col">
                             <div class="info-card">
                                 <h5><i class="fas fa-home me-2"></i>Kegiatan Indoor</h5>
@@ -171,7 +165,6 @@
                                 </small>
                             </div>
                         </div>
-                        <!-- Kegiatan Outdoor -->
                         <div class="col-md-6 info-col">
                             <div class="info-card">
                                 <h5><i class="fas fa-running me-2"></i>Kegiatan Outdoor</h5>
@@ -191,7 +184,6 @@
                                 </small>
                             </div>
                         </div>
-                        <!-- Kondisi -->
                         <div class="col-md-4 info-col">
                             <div class="info-card">
                                 <h5><i class="fas fa-heartbeat me-2"></i>Kondisi</h5>
@@ -206,7 +198,6 @@
                                 </p>
                             </div>
                         </div>
-                        <!-- Obat -->
                         <div class="col-md-4 info-col">
                             <div class="info-card">
                                 <h5><i class="fas fa-pills me-2"></i>Obat</h5>
@@ -215,7 +206,6 @@
                                 <p class="mb-1"><small><i class="fas fa-moon text-info me-2"></i>Sore: {{ $history->obat_sore ?? 'Tidak ada' }}</small></p>
                             </div>
                         </div>
-                        <!-- Makanan & Camilan -->
                         <div class="col-md-4 info-col">
                             <div class="info-card">
                                 <h5><i class="fas fa-cookie-bite me-2"></i>Makanan & Camilan</h5>

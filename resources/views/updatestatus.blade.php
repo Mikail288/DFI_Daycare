@@ -572,7 +572,6 @@
             lainnyaLabel.classList.add('d-none');
         }
 
-        // Perbaikan untuk kegiatan indoor
         const lainnyaIndoorCheckbox = document.querySelector('#kegiatan_indoor_lainnya');
         const lainnyaIndoorText = document.querySelector('input[name="kegiatan_indoor_lainnya"]');
         const lainnyaIndoorLabel = lainnyaIndoorCheckbox.nextElementSibling;

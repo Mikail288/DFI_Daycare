@@ -25,6 +25,17 @@
         color: white;
         border-radius: 15px 15px 0 0 !important;
       }
+      .card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,.1);
+        transition: all 0.3s ease;
+      }
+      .card-header {
+        background-color: #007bff;
+        color: white;
+        border-radius: 15px 15px 0 0 !important;
+      }
       .btn-icon {
         display: inline-flex;
         align-items: center;
@@ -71,7 +82,6 @@
         outline: none;
       }
 
-      /* Tambahkan gaya baru untuk tombol */
       .btn-action {
         margin-bottom: 5px;
         width: 100%;
@@ -86,19 +96,16 @@
 
       @media (max-width: 767px) {
         .card-header .d-flex {
-          flex-wrap: nowrap;
-        }
-        .card-header .input-group {
-          max-width: 150px;
-        }
-        .card-header h3 {
-          font-size: 1rem;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
         }
         .card-header form {
-          flex-shrink: 0;
+          width: auto;
+          margin-top: 0;
+        }
+        .card-header .input-group {
+          width: 200px;
         }
       }
 
@@ -164,6 +171,12 @@
 
       .floating-image:hover {
         transform: translateY(-10px);
+      }
+
+      .card-header h3 {
+        font-size: 1.75rem;
+        font-weight: bold;
+        margin-bottom: 0;
       }
     </style>
   </head>
@@ -239,12 +252,12 @@
         </div>
 
         <div class="card">
-            <div class="card-header">
+        <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0"><i class="fas fa-users me-2"></i>Manage Users</h3>
-                    <form action="{{ route('users.search') }}" method="GET">
+                    <h3 class="mb-0 fs-5"><i class="fas fa-child me-2"></i>Manage Users</h3>
+                    <form action="{{ route('children.search') }}" method="GET">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Cari nama pengguna..." value="{{ request('search') }}" aria-label="Cari nama pengguna" aria-describedby="search-addon">
+                            <input type="text" name="search" class="form-control" placeholder="Cari nama anak..." value="{{ request('search') }}" aria-label="Cari nama anak" aria-describedby="search-addon">
                             <button class="btn btn-primary" type="submit" id="search-addon">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -257,7 +270,6 @@
                     <table class="table table-hover">
                         <thead class="table-light">
                             <tr>
-                                <th>ID</th>
                                 <th>Nama</th>
                                 <th>Email</th>
                                 <th>Role</th>
@@ -267,20 +279,21 @@
                         <tbody>
                             @foreach ($users as $user)
                                 <tr class="user-row" data-href="{{ route('users.show', $user->id) }}" style="cursor: pointer;">
-                                    <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td><span class="badge bg-{{ $user->role == 'admin' ? 'danger' : 'primary' }}">{{ $user->role }}</span></td>
                                     <td>
-                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm btn-action">
-                                            <i class="fas fa-edit"></i> Edit
-                                        </a>
-                                        <button type="button" class="btn btn-primary btn-sm btn-action" data-bs-toggle="modal" data-bs-target="#addChildModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
-                                            <i class="fas fa-baby"></i> Tambah Anak
-                                        </button>
-                                        <button type="button" class="btn btn-danger btn-sm btn-action" data-bs-toggle="modal" data-bs-target="#deleteModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </button>
+                                        <div class="d-flex flex-column flex-md-row">
+                                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm btn-action mb-2 mb-md-0 me-md-2">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                            <button type="button" class="btn btn-primary btn-sm btn-action mb-2 mb-md-0 me-md-2" data-bs-toggle="modal" data-bs-target="#addChildModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
+                                                <i class="fas fa-baby"></i> Tambah Anak
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-sm btn-action" data-bs-toggle="modal" data-bs-target="#deleteModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
+                                                <i class="fas fa-trash"></i> Hapus
+                                            </button>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
