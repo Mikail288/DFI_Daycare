@@ -71,7 +71,37 @@
         outline: none;
       }
 
-      /* Styles for sidebar */
+      /* Tambahkan gaya baru untuk tombol */
+      .btn-action {
+        margin-bottom: 5px;
+        width: 100%;
+      }
+
+      @media (min-width: 768px) {
+        .btn-action {
+          width: auto;
+          margin-right: 5px;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .card-header .d-flex {
+          flex-wrap: nowrap;
+        }
+        .card-header .input-group {
+          max-width: 150px;
+        }
+        .card-header h3 {
+          font-size: 1rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .card-header form {
+          flex-shrink: 0;
+        }
+      }
+
       #sidebar {
         position: fixed;
         top: 0;
@@ -114,11 +144,53 @@
           margin-right: 0 !important;
         }
       }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .floating-image {
+        transition: all 0.3s ease;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .floating-image:hover {
+        transform: translateY(-10px);
+      }
     </style>
   </head>
 <body>
 
-<!-- Page Content -->
+<nav id="sidebar">
+    <div class="p-4">
+        <h3>Menu</h3>
+        <ul class="list-unstyled components mb-5">
+            <li>
+                <a href="{{ route('dashboardanak') }}" class="btn btn-outline-primary w-100 mb-2">
+                    <i class="fas fa-users"></i> Dashboard Anak
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('logout') }}" class="btn btn-danger w-100"
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fas fa-sign-out-alt"></i> {{ __('Keluar') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <div id="content">
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
@@ -140,9 +212,6 @@
                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="fas fa-sign-out-alt"></i> {{ __('Keluar') }}
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                            @csrf
-                        </form>
                     </li>
                 </ul>
             </div>
@@ -157,14 +226,14 @@
             </div>
         @endsession
 
-        <div class="row mb-4">
+        <div class="row align-items-center mb-4">
             <div class="col-md-8">
-                <h1 class="display-4 fw-bold">Welcome, {{ Auth::user()->name }}</h1>
-                <p class="lead">Manage your daycare users and children here.</p>
+                <h1 class="display-4 fw-bold">Selamat Datang, {{ Auth::user()->name }}</h1>
+                <p class="lead">Kelola pengguna dan anak-anak di daycare Anda di sini.</p>
             </div>
-            <div class="col-md-4 text-md-end">
+            <div class="col-md-4 text-end">
                 <a href="{{ route('register') }}" class="btn btn-primary btn-lg">
-                    <i class="fas fa-user-plus me-2"></i> Add New User
+                    <i class="fas fa-user-plus me-2"></i> Tambah User
                 </a>
             </div>
         </div>
@@ -172,7 +241,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0"><i class="fas fa-users me-2"></i>User Management</h3>
+                    <h3 class="mb-0"><i class="fas fa-users me-2"></i>Manage Users</h3>
                     <form action="{{ route('users.search') }}" method="GET">
                         <div class="input-group">
                             <input type="text" name="search" class="form-control" placeholder="Cari nama pengguna..." value="{{ request('search') }}" aria-label="Cari nama pengguna" aria-describedby="search-addon">
@@ -189,7 +258,7 @@
                         <thead class="table-light">
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
+                                <th>Nama</th>
                                 <th>Email</th>
                                 <th>Role</th>
                                 <th>Actions</th>
@@ -201,16 +270,16 @@
                                     <td>{{ $user->id }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td><span class="badge bg-{{ $user->role == 'admin' ? 'danger' : 'success' }}">{{ $user->role }}</span></td>
+                                    <td><span class="badge bg-{{ $user->role == 'admin' ? 'danger' : 'primary' }}">{{ $user->role }}</span></td>
                                     <td>
-                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm me-1" title="Edit" onclick="event.stopPropagation();">
+                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm btn-action">
                                             <i class="fas fa-edit"></i> Edit
                                         </a>
-                                        <button type="button" class="btn btn-success btn-sm me-1" data-bs-toggle="modal" data-bs-target="#addChildModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}" title="Add Child" onclick="event.stopPropagation();">
-                                            <i class="fas fa-baby"></i>Tambah Anak
+                                        <button type="button" class="btn btn-primary btn-sm btn-action" data-bs-toggle="modal" data-bs-target="#addChildModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
+                                            <i class="fas fa-baby"></i> Tambah Anak
                                         </button>
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}" title="Delete" onclick="event.stopPropagation();">
-                                            <i class="fas fa-trash"></i> Delete
+                                        <button type="button" class="btn btn-danger btn-sm btn-action" data-bs-toggle="modal" data-bs-target="#deleteModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
+                                            <i class="fas fa-trash"></i> Hapus
                                         </button>
                                     </td>
                                 </tr>
@@ -265,6 +334,8 @@
         </div>
       </div>
     </div>
+
+    <div class="overlay"></div>
 
     <script>
       var deleteModal = document.getElementById('deleteModal');
@@ -324,52 +395,23 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
-</div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.querySelector('.overlay');
+        const sidebarCollapse = document.getElementById('sidebarCollapse');
 
-<!-- Sidebar -->
-<nav id="sidebar">
-    <div class="p-4">
-        <h3>Menu</h3>
-        <ul class="list-unstyled components mb-5">
-            <li>
-                <a href="{{ route('dashboardanak') }}" class="btn btn-outline-primary w-100 mb-2">
-                    <i class="fas fa-users"></i> Dashboard Anak
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('logout') }}" class="btn btn-danger w-100"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="fas fa-sign-out-alt"></i> {{ __('Keluar') }}
-                </a>
-                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </li>
-        </ul>
-    </div>
-</nav>
+        sidebarCollapse.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
 
-<div class="overlay"></div>
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.querySelector('.overlay');
-    const sidebarCollapse = document.getElementById('sidebarCollapse');
-
-    // Sidebar toggle
-    sidebarCollapse.addEventListener('click', function() {
-        sidebar.classList.toggle('active');
-        overlay.classList.toggle('active');
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            this.classList.remove('active');
+        });
     });
-
-    // Close sidebar when clicking outside
-    overlay.addEventListener('click', function() {
-        sidebar.classList.remove('active');
-        this.classList.remove('active');
-    });
-});
-</script>
+    </script>
 
 </body>
 </html>

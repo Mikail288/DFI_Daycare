@@ -126,11 +126,22 @@
           margin-right: 0 !important;
         }
       }
+
+      .btn-action {
+        margin-bottom: 5px;
+        width: 100%;
+      }
+
+      @media (min-width: 768px) {
+        .btn-action {
+          width: auto;
+          margin-right: 5px;
+        }
+      }
     </style>
   </head>
 <body>
 
-<!-- Sidebar -->
 <nav id="sidebar">
     <div class="p-4">
         <h3>Menu</h3>
@@ -153,7 +164,6 @@
     </div>
 </nav>
 
-<!-- Page Content -->
 <div id="content">
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
@@ -273,13 +283,13 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('children.editStatus', $child->id) }}" class="btn btn-primary btn-sm">
+                                        <a href="{{ route('children.editStatus', $child->id) }}" class="btn btn-primary btn-sm btn-action">
                                             <i class="fas fa-edit"></i> Update Status
                                         </a>
-                                        <a href="{{ route('children.info', $child->id) }}" class="btn btn-warning btn-sm">
+                                        <a href="{{ route('children.info', $child->id) }}" class="btn btn-warning btn-sm btn-action">
                                             <i class="fas fa-info-circle"></i> Informasi Anak
                                         </a>
-                                        <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteChildModal" data-childid="{{ $child->id }}" data-childname="{{ $child->nama }}">
+                                        <button type="button" class="btn btn-danger btn-sm btn-action" data-bs-toggle="modal" data-bs-target="#deleteChildModal" data-childid="{{ $child->id }}" data-childname="{{ $child->nama }}">
                                             <i class="fas fa-trash"></i> Hapus
                                         </button>
                                     </td>
@@ -349,13 +359,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const overlay = document.querySelector('.overlay');
     const sidebarCollapse = document.getElementById('sidebarCollapse');
 
-    // Sidebar toggle
     sidebarCollapse.addEventListener('click', function() {
         sidebar.classList.toggle('active');
         overlay.classList.toggle('active');
     });
 
-    // Close sidebar when clicking outside
     overlay.addEventListener('click', function() {
         sidebar.classList.remove('active');
         this.classList.remove('active');

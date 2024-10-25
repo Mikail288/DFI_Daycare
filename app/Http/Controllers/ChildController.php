@@ -218,22 +218,6 @@ class ChildController extends Controller
         return view('child_info', compact('child', 'histories'));
     }
 
-    // public function downloadPDF(Request $request, $id)
-    // {
-    //     $child = Child::findOrFail($id);
-    //     $dateRange = explode(' - ', $request->input('daterange'));
-    //     $startDate = Carbon::createFromFormat('d-m-Y', $dateRange[0])->startOfDay();
-    //     $endDate = Carbon::createFromFormat('d-m-Y', $dateRange[1])->endOfDay();
-
-    //     $histories = $child->histories()
-    //         ->whereBetween('tanggal', [$startDate, $endDate])
-    //         ->orderBy('tanggal', 'desc')
-    //         ->get();
-
-    //     $pdf = PDF::loadView('pdf.pdf_child_history', compact('child', 'histories'));
-    //     return $pdf->download('child_history.pdf');
-    // }
-
     public function downloadExcel(Request $request, $id)
     {
         $child = Child::findOrFail($id);
