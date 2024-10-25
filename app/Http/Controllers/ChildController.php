@@ -7,6 +7,10 @@ use App\Models\ChildHistory;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use PDF; // Pastikan Anda sudah menginstal dan mengimpor package dompdf
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ChildHistoryExport;
+use Illuminate\Support\Facades\Log;
 
 class ChildController extends Controller
 {
@@ -212,5 +216,37 @@ class ChildController extends Controller
         $child = Child::findOrFail($id);
         $histories = $child->histories()->orderBy('tanggal', 'desc')->paginate(7);
         return view('child_info', compact('child', 'histories'));
+    }
+
+    // public function downloadPDF(Request $request, $id)
+    // {
+    //     $child = Child::findOrFail($id);
+    //     $dateRange = explode(' - ', $request->input('daterange'));
+    //     $startDate = Carbon::createFromFormat('d-m-Y', $dateRange[0])->startOfDay();
+    //     $endDate = Carbon::createFromFormat('d-m-Y', $dateRange[1])->endOfDay();
+
+    //     $histories = $child->histories()
+    //         ->whereBetween('tanggal', [$startDate, $endDate])
+    //         ->orderBy('tanggal', 'desc')
+    //         ->get();
+
+    //     $pdf = PDF::loadView('pdf.pdf_child_history', compact('child', 'histories'));
+    //     return $pdf->download('child_history.pdf');
+    // }
+
+    public function downloadExcel(Request $request, $id)
+    {
+        $child = Child::findOrFail($id);
+        $dateRange = explode(' - ', $request->input('daterange'));
+        $startDate = Carbon::createFromFormat('d-m-Y', $dateRange[0])->startOfDay();
+        $endDate = Carbon::createFromFormat('d-m-Y', $dateRange[1])->endOfDay();
+
+        $histories = $child->histories()
+            ->whereBetween('tanggal', [$startDate, $endDate])
+            ->orderBy('tanggal', 'desc')
+            ->get();
+
+        $fileName = 'Riwayat ' . $child->nama . '.xlsx';
+        return Excel::download(new ChildHistoryExport($child, $histories), $fileName);
     }
 }

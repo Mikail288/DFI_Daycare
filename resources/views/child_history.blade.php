@@ -58,6 +58,17 @@
                 max-width: 50%;
             }
         }
+        .modal-dialog-centered {
+            display: flex;
+            align-items: center;
+            min-height: calc(100% - 1rem);
+        }
+
+        @media (min-width: 576px) {
+            .modal-dialog-centered {
+                min-height: calc(100% - 3.5rem);
+            }
+        }
     </style>
 </head>
 <body>
@@ -269,12 +280,23 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div id="errorToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-danger text-white">
+                <strong class="me-auto">Error</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Terjadi kesalahan saat mengunduh Excel.
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="dateRangeModal" tabindex="-1" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="dateRangeModalLabel">Download PDF</h5>
+                    <h5 class="modal-title" id="dateRangeModalLabel">Download Excel</h5>
                 </div>
                 <div class="modal-body">
                     <p>Pilih rentang tanggal yang ingin di download</p>
@@ -306,6 +328,8 @@
                 $('#dateRangeModal').modal('show');
             });
 
+            var dateRangeModal = new bootstrap.Modal(document.getElementById('dateRangeModal'));
+
             $('#dateRangeModal').on('shown.bs.modal', function() {
                 $('#daterange').daterangepicker({
                     opens: 'left',
@@ -317,8 +341,33 @@
 
             $('#apply-daterange').on('click', function() {
                 var dateRange = $('#daterange').val();
-                alert('A date range was chosen: ' + dateRange);
-                $('#dateRangeModal').modal('hide');
+                var childId = {{ $child->id }};
+                var childName = "{{ $child->nama }}";
+
+                $.ajax({
+                    url: '{{ route('children.downloadExcel', ['id' => $child->id]) }}',
+                    type: 'POST',
+                    data: {
+                        daterange: dateRange,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    xhrFields: {
+                        responseType: 'blob'
+                    },
+                    success: function(response) {
+                        var blob = new Blob([response], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        var link = document.createElement('a');
+                        link.href = window.URL.createObjectURL(blob);
+                        link.download = 'Riwayat ' + childName + '.xlsx';
+                        link.click();
+                        dateRangeModal.hide();
+                    },
+                    error: function() {
+                        // Ganti alert dengan Toast
+                        var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
+                        errorToast.show();
+                    }
+                });
             });
         });
     </script>
