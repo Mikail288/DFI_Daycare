@@ -6,6 +6,7 @@
     <title>Riwayat {{ $child->nama }}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <style>
         body {
             background-color: #f8f9fa;
@@ -61,11 +62,16 @@
 </head>
 <body>
     <div class="container mt-4">
-        <div class="d-flex align-items-center mb-4">
-            <a href="{{ route('dashboard') }}" class="btn btn-primary me-3">
-                <i class="fas fa-arrow-left"></i> Kembali
-            </a>
-            <h1 class="mb-0">Riwayat {{ $child->nama }}</h1>
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <a href="{{ route('dashboard') }}" class="btn btn-primary me-3">
+                    <i class="fas fa-arrow-left"></i> Kembali
+                </a>
+                <h1 class="mb-0">Riwayat {{ $child->nama }}</h1>
+            </div>
+            <button id="download-btn" class="btn btn-success">
+                <i class="fas fa-download"></i> Download
+            </button>
         </div>
         @foreach($histories as $history)
             <div class="card mb-3">
@@ -263,7 +269,29 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="dateRangeModal" tabindex="-1" aria-labelledby="dateRangeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dateRangeModalLabel">Download PDF</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Pilih rentang tanggal yang ingin di download</p>
+                    <input type="text" id="daterange" class="form-control" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-success" id="apply-daterange">Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script>
         function toggleHistory(id) {
             var content = document.getElementById('history-' + id);
@@ -272,6 +300,27 @@
             icon.classList.toggle('fa-chevron-up');
             icon.classList.toggle('fa-chevron-down');
         }
+
+        $(document).ready(function() {
+            $('#download-btn').on('click', function() {
+                $('#dateRangeModal').modal('show');
+            });
+
+            $('#dateRangeModal').on('shown.bs.modal', function() {
+                $('#daterange').daterangepicker({
+                    opens: 'left',
+                    locale: {
+                        format: 'DD-MM-YYYY'
+                    }
+                });
+            });
+
+            $('#apply-daterange').on('click', function() {
+                var dateRange = $('#daterange').val();
+                alert('A date range was chosen: ' + dateRange);
+                $('#dateRangeModal').modal('hide');
+            });
+        });
     </script>
 </body>
 </html>
