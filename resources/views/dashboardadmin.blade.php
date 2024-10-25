@@ -287,10 +287,10 @@
                                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm btn-action mb-2 mb-md-0 me-md-2">
                                                 <i class="fas fa-edit"></i> Edit
                                             </a>
-                                            <button type="button" class="btn btn-primary btn-sm btn-action mb-2 mb-md-0 me-md-2" data-bs-toggle="modal" data-bs-target="#addChildModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
+                                            <button type="button" class="btn btn-primary btn-sm btn-action mb-2 mb-md-0 me-md-2 add-child-btn" data-bs-toggle="modal" data-bs-target="#addChildModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
                                                 <i class="fas fa-baby"></i> Tambah Anak
                                             </button>
-                                            <button type="button" class="btn btn-danger btn-sm btn-action" data-bs-toggle="modal" data-bs-target="#deleteModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
+                                            <button type="button" class="btn btn-danger btn-sm btn-action delete-user-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
                                                 <i class="fas fa-trash"></i> Hapus
                                             </button>
                                         </div>
@@ -396,9 +396,36 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const userRows = document.querySelectorAll('.user-row');
+        const addChildBtns = document.querySelectorAll('.add-child-btn');
+        const deleteUserBtns = document.querySelectorAll('.delete-user-btn');
+
         userRows.forEach(row => {
-            row.addEventListener('click', function() {
-                window.location.href = this.dataset.href;
+            row.addEventListener('click', function(e) {
+                if (!e.target.closest('.btn')) {
+                    window.location.href = this.dataset.href;
+                }
+            });
+        });
+
+        addChildBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const userId = this.getAttribute('data-userid');
+                const childUserId = document.getElementById('childUserId');
+                childUserId.value = userId;
+            });
+        });
+
+        deleteUserBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const userId = this.getAttribute('data-userid');
+                const userName = this.getAttribute('data-username');
+                const form = document.getElementById('deleteForm');
+                const userNameToDelete = document.getElementById('userNameToDelete');
+                
+                form.action = '/users/' + userId;
+                userNameToDelete.textContent = userName;
             });
         });
     });
