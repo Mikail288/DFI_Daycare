@@ -229,6 +229,7 @@
                         <thead class="table-light">
                             <tr>
                                 <th>Nama</th>
+                                <th>Orang Tua</th>
                                 <th>Tanggal</th>
                                 <!-- <th>Keterangan</th> -->
                                 <th>Status Pengisian</th>
@@ -239,6 +240,7 @@
                             @foreach ($children as $child)
                                 <tr class="clickable-row" data-href="{{ route('children.info', $child->id) }}">
                                     <td>{{ $child->nama }}</td>
+                                    <td>{{ $child->user->name ?? '-' }}</td>
                                     <td>{{ \Carbon\Carbon::parse($child->tanggal)->format('d-m-Y') }}</td>
                                     <!-- <td>{{ $child->keterangan ?? '-' }}</td> -->
                                     <td>

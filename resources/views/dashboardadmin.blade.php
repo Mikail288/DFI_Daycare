@@ -255,7 +255,7 @@
         <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="mb-0 fs-5"><i class="fas fa-child me-2"></i>Manage Users</h3>
-                    <form action="{{ route('children.search') }}" method="GET">
+                    <form action="{{ route('users.search') }}" method="GET">
                         <div class="input-group">
                             <input type="text" name="search" class="form-control" placeholder="Cari nama anak..." value="{{ request('search') }}" aria-label="Cari nama anak" aria-describedby="search-addon">
                             <button class="btn btn-primary" type="submit" id="search-addon">
@@ -287,9 +287,11 @@
                                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm btn-action mb-2 mb-md-0 me-md-2">
                                                 <i class="fas fa-edit"></i> Edit
                                             </a>
-                                            <button type="button" class="btn btn-primary btn-sm btn-action mb-2 mb-md-0 me-md-2 add-child-btn" data-bs-toggle="modal" data-bs-target="#addChildModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
-                                                <i class="fas fa-baby"></i> Tambah Anak
-                                            </button>
+                                            @if($user->role != 'admin')
+                                                <button type="button" class="btn btn-primary btn-sm btn-action mb-2 mb-md-0 me-md-2 add-child-btn" data-bs-toggle="modal" data-bs-target="#addChildModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
+                                                    <i class="fas fa-baby"></i> Tambah Anak
+                                                </button>
+                                            @endif
                                             <button type="button" class="btn btn-danger btn-sm btn-action delete-user-btn" data-bs-toggle="modal" data-bs-target="#deleteModal" data-userid="{{ $user->id }}" data-username="{{ $user->name }}">
                                                 <i class="fas fa-trash"></i> Hapus
                                             </button>
