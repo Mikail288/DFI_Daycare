@@ -353,7 +353,6 @@
                         dateRangeModal.hide();
                     },
                     error: function() {
-                        // Ganti alert dengan Toast
                         var errorToast = new bootstrap.Toast(document.getElementById('errorToast'));
                         errorToast.show();
                     }

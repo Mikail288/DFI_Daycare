@@ -199,8 +199,18 @@ class ChildController extends Controller
     public function search(Request $request)
     {
         $search = $request->input('search');
-        $children = Child::where('nama', 'LIKE', "%{$search}%")->get();
-        return view('dashboardanak', compact('children'));
+        
+        $children = Child::query()
+            ->where('nama', 'LIKE', "%{$search}%")
+            ->orWhereHas('user', function($query) use ($search) {
+                $query->where('name', 'LIKE', "%{$search}%");
+            })
+            ->get();
+
+        return view('dashboardanak', [
+            'children' => $children,
+            'users' => \App\Models\User::where('role', 'user')->get()
+        ]);
     }
 
     public function showHistory($id)
@@ -231,5 +241,18 @@ class ChildController extends Controller
 
         $fileName = 'Riwayat ' . $child->nama . '.xlsx';
         return Excel::download(new ChildHistoryExport($child, $histories), $fileName);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $child = Child::findOrFail($id);
+        $child->update($request->only(['nama', 'user_id']));
+
+        return redirect()->route('dashboardanak')->with('success', 'Data anak berhasil diperbarui');
     }
 }

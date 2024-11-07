@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="id">
   <head>
     <meta charset="utf-8">
@@ -7,6 +6,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
     <style>
       body {
         background-color: #f8f9fa;
@@ -138,6 +139,63 @@
           margin-right: 5px;
         }
       }
+
+      .select2-container {
+        width: 100% !important;
+      }
+      .select2-selection {
+        height: 38px !important;
+        padding: 5px !important;
+      }
+
+      .modal {
+        text-align: center;
+        padding: 0!important;
+      }
+
+      .modal:before {
+        content: '';
+        display: inline-block;
+        height: 100%;
+        vertical-align: middle;
+        margin-right: -4px;
+      }
+
+      .modal-dialog {
+        display: inline-block;
+        text-align: left;
+        vertical-align: middle;
+        max-width: 500px;
+        width: 90%;
+      }
+
+      @media (max-width: 576px) {
+        .modal-dialog {
+          margin: 1rem auto;
+          width: 95%;
+        }
+      }
+
+      .select2-container--open .select2-dropdown {
+        top: 100% !important;
+        bottom: auto !important;
+      }
+      
+      .select2-container .select2-dropdown {
+        margin-top: 1px;
+      }
+      
+      .modal-body {
+        overflow: visible;
+      }
+      
+      .modal-content {
+        overflow: visible;
+      }
+
+      .search-form {
+        margin-left: auto;
+      }
     </style>
   </head>
 <body>
@@ -147,8 +205,8 @@
         <h3>Menu</h3>
         <ul class="list-unstyled components mb-5">
             <li>
-                <a href="{{ route('dashboardadmin') }}" class="btn btn-outline-success w-100 mb-2">
-                    <i class="fas fa-users"></i> Dashboard Admin
+                <a href="{{ route('dashboardanak') }}" class="btn btn-outline-primary w-100 mb-2">
+                    <i class="fas fa-users"></i> Dashboard Anak
                 </a>
             </li>
             <li>
@@ -213,9 +271,15 @@
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h3 class="mb-0"><i class="fas fa-child me-2"></i>Daftar Anak</h3>
-                    <form action="{{ route('children.search') }}" method="GET">
+                    <form action="{{ route('children.search') }}" method="GET" class="search-form">
                         <div class="input-group">
-                            <input type="text" name="search" class="form-control" placeholder="Cari nama anak..." value="{{ request('search') }}" aria-label="Cari nama anak" aria-describedby="search-addon">
+                            <input type="text" 
+                                   name="search" 
+                                   class="form-control" 
+                                   placeholder="Cari nama anak..." 
+                                   value="{{ request('search') }}"
+                                   aria-label="Cari nama anak" 
+                                   aria-describedby="search-addon">
                             <button class="btn btn-primary" type="submit" id="search-addon">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -291,6 +355,12 @@
                                         <a href="{{ route('children.info', $child->id) }}" class="btn btn-warning btn-sm btn-action">
                                             <i class="fas fa-info-circle"></i> Informasi Anak
                                         </a>
+                                        <button type="button" class="btn btn-success btn-sm btn-action" data-bs-toggle="modal" data-bs-target="#editChildModal" 
+                                            data-childid="{{ $child->id }}" 
+                                            data-childname="{{ $child->nama }}"
+                                            data-userid="{{ $child->user_id }}">
+                                            <i class="fas fa-sync"></i> Update
+                                        </button>
                                         <button type="button" class="btn btn-danger btn-sm btn-action" data-bs-toggle="modal" data-bs-target="#deleteChildModal" data-childid="{{ $child->id }}" data-childname="{{ $child->nama }}">
                                             <i class="fas fa-trash"></i> Hapus
                                         </button>
@@ -324,6 +394,42 @@
         </div>
       </div>
     </div>
+
+    <div class="modal fade" id="editChildModal" tabindex="-1" aria-labelledby="editChildModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editChildModalLabel">Edit Data Anak</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editChildForm" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="mb-3">
+                            <label for="edit_nama" class="form-label">Nama Anak</label>
+                            <input type="text" class="form-control" id="edit_nama" name="nama" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="edit_user_id" class="form-label">Cari Orang Tua</label>
+                            <select class="form-select" id="edit_user_id" name="user_id" required>
+                                <option value="">Pilih orang tua...</option>
+                                @foreach($users as $user)
+                                    @if($user->role === 'user')
+                                        <option value="{{ $user->id }}">{{ $user->email }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="overlay"></div>
@@ -331,6 +437,8 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
   var deleteChildModal = document.getElementById('deleteChildModal');
@@ -348,15 +456,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const rows = document.querySelectorAll('.clickable-row');
-    rows.forEach(row => {
-        row.addEventListener('click', function(e) {
-            if (!e.target.closest('a, button')) {
-                window.location.href = this.dataset.href;
-            }
-        });
-    });
-
+    // Tambahkan kode ini untuk sidebar
     const sidebar = document.getElementById('sidebar');
     const overlay = document.querySelector('.overlay');
     const sidebarCollapse = document.getElementById('sidebarCollapse');
@@ -370,8 +470,35 @@ document.addEventListener('DOMContentLoaded', function() {
         sidebar.classList.remove('active');
         this.classList.remove('active');
     });
+
+    // Kode Select2 yang sudah ada
+    $('#edit_user_id').select2({
+        theme: 'bootstrap-5',
+        dropdownParent: $('#editChildModal'),
+        placeholder: 'Cari email orang tua...',
+        allowClear: true,
+        width: '100%'
+    });
+
+    var editChildModal = document.getElementById('editChildModal');
+    editChildModal.addEventListener('show.bs.modal', function (event) {
+        var button = event.relatedTarget;
+        var childId = button.getAttribute('data-childid');
+        var childName = button.getAttribute('data-childname');
+        var userId = button.getAttribute('data-userid');
+        
+        var form = document.getElementById('editChildForm');
+        var nameInput = document.getElementById('edit_nama');
+        
+        form.action = '/children/' + childId;
+        nameInput.value = childName;
+        
+        // Update Select2 value
+        $('#edit_user_id').val(userId).trigger('change');
+    });
 });
 </script>
 
 </body>
 </html>
+

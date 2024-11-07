@@ -52,6 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboardanak/info/{id}', [ChildController::class, 'showInfo'])->name('children.info');
     
     Route::post('children/{id}/download-excel', [ChildController::class, 'downloadExcel'])->name('children.downloadExcel');
+    Route::put('/children/{id}', [ChildController::class, 'update'])->name('children.update');
 });
 
 Route::fallback(function () {

@@ -36,7 +36,8 @@ class DashboardController extends Controller
     {
         if (Auth::check() && Auth::user()->role == 'admin') {
             $children = Child::with('user')->get();
-            return view('dashboardanak', compact('children'));
+            $users = User::where('role', 'user')->get();
+            return view('dashboardanak', compact('children', 'users'));
         }
 
         return redirect("login")->withErrors('Anda tidak memiliki akses ke dashboard anak. Silakan login kembali');
