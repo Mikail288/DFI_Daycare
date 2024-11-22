@@ -226,7 +226,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="" alt="Daycare Logo" height="40">
+                <img src="{{ asset('logo.jpeg') }}" alt="Daycare Logo" height="100">
             </a>
             <button type="button" id="sidebarCollapse" class="btn btn-primary d-lg-none">
                 <i class="fas fa-bars"></i>
@@ -263,7 +263,7 @@
                 <p class="lead">Kelola data anak-anak di daycare Anda di sini.</p>
             </div>
             <div class="col-md-4 text-end">
-                <img src="{{ asset('Upinipin.png') }}" alt="Upin & Ipin" class="img-fluid floating-image" style="max-width: 120px;">
+                {{-- <img src="{{ asset('Upinipin.png') }}" alt="Upin & Ipin" class="img-fluid floating-image" style="max-width: 120px;"> --}}
             </div>
         </div>
 
